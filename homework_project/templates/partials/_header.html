@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/login">Web | Ödev Sistemi</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item">
+        <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Anasayfa</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if request.path == '/homeworks' %}active{% endif %}" href="/homeworks">Ödevler</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="/homeworks">Videolar</a>
+      </li>
+    </ul>
+    <!-- Person information if authenticated -->
+    {% if person %}
+    <div id="header__person_info" class="d-inline-flex flex-sm-row bg-dark text-white p-3 border rounded">
+      <p class="mb-0 mr-3 text-lg-center">{{ person.name }} {{person.surname}} <br> ({{ person.user.username }})</p>
+      <button class="btn btn-info mb-lg-0 mr-2" onclick="document.location.href='/profile'">Profil</button>
+      <button class="btn btn-secondary mb-lg-0" onclick="document.location.href='/logout'">Çıkış yap</button>
+    </div>
+    {% else %}
+    <div id="header__person_buttons">
+      <button class="btn btn-light" onclick="document.location.href='/login'">Giriş</button>
+      <button class="btn btn-secondary" onclick="document.location.href='/register'">Kayıt ol</button>
+    </div>
+    {% endif %}
+  </div>
+</nav>

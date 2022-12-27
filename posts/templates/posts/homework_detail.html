@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-lg">
+    
+    <div class="container my-5">
+
+        <div id="homework-info">
+            <div class="title p-2 rounded-sm bg-dark text-light">
+                <h2 class="text-center">{{ homework.name }}</h2>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 pr-0">
+                    <div class="list-group-item bg-light">
+                        <p class="blockquote">{{ homework.description }}</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 pl-0">
+                    <ul class="list-group text-dark">
+                        <li class="list-group-item bg-light">Alan : {{ homework.get_content_display }}</li>
+                        <li class="list-group-item bg-light">Oluşturulma Tarihi : {{ homework.created_at }}</li>
+                        <li class="list-group-item bg-light">Ödev Başlangıcı : {{ homework.start_at }}</li>
+                        <li class="list-group-item bg-light">Ödev Sonu : {{ homework.expired_date }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container mt-5">
+
+        <div class="title p-2 rounded-sm bg-dark text-light">
+            <h2 class="text-left">Detaylar :</h2>
+        </div>
+        <div id="accordion">
+            {% for detail in details %}
+            <div class="card mb-0">
+              <div class="card-header" id="heading-{{ detail.id }}">
+                <h5 class="mb-0">
+                  <button class="btn btn-link" data-toggle="" data-target="#detail-{{ detail.id }}" aria-expanded="true" aria-controls="detail-{{ detail.id }}">
+                    {{ detail.detail_name }}
+                  </button>
+                </h5>
+                <span class="badge badge-warning pt-2">{{ detail.get_risk_detail_display }}</span>
+              </div>
+          
+              <div id="detail-{{ detail.id }}" class=" show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <pre>{{ detail.detail_description }}</pre>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <div class="container mt-5">
+
+        <div class="title p-2 rounded-sm bg-dark text-light">
+            <h2 class="text-left">Postlar :</h2>
+        </div>
+
+        <table class="table table-dark">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Full Name</th>
+                <th scope="col">Tarih</th>
+                <th scope="col">Proje (URL)</th>
+                <th scope="col">Komut</th>
+              </tr>
+            </thead>
+            <tbody>
+
+                {% if not posted %}
+                    <th scope="row"> - </th>
+                    <td>{{ person.name }} {{ person.surname }}</td>
+                    <td> {% now "j F Y" %} <small class="text-muted">( today )</small> </td>
+                    <form action="" method="post">
+                        <td> 
+                            <form action="" method="post" id="update-post-form" class="d-flex flex-column w-50 mx-auto">
+                                {% csrf_token %}
+                                {{ update_form.github_url }} 
+                            </form>
+                        </td>
+                        <td> <button class="btn btn-light" form="update-post-form" type="submit" value="Submit">Submit</button> </td>
+                    </form>
+
+
+                {% endif %}
+                {% for post in posts %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ post.person.name }} {{ post.person.surname }}</td>
+                    <td>{{ post.post_at }}</td>
+                    <td> <a href="{{ post.post_url }}" class="btn btn-link pl-0">{{ post.post_url }}</a> </td>
+                    {% if post.person == person %}
+                    <td>
+                        <button class="btn btn-light">Update</button>
+                        <button class="btn btn-secondary">Delete</button>
+                    </td>
+                    {% else %}
+                    <td>
+                        <button class="btn btn-info" onclick="document.location.href='{{ person.github_url }}'">GitHub Profili</button>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+    </div>
+
+    
+</div>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid my-5">
+    
+    <div class="row mx-3">
+
+        
+        <div class="col-sm-3 mt-5">
+            <div class="title p-2 rounded-sm bg-dark text-light">
+                <h3 class="text-center mb-0">Ödev Tipi</h3>
+            </div>
+            <div class="list-group">
+                <a href="/homeworks" class="list-group-item list-group-item-action {% if request.path == '/homeworks' %}active{% endif %}">Hepsi</a>
+                <a href="/homeworks/FE" class="list-group-item list-group-item-action {% if request.path == '/homeworks/FE' %}active{% endif %}">Frontend</a>
+                <a href="/homeworks/BE" class="list-group-item list-group-item-action {% if request.path == '/homeworks/BE' %}active{% endif %}">Backend</a>
+            </div>
+        </div>
+        
+        <div class="col-sm-9">
+            
+            <div class="list-group">
+                
+                {% for homework in homeworks %}
+                <a href="/homeworks/id/{{ homework.id }}" class="list-group-item list-group-item-action flex-column align-items-start bg-light">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ homework.name }}</h5>
+                        <span class="badge badge-info pt-2">{{ homework.get_content_display }}</span>
+                    </div>
+                    <p class="mb-1 mt-3">{{ homework.description }}</p>
+                    <hr>
+                    <div class="d-flex">
+                        <p>Başlama Tarihi : {{ homework.start_at }}</p>
+                        <hr>
+                        <p>Bitiş Tarihi : {{ homework.expired_date }}</p>
+                    </div>
+                </a>
+                {% endfor %}
+
+            </div>
+            
+        </div>
+        
+    </div>
+        
+    </div>
+{% endblock %}

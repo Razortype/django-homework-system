@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+
+    <div class="container">
+
+        <div class="variables">
+            <ul class="list-group text-dark">
+                <li class="list-group-item bg-light">email : {{ person.user.email }}</li>
+                <li class="list-group-item bg-light">username : {{ person.user.username }}</li>
+            </ul>
+
+        </div>
+
+        <div class="update-form">
+            {{ csrf_token }}
+            {{ update_user_form.as_p }}
+        </div>
+        
+    </div>
+
+    <hr>
+
+    <div class="container">
+
+        <div class="variables">
+
+            <ul class="list-group text-dark">
+                <li class="list-group-item bg-light">name {{ person.name }} {{ person.surnames }}</li>
+                <li class="list-group-item bg-light">age : {{ person.age }} </li>
+                <li class="list-group-item bg-light">GitHub : {{ person.github_url }}</li>
+            </ul>
+
+        </div>
+
+        <div class="update-form">
+            {{ csrf_token }}
+            {{ update_person_form.as_p }}
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

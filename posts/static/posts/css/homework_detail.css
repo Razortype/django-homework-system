@@ -1,0 +1,16 @@
+
+#accordion .card .card-header {
+    background: #343a40;
+}
+
+#accordion .btn-link {
+    color: #f8f9fa;
+}
+
+#accordion .card-body {
+    background: #4b5054;
+}
+
+#accordion .card-body pre {
+    color: #f8f9fa;
+}

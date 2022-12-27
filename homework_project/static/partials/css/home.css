@@ -1,0 +1,16 @@
+
+
+#main-section {
+    position: relative;
+}
+
+#content {
+    position: absolute;
+    text-align: center;
+    top: 56%;
+    left: 50%;
+    width: 400px;
+    height: 300px;
+    margin-top: -150px;
+    margin-left: -200px;
+}
