@@ -58,8 +58,10 @@ class Home(View):
 
     def get(self, req, *args, **kwargs):
         user = req.user
-        content = {}
-        content['style_file'] = 'partials/css/home.css'
+        content = {
+            'style_file': 'partials/css/home.css',
+            'js_file': 'partials/js/_header.js'
+        }
 
         if not isinstance(user, AnonymousUser):
             content['person'] = Person.objects.get(pk=user.id)

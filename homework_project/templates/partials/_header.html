@@ -1,4 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-light bg-transparent fixed-top">
+  <div class="container">
   <a class="navbar-brand" href="/">Web | Ödev Sistemi</a>
 
     <!-- Person information if authenticated -->
@@ -7,7 +8,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+    <ul class="header__list navbar-nav mt-2 mt-lg-0 ">
       <li class="nav-item">
         <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Anasayfa</a>
       </li>
@@ -17,12 +18,28 @@
       <li class="nav-item">
         <a class="nav-link disabled" href="/homeworks">Videolar</a>
       </li>
+      <li>
+        <a class="nav-link d-lg-none" href='/profile'">Profil</a>
+      </li>
+      <li>
+        <a class="nav-link d-lg-none" href='/logout'">Çıkış Yap</a>
+
+      </li>
+      <li class="nav-item dropdown  header__userInfo d-none d-sm-none d-lg-block">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <p src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg">
+            {{ person.name|first }}
+            </p>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/profile" >{{ person.name }} {{person.surname}} <br> ({{ person.user.username }})</a>
+            <a class="dropdown-item" href='/profile'">Profil</a>
+            <a class="dropdown-item" href='/logout'">Çıkış Yap</a>
+
+            </div>
+      </li>
     </ul>
-    <div id="header__person_info" class="d-inline-flex flex-sm-row bg-dark text-white p-3 border rounded">
-      <p class="mb-0 mr-3 text-lg-center">{{ person.name }} {{person.surname}} <br> ({{ person.user.username }})</p>
-      <button class="btn btn-info mb-lg-0 mr-2" onclick="document.location.href='/profile'">Profil</button>
-      <button class="btn btn-secondary mb-lg-0" onclick="document.location.href='/logout'">Çıkış yap</button>
-    </div>
+
   </div>
 
     {% else %}
@@ -33,4 +50,5 @@
 
     
     {% endif %}
+  </div>
 </nav>

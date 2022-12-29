@@ -1,3 +1,30 @@
 #header__person_buttons{
   margin-left:auto;
 }
+
+.header__userInfo{
+    border-radius:100%;
+    width:40px ;
+    height:40px;
+    text-align:center;
+    margin-left:10px !important;
+    background-color:#FCB3A0;
+}
+
+.header__userInfo > a > p {
+    color:#343A3F !important;
+    font-weight:bold;
+}
+
+.dropdown-toggle::after {
+    display:none;
+}
+
+.header__list{
+    margin-left:auto;
+}
+
+.bg-transparent{
+    background-color:transparent !important;
+
+}
