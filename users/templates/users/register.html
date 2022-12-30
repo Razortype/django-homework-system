@@ -2,6 +2,18 @@
 
 {% block content %}
 <div class="container my-5">
+    
+    <div class="row">
+
+        <form id="signupForm" method="POST">
+            {% csrf_token %}
+            {{ user_form.as_p }} 
+            {{ person_form.as_p }}
+            
+            <input value ="Sign Up" type="submit">
+        </form>
+
+    </div>
 
 </div>
 {% endblock %}
