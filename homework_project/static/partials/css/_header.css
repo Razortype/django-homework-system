@@ -24,12 +24,36 @@
     margin-left:auto;
 }
 
+.header__link{
+    color:white !important;
+}
+
 .bg-transparent{
     background-color:transparent !important;
+}
+
+.bg-darkblue{
+    background-color: #446E9C;
 }
 
 .navbar{
     z-index:1;
     transition-timing-function:ease-in;
-    transition:all 0.5s;
+    transition:all 0.3s;
+}
+
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.navbar-toggler{
+    border: none !important;
+}
+
+.text-light{
+    transition-timing-function:ease-in;
+    transition:all 0.3s;
 }

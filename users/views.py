@@ -5,8 +5,9 @@ from django.contrib.auth import authenticate, login, logout
 
 from posts.models import Post
 from .models import Person
-from .forms import LoginForm, UpdateUserForm, UpdatePersonForm
+from .forms import LoginForm, UpdateUserForm, PersonForm, SignUserForm
 
+from django.contrib.auth.models import User
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -22,6 +23,7 @@ class LoginView(View):
             username = form.cleaned_data["username"]
             password = form.cleaned_data["password"]
 
+            print(username, password)
             user = authenticate(req, username=username, password=password)
 
             if user is not None:
@@ -68,12 +70,58 @@ class Home(View):
 
         return HttpResponse(render(req, 'home.html', content))
 
+
+class Register(View):
+
+    user_form = SignUserForm
+    person_form = PersonForm
+
+    def get(self, req, *args, **kwargs):
+        content = {
+            'user_form': self.user_form(),
+            'person_form': self.person_form(),
+            #'style_file': ,
+            #'js_file': ,
+        }
+
+        return HttpResponse(render(req, 'users/register.html', content))
+
+    def post(self, req, *args, **kwargs):
+        
+        user_form = self.user_form(req.POST)
+        person_form = self.person_form(req.POST)
+
+        if user_form.is_valid() and person_form.is_valid():
+            user = User.objects.create_user(
+                username=user_form.cleaned_data['username'],
+                email=user_form.cleaned_data['email'],
+                password=user_form.cleaned_data['password1']
+            )
+
+            person = Person(
+                user=user,
+                name=person_form.cleaned_data['name'].title(),
+                surname=person_form.cleaned_data['surname'].title(),
+                age=person_form.cleaned_data['age'],
+                github_url=person_form.cleaned_data['github_url'],
+            )
+
+            person.save()
+
+            login(req, user)
+
+            return HttpResponseRedirect('/')
+
+        else:
+            return HttpResponse("Credidentals were defined as wrong")
+
+
 # Profile
 
 class Profile(LoginRequiredMixin, View):
 
     user_form = UpdateUserForm
-    person_form = UpdatePersonForm
+    person_form = PersonForm
 
     def get(self, req, *args, **kwargs):
         user = req.user
@@ -84,6 +132,3 @@ class Profile(LoginRequiredMixin, View):
             content['person'] = Person.objects.get(pk=user.id)
 
         return HttpResponse(render(req, 'users/profile.html', content))
-
-    def post(self, req, *args, **kwargs):
-        return HttpResponse("NOT FOUND")

@@ -19,3 +19,20 @@ html {
     height: 70vh !important;
 }
 
+.list-inline-item{
+    margin-right: 25px !important;
+    transition: 0.3s;
+}
+.list-inline-item > img {
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 50%;
+}
+
+.list-inline-item:hover{
+    transform: scale(1.1);
+}
+
+.main__article > div{
+    height: 100% !important;
+}

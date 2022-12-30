@@ -1,8 +1,12 @@
 .footer__container{
-    background-color:#FDB1A4 !important;
+    background-color:#446E9C !important;
 }
 @media (max-width: 767.98px) { 
     .footer__container{
         font-size: 13px !important;
     }
+ }
+
+ .text-pink{
+    color:#FCB3A0;
  }
