@@ -1,20 +1,19 @@
-{% extends 'base.html' %}
-
+{% extends 'base.html' %} 
 {% block content %}
 
-<div id="main-section">
-
-    <div id="content">
-        <h1>WEB Ödev Sistemi</h1>
-        <small>Web Geliştirme Departmanı | MAU - Anka</small>
-    </div>
-    
-    <div class="bg-image" 
-    style="background-image: url('https://mdbootstrap.com/img/Photos/Others/images/76.jpg');
-            height: 100vh;
-            ">
-    </div>
+<header
+    class="banner"
+    style="
+    background-size: cover;
+    background-image: url('https://mdbootstrap.com/img/Photos/Others/images/76.jpg');
+    background-position: center center;
+  "
+>
+    <div class="banner__contents">
+        <h1 class="display-4 ">Web Ödev Sistemi</h1>
+        <small class="lead">Web Geliştirme Departmanı | MAU - Anka</small>
 </div>
+</header>
 
 
 {% endblock %}
