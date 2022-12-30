@@ -1,0 +1,8 @@
+.footer__container{
+    background-color:#FDB1A4 !important;
+}
+@media (max-width: 767.98px) { 
+    .footer__container{
+        font-size: 13px !important;
+    }
+ }
