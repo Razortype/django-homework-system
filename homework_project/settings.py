@@ -144,3 +144,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "posts", "static"),
     os.path.join(BASE_DIR, "users", "static"),
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
