@@ -1,0 +1,9 @@
+{% autoescape off %}
+
+Merhaba, {{ person.name }} {{ person.surname }}
+
+Bu link üzerinden hesabınızı onaylayabilirsiniz
+
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+
+{% endautoescape %}
