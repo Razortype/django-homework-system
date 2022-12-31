@@ -2,7 +2,9 @@ let nav=document.querySelector('nav')
 let brand=document.querySelector('.navbar-brand')
 let link=document.querySelectorAll('.header__list>li>a')
 let toggle=document.querySelector('.navbar-toggler')
-toggle.addEventListener('click',showNav)
+if(toggle){
+    toggle.addEventListener('click',showNav)
+}
 window.addEventListener("scroll",()=>{
     if(window.scrollY>375){
         nav.classList.remove('bg-transparent')
