@@ -47,29 +47,28 @@ class LoginView(View):
     def post(self, req, *args, **kwargs):
         form = self.form_class(data=req.POST)
 
-        if form.is_valid():
-            username = form.cleaned_data["username"]
-            password = form.cleaned_data["password"]
-
-            user = authenticate(req, username=username, password=password)
-
-            if user is not None:
-
-                if not user.is_email_valid:
-                    return HttpResponse(render(req, 'users/activate_failed.html', {}))
-
-                login(req, user)
-
-                redirect_to = req.GET.get("next")
-                if redirect_to is None:
-                    return HttpResponseRedirect("/")
-                else:
-                    return HttpResponseRedirect(redirect_to)
-            else:
-                return HttpResponse("You cannot login with these credentials")
-
-        else:
+        if not form.is_valid():
             return HttpResponse("Form is not valid")
+
+        username = form.cleaned_data["username"]
+        password = form.cleaned_data["password"]
+
+        user = authenticate(req, username=username, password=password)
+
+        if user is None:
+            return HttpResponse("You cannot login with these credentials")
+
+        if not user.is_email_valid:
+            return HttpResponse(render(req, 'users/activate_failed.html', {}))
+        else:
+            login(req, user)
+
+        redirect_to = req.GET.get("next")
+        if redirect_to is None:
+            return HttpResponseRedirect("/")
+        else:
+            return HttpResponseRedirect(redirect_to)
+            
 
     def get(self, req, *args, **kwargs):
         form = self.form_class()
