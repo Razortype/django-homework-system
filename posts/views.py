@@ -2,12 +2,11 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
 
-from users.models import Person
+from users.models import Person, CustomUser
 from .models import Homework, HomeworkDetail, Post
 
 from .forms import NewPostForm
 
-from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 ## Homework Views
@@ -23,7 +22,7 @@ class HomeworkList(LoginRequiredMixin, View):
         content['homeworks'] = Homework.objects.all()
         content['style_file'] = 'posts/css/homework_list.css'
 
-        if not isinstance(user, AnonymousUser):
+        if not isinstance(user, CustomUser):
             content['person'] = Person.objects.get(pk=user.id)
 
         return HttpResponse(render(req, 'posts/homework_list.html', content))
@@ -39,7 +38,7 @@ class HomeworkListByType(LoginRequiredMixin, View):
         content['homeworks'] = Homework.objects.filter(content=type_name).values()
         content['style_file'] = 'posts/css/homework_list.css'
 
-        if not isinstance(user, AnonymousUser):
+        if not isinstance(user, CustomUser):
             content['person'] = Person.objects.get(pk=user.id)
 
         return HttpResponse(render(req, 'posts/homework_list.html', content))
@@ -67,7 +66,7 @@ class HomeworkDetailById(LoginRequiredMixin, View):
             'style_file': 'posts/css/homework_detail.css',
         }
         
-        if not isinstance(user, AnonymousUser):
+        if not isinstance(user, CustomUser):
             content['person'] = Person.objects.get(pk=user.id)
             if content['person'] in [i.person for i in content["posts"]]:
                 content['posted'] = True
@@ -76,4 +75,4 @@ class HomeworkDetailById(LoginRequiredMixin, View):
 
     def post(self, req, *args, **kwargs):
 
-        pass
+        return HttpResponse("NOT VALIDATED HTML PAGE")
