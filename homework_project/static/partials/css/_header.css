@@ -1,8 +1,6 @@
-#header__person_buttons{
+.header__person__buttons{
   margin-left:auto;
 }
-
-
 
 .header__userInfo{
     border-radius:100%;
