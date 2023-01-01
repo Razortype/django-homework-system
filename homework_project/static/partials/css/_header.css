@@ -2,12 +2,6 @@
   margin-left:auto;
 }
 
-.header__person__buttons > button :focus,:hover,:active {
-    text-decoration: none !important;
-}
-
-
-
 .header__userInfo{
     border-radius:100%;
     width:40px ;
