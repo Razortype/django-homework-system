@@ -94,8 +94,8 @@ class Register(View):
         content = {
             'user_form': self.user_form(),
             'person_form': self.person_form(),
-            #'style_file': ,
-            #'js_file': ,
+            'style_file': 'users/css/register.css',
+            'js_file': 'users/js/register.js',
         }
 
         return HttpResponse(render(req, 'users/register.html', content))
