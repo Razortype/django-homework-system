@@ -1,0 +1,18 @@
+.alert__message{
+    position: absolute;
+    top: 10vh;
+    right: 1vw !important;
+    color: white !important;
+    background-color: rgba(4,88,146,0.5)!important;
+    border: none !important;
+    max-width: 30% !important;
+}
+
+@media (max-width: 767.98px) { 
+    .alert__message{
+        max-width: 80% !important;
+        max-height: 10vh;
+        overflow: scroll;
+        font-size: 15px;
+    }
+ }
