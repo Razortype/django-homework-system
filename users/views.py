@@ -128,7 +128,7 @@ class Register(View):
 
             send_action_email(user, req)
 
-            messages.info("Emailinize aktivasyon kodu gönderilmiştir")
+            messages.info(req, "Emailinize aktivasyon kodu gönderilmiştir")
             return HttpResponseRedirect('/login')
 
         else:
@@ -150,7 +150,7 @@ class ActivateUser(View):
             user.is_email_valid = True
             user.save()
 
-            messages.success("Emailiniz başarıyla aktive edildi")
+            messages.success(req, "Emailiniz başarıyla aktive edildi")
             return HttpResponseRedirect('/login')
 
         messages.warning(req, "Email onaylanması sırasında bir hata gerçekleşti")
@@ -184,8 +184,10 @@ class Profile(LoginRequiredMixin, View):
 
     def get(self, req, *args, **kwargs):
         user = req.user
-        content = {'title': 'WEB | Profil'}
-        content['posts'] = Post.objects.filter(person__user__id = user.id)
+        content = {
+            'title': 'WEB | Profil',
+            'posts': Post.objects.filter(person__user__id = user.id),
+        }
 
         if not isinstance(user, AnonymousUser):
             content['person'] = Person.objects.get(pk=user.id)
