@@ -5,7 +5,7 @@ from .models import Homework, HomeworkDetail, Post
 class HomeworkForm(forms.ModelForm):
     class Meta:
         model = Homework
-        fields = ['name', 'content', 'description', 'display', 'start_at', 'expired_date']
+        fields = ['name', 'category', 'description', 'display', 'start_at', 'expired_date']
 
 class HomeworkDetailForm(forms.ModelForm):
     class Meta:

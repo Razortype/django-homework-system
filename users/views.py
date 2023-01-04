@@ -81,7 +81,7 @@ class LogoutView(View):
     def get(self, req, *args, **kwargs):
         user = req.user
         if isinstance(user, AnonymousUser):
-            messages.warning("You have to login first")
+            messages.warning(req, "You have to login first")
             return HttpResponseRedirect('/login')
         else:
             logout(req)
@@ -130,7 +130,7 @@ class Register(View):
             return HttpResponseRedirect('/login')
 
         else:
-            messages.error("Girilen bilgiler doğru belirtilmedi")
+            messages.error(req, "Girilen bilgiler doğru belirtilmedi")
             return HttpResponseRedirect('/register')
 
 class ActivateUser(View):
@@ -144,12 +144,11 @@ class ActivateUser(View):
             print(e)
             user = None
 
-        print(user,generate_token.check_token(user, token))
-
         if user and generate_token.check_token(user, token):
             user.is_email_valid = True
             user.save()
 
+            messages.success("Email aktive edildi")
             return HttpResponseRedirect('/login')
 
         messages.warning(req, "Email onaylanması sırasında bir hata gerçekleşti")

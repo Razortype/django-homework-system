@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 
 from users.models import Person
-from .models import Homework, HomeworkDetail, Post
+from .models import Category, Homework, HomeworkDetail, Post
 
 from .forms import PostForm
 
@@ -20,9 +20,12 @@ class HomeworkList(LoginRequiredMixin, View):
 
     def get(self, req, *args, **kwargs):
         user = req.user
-        content = {'title': 'WEB | Ödevler'}
-        content['homeworks'] = Homework.objects.all()
-        content['style_file'] = 'posts/css/homework_list.css'
+        content = {
+            'title': 'WEB | Ödevler',
+            'categories': Category.objects.all(),
+            'homeworks': Homework.objects.all(),
+            'style_file': 'posts/css/homework_list.css'
+        }
 
         if not isinstance(user, AnonymousUser):
             content['person'] = Person.objects.get(pk=user.id)
@@ -34,11 +37,14 @@ class HomeworkListByType(LoginRequiredMixin, View):
     login_url = "login"
     redirect_field_name = "next"
 
-    def get(self, req, type_name, *args, **kwargs):
+    def get(self, req, category, *args, **kwargs):
         user = req.user
-        content = {'title': f'WEB | Ödevler - {type_name}'}
-        content['homeworks'] = Homework.objects.filter(content=type_name).values()
-        content['style_file'] = 'posts/css/homework_list.css'
+        content = {
+            'title': f'WEB | Ödevler - {category}',
+            'categories': Category.objects.all(),
+            'homeworks': Homework.objects.filter(category__name = category).values(),
+            'style_file': 'posts/css/homework_list.css'
+        }
 
         if not isinstance(user, AnonymousUser):
             content['person'] = Person.objects.get(pk=user.id)
@@ -51,8 +57,6 @@ class HomeworkDetailById(LoginRequiredMixin, View):
     redirect_field_name = "next"
 
     post_form = PostForm
-
-    content = {}
 
     def get(self, req, id, *args, **kwargs):
         user = req.user
