@@ -61,7 +61,7 @@ class LoginView(View):
             return HttpResponseRedirect('/login')
 
         if not user.is_email_valid:
-            messages.warning("Emailinizi aktive etmeniz gerekmektedir")
+            messages.warning(req, "Emailinizi aktive etmeniz gerekmektedir")
             return HttpResponseRedirect('/login')
         else:
             login(req, user)
