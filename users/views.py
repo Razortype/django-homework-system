@@ -61,7 +61,8 @@ class LoginView(View):
             return HttpResponseRedirect('/login')
 
         if not user.is_email_valid:
-            return HttpResponse(render(req, 'users/activate_failed.html', {}))
+            messages.warning("Emailinizi aktive etmeniz gerekmektedir")
+            return HttpResponseRedirect('/login')
         else:
             login(req, user)
 
@@ -127,6 +128,7 @@ class Register(View):
 
             send_action_email(user, req)
 
+            messages.info("Emailinize aktivasyon kodu gönderilmiştir")
             return HttpResponseRedirect('/login')
 
         else:
@@ -148,7 +150,7 @@ class ActivateUser(View):
             user.is_email_valid = True
             user.save()
 
-            messages.success("Email aktive edildi")
+            messages.success("Emailiniz başarıyla aktive edildi")
             return HttpResponseRedirect('/login')
 
         messages.warning(req, "Email onaylanması sırasında bir hata gerçekleşti")
