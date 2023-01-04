@@ -1,12 +1,13 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 
 from users.models import Person
 from .models import Homework, HomeworkDetail, Post
 
-from .forms import NewPostForm
+from .forms import PostForm
 
+from django.contrib import messages
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -49,7 +50,7 @@ class HomeworkDetailById(LoginRequiredMixin, View):
     login_url = "login"
     redirect_field_name = "next"
 
-    new_post_form = NewPostForm
+    post_form = PostForm
 
     content = {}
 
@@ -63,7 +64,7 @@ class HomeworkDetailById(LoginRequiredMixin, View):
             'details': HomeworkDetail.objects.filter(homework__id = homework.id),
             'posts': Post.objects.filter(homework__id = homework.id),
             'posted': False,
-            'update_form': self.new_post_form(),
+            'update_form': self.post_form(),
             'style_file': 'posts/css/homework_detail.css',
         }
         
@@ -76,4 +77,25 @@ class HomeworkDetailById(LoginRequiredMixin, View):
 
     def post(self, req, *args, **kwargs):
 
-        return HttpResponse("NOT VALIDATED HTML PAGE")
+        user = req.user
+        form = self.post_form(req.POST)
+
+        if not isinstance(user, AnonymousUser):
+
+            if form.is_valid():
+                if form.cleaned_data['user'].id == user.id:
+                    # form.save()
+                    messages.info("Post başarıyla atıldı")
+            else:
+                messages.error("Post gönderilemedi")
+            
+            return HttpResponseRedirect(req.path_info)
+        
+        else:
+            messages.warning("Post atmak için önce giriş yapmalısın")
+            return HttpResponseRedirect('/login')
+
+        '''
+        messages.info("Post send successfully")
+        return HttpResponseRedirect(RETURN_CURRENT_PAGE)
+        '''

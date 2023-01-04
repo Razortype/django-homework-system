@@ -8,6 +8,7 @@ from .models import Person, CustomUser
 from .forms import LoginForm, UpdateUserForm, PersonForm, SignUserForm
 from .utils import generate_token, EmailThread
 
+from django.contrib import messages 
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
@@ -56,7 +57,8 @@ class LoginView(View):
         user = authenticate(req, username=username, password=password)
 
         if user is None:
-            return HttpResponse("You cannot login with these credentials")
+            messages.error(req, "Kullanıcı adı veya Şifre hatalı")
+            return HttpResponseRedirect('/login')
 
         if not user.is_email_valid:
             return HttpResponse(render(req, 'users/activate_failed.html', {}))
@@ -79,7 +81,8 @@ class LogoutView(View):
     def get(self, req, *args, **kwargs):
         user = req.user
         if isinstance(user, AnonymousUser):
-            return HttpResponse("You have to login first")
+            messages.warning("You have to login first")
+            return HttpResponseRedirect('/login')
         else:
             logout(req)
             return HttpResponseRedirect("/")
@@ -127,7 +130,8 @@ class Register(View):
             return HttpResponseRedirect('/login')
 
         else:
-            return HttpResponse("Credidentals were defined as wrong")
+            messages.error("Girilen bilgiler doğru belirtilmedi")
+            return HttpResponseRedirect('/register')
 
 class ActivateUser(View):
 
@@ -148,7 +152,8 @@ class ActivateUser(View):
 
             return HttpResponseRedirect('/login')
 
-        return HttpResponseBadRequest("Email onaylanması sırasında hata oluştu")
+        messages.warning(req, "Email onaylanması sırasında bir hata gerçekleşti")
+        return HttpResponseRedirect('/')
 
 ## General
 
