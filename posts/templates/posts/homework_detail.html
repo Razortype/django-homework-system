@@ -18,7 +18,11 @@
                 </div>
                 <div class="col-sm-6 pl-0">
                     <ul class="list-group text-dark">
-                        <li class="list-group-item bg-light">Alan : {{ homework.get_content_display }}</li>
+                        <h3>Category</h3>
+                        <li class="list-group-item bg-light">Alan : {{ homework.category.name }}</li>
+                        <li class="list-group-item bg-light">Color : {{ homework.category.color }}</li>
+                        <li class="list-group-item bg-light">description : {{ homework.category.description }}</li>
+                        <h3>Homework</h3>
                         <li class="list-group-item bg-light">Oluşturulma Tarihi : {{ homework.created_at }}</li>
                         <li class="list-group-item bg-light">Ödev Başlangıcı : {{ homework.start_at }}</li>
                         <li class="list-group-item bg-light">Ödev Sonu : {{ homework.expired_date }}</li>

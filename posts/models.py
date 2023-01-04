@@ -5,22 +5,20 @@ from django.utils import timezone
 from django.utils.timezone import utc
 from datetime import datetime
 
+class Category(models.Model):
+    name        = models.CharField(max_length=50)
+    color       = models.CharField(max_length=6)
+    description = models.TextField(max_length=1000)
+
+    def __str__(self) -> str:
+        return self.name
+
 class Homework(models.Model):
 
     MIN_EXPIRE_DAY = 7
-    FRONTEND = 'FE'
-    BACKEND = 'BE'
-    CONTENT_TYPES = [
-        (FRONTEND, 'Frontend'),
-        (BACKEND, 'Backend'),
-    ]
 
     name = models.CharField(max_length=100)
-    content = models.CharField(
-        max_length=2,
-        choices=CONTENT_TYPES,
-        default=BACKEND,
-    )
+    category = models.ForeignKey(Category,on_delete=models.CASCADE)
     description = models.TextField(max_length=1000, default=' ', null=False, blank=True)
     display = models.BooleanField(default=False)
     created_at = models.DateField(auto_now=True)
