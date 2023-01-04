@@ -16,6 +16,3 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['person', 'post_url', 'post_url']
-
-class NewPostForm(forms.Form):
-    github_url = forms.URLField(required=True)

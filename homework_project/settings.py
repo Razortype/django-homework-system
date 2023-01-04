@@ -30,7 +30,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.ankaweb.dev', 'ankaweb.dev', '24.199.104.52', '127.0.0.1',]
+ALLOWED_HOSTS = ['ankaweb.dev', 'www.ankaweb.dev', '24.199.104.52', '127.0.0.1',]
 
 # Application definition
 
@@ -93,9 +93,9 @@ DATABASES = {
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'homework',
-#         'USER': 'razortype',
-#         'PASSWORD': 'sdJ5rA29EGqfW7DH',
+#         'NAME': env('DB_NAME'),
+#         'USER': env('DB_USER'),
+#         'PASSWORD': env('DB_PASSWORD'),
 #         'HOST': 'localhost',
 #         'PORT': '',
 #     }
