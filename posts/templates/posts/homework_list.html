@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load post_extras %}
+
 {% block content %}
 <div class="container-fluid my-5">
     
@@ -12,8 +14,12 @@
             </div>
             <div class="list-group">
                 <a href="/homeworks" class="list-group-item list-group-item-action {% if request.path == '/homeworks' %}active{% endif %}">Hepsi</a>
-                <a href="/homeworks/FE" class="list-group-item list-group-item-action {% if request.path == '/homeworks/FE' %}active{% endif %}">Frontend</a>
-                <a href="/homeworks/BE" class="list-group-item list-group-item-action {% if request.path == '/homeworks/BE' %}active{% endif %}">Backend</a>
+                
+                {% for category in categories %}
+                <a href="/homeworks/{{ category.name }}" class="list-group-item list-group-item-action {% if request.path|endswith:category.name %}active{% endif %}">
+                    {{ category.name }}
+                </a>
+                {% endfor %}
             </div>
         </div>
         
@@ -25,7 +31,7 @@
                 <a href="/homeworks/id/{{ homework.id }}" class="list-group-item list-group-item-action flex-column align-items-start bg-light">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">{{ homework.name }}</h5>
-                        <span class="badge badge-info pt-2">{{ homework.get_content_display }}</span>
+                        <span class="badge badge-info pt-2">{{ homework.category.name }}</span>
                     </div>
                     <p class="mb-1 mt-3">{{ homework.description }}</p>
                     <hr>
