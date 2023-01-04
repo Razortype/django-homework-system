@@ -19,11 +19,15 @@
     <link rel="stylesheet" href="{% static style_file %}">
     {% endif %}
 
+    <!-- Partial Contents Static Data -->
     <link rel="stylesheet" href="{% static 'partials/css/_header.css' %}">
     <link rel="stylesheet" href="{% static 'partials/css/_footer.css' %}">
+    <link rel="stylesheet" href="{% static 'partials/css/_alert.css' %}">
 
   </head>
   <body>
+
+    {% include 'partials/_alert.html' %}
     
     {% include 'partials/_header.html' %}
 

@@ -1,0 +1,38 @@
+{% comment %} 
+Yorum satırları bu şekilde atılıyor işin bitince bu kısmı silersin
+
+'messages' benim cookie olarak gönderiğim kısımdan geliyor içeriğini almak için bikaç örnek koydum
+NOTES > dönen mesajlar query tipinde dönüyor. Daha anlıyıcan dilde liste formatında... | for message in message |  
+
+- message >
+   * tags
+   * level
+   * - (içerik için kendisi yazmak yeterli)
+
+DEFAULT_MESSAGE_LEVELS
+Bunu gönderilen mesajın türü için kullanabilirsin
+- ERROR
+- WARNING
+- INFO
+ ...
+
+ bir sürü türü var 'django message' diye aratırsan içeriğine bakarsın
+
+ örnek:
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+
+    bu kısımda sadece eğer dönen ERROR sa important yazısını ekliyor
+
+{% endcomment %}
+<div id="message-section">
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
