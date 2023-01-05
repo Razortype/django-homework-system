@@ -99,7 +99,10 @@ class Register(View):
             'user_form': self.user_form(),
             'person_form': self.person_form(),
             'style_file': 'users/css/register.css',
-            'js_file': 'users/js/register.js',
+            'js_files': [
+                'users/js/register.js',
+                'partials/js/_navbar.js'
+                ],
         }
 
         return HttpResponse(render(req, 'users/register.html', content))
@@ -165,7 +168,9 @@ class Home(View):
 
         content = {
             'style_file': 'partials/css/home.css',
-            'js_file': 'partials/js/_header.js'
+            'js_files': [
+                'partials/js/_header.js'
+            ],
         }
 
         if not isinstance(user, AnonymousUser):

@@ -43,7 +43,10 @@ class HomeworkListByType(LoginRequiredMixin, View):
             'title': f'WEB | Ödevler - {category}',
             'categories': Category.objects.all(),
             'homeworks': Homework.objects.filter(category__name = category).values(),
-            'style_file': 'posts/css/homework_list.css'
+            'style_file': 'posts/css/homework_list.css',
+            'js_files': [
+                'partials/js/_navbar.js',
+            ]
         }
 
         if not isinstance(user, AnonymousUser):
@@ -70,6 +73,9 @@ class HomeworkDetailById(LoginRequiredMixin, View):
             'posted': False,
             'update_form': self.post_form(),
             'style_file': 'posts/css/homework_detail.css',
+            'js_files': [
+                'partials/js/_navbar.js',
+            ]
         }
         
         if not isinstance(user, AnonymousUser):
