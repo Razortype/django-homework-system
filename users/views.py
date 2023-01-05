@@ -4,7 +4,7 @@ from django.views import View
 from django.contrib.auth import authenticate, login, logout
 
 from posts.models import Post
-from .models import Person, CustomUser
+from .models import Person, CustomUser, SignUserModel
 from .forms import LoginForm, UpdateUserForm, PersonForm, SignUserForm
 from .utils import generate_token, EmailThread
 
@@ -19,6 +19,8 @@ from django.utils.encoding import force_bytes, force_str, DjangoUnicodeDecodeErr
 
 from django.core.mail import EmailMessage
 from django.conf import settings
+
+from homework_project.util import model_utils
 
 def send_action_email(user: CustomUser, req):
     person = Person.objects.get(pk=user.pk)
@@ -113,6 +115,14 @@ class Register(View):
         person_form = self.person_form(req.POST)
 
         if user_form.is_valid() and person_form.is_valid():
+            
+            errors = model_utils.check_password_valid(user_form.cleaned_data['password1'],user_form.cleaned_data['password2'])
+
+            if errors:
+                for error in errors:
+                    messages.error(req, error)
+                return HttpResponseRedirect('/register')
+            
             user = CustomUser.objects.create_user(
                 username=user_form.cleaned_data['username'],
                 email=user_form.cleaned_data['email'],
