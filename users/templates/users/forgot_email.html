@@ -1,0 +1,13 @@
+{% autoescape off %}
+
+Merhaba, {{ person.name }} {{ person.surname }}
+
+Bu link üzerinden şifrenizi değiştirebilirsiniz
+
+http://{{ domain }}/users/forgot-password/token
+
+6 haneli numaranız
+
+{{ token }}
+
+{% endautoescape %}
