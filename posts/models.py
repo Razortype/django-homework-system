@@ -3,7 +3,8 @@ from users.models import Person
 
 from django.utils import timezone
 from django.utils.timezone import utc
-from datetime import datetime
+
+from datetime import datetime, timedelta
 
 class Category(models.Model):
     name        = models.CharField(max_length=50)
@@ -14,9 +15,7 @@ class Category(models.Model):
         return self.name
 
 class Homework(models.Model):
-
-    MIN_EXPIRE_DAY = 7
-
+    
     name = models.CharField(max_length=100)
     category = models.ForeignKey(Category,on_delete=models.CASCADE)
     description = models.TextField(max_length=1000, default=' ', null=False, blank=True)
@@ -25,14 +24,14 @@ class Homework(models.Model):
     start_at = models.DateField(default=timezone.now)
     expired_date = models.DateField()
 
-    def check_exipred(self):
-        if self.post_at:
+    def check_expired(self):
+        if self.start_at and self.expired_date:
             now = datetime.utcnow().replace(tzinfo=utc)
-            timediff = now - self.expired_date
-            return timediff.total_seconds()
+            expired = datetime(self.expired_date.year, self.expired_date.month, self.expired_date.day)
+            return now.now() < expired.now()
 
     def __str__(self) -> str:
-        return f"{self.name} (dp:{self.display})"
+        return f"{self.name} ({self.category.name})"
 
 class HomeworkDetail(models.Model):
     LOW = 'L'
