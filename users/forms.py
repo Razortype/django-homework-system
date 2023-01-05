@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Person, SignUserModel
+from .models import Person, SignUserModel, ForgotPasswordModel
 from django.contrib.auth.models import User
 
 from django.utils.translation import gettext_lazy as _
@@ -39,6 +39,30 @@ class SignUserForm(forms.ModelForm):
             'password1': _("Şifre"),
             'password2': _("Şifre (Tekrar)")
         }
+
+class ForgotPasswordForm(forms.ModelForm):
+    class Meta:
+        model = ForgotPasswordModel
+        fields = [
+            "password1",
+            "password2",
+        ]
+
+        widgets = {
+            "password1":forms.widgets.PasswordInput(),
+            "password2":forms.widgets.PasswordInput(),
+        }
+
+        labels = {
+            "password1": _("Yeni Şifre"),
+            "password2": _("Yeni Şifre (Tekrar)"),
+        }
+
+class TokenForm(forms.Form):
+    token = forms.CharField(label="Token", max_length=6)
+
+class EmailForm(forms.Form):
+    email = forms.EmailField(label="E-mail", max_length=100)
 
 class UpdateUserForm(forms.ModelForm):
     class Meta:
