@@ -1,18 +1,26 @@
-.alert__message{
+.alert__container{
     position: absolute;
     top: 10vh;
     right: 1vw !important;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 30%;
+    max-height: 20vh !important;
+    overflow: scroll;
+    overflow-x: hidden !important;
+
+}
+.alert__message{
     color: white !important;
     background-color: rgba(4,88,146,0.5)!important;
     border: none !important;
-    max-width: 30% !important;
 }
 
 @media (max-width: 767.98px) { 
-    .alert__message{
-        max-width: 80% !important;
-        max-height: 10vh;
-        overflow: scroll;
+    .alert__container{
+        min-width: 70% !important;
+        max-height: 10vh !important;
         font-size: 15px;
     }
  }
