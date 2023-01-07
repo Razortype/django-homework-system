@@ -84,6 +84,7 @@ class LoginView(View):
             return HttpResponseRedirect('/login')
         else:
             login(req, user)
+            messages.success(req, "Başarıyla giriş yapıldı")
 
         redirect_to = req.GET.get("next")
         if redirect_to is None:
@@ -105,6 +106,7 @@ class LogoutView(View):
             return HttpResponseRedirect('/login')
         else:
             logout(req)
+            messages.success(req, "Başarıyla çıkış yapıldı")
             return HttpResponseRedirect("/")
 
 
