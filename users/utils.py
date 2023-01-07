@@ -1,6 +1,6 @@
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
-from .models import CustomUser, UserToken
+from .models import CustomUser, Person, UserToken
 
 from random import randint
 import six
@@ -34,6 +34,17 @@ def check_password_valid(password1, password2):
         }
         
         return [name for name,res in tests.items() if res]
+
+def check_account_valid(username, email, github_url):
+    
+    tests = {
+        'Kullanıcı adı zaten kullanılmaktadır': CustomUser.objects.filter(username=username).exists(),
+        'Email zaten kullanılmaktadır': CustomUser.objects.filter(email=email).exists(),
+        'Github URL geçerli bir hesap değildir': not github_url.startswith('https://github.com/'),
+        'Github hesabı zaten kullanılmaktadır': Person.objects.filter(github_url=github_url).exists(),
+    }
+    
+    return [name for name,res in tests.items() if res]
 
 def generate_6_digit_number():
     range_start = 10**5

@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from posts.models import Post
 from .models import Person, CustomUser, SignUserModel, UserToken
 from .forms import LoginForm, UpdateUserForm, PersonForm, SignUserForm, TokenForm, ForgotPasswordForm, EmailForm
-from .utils import generate_token, EmailThread, check_password_valid, generate_forgot_token
+from .utils import generate_token, EmailThread, check_password_valid, check_account_valid, generate_forgot_token
 
 from django.contrib import messages 
 from django.contrib.auth.models import AnonymousUser
@@ -135,10 +135,17 @@ class Register(View):
 
         if user_form.is_valid() and person_form.is_valid():
             
-            errors = check_password_valid(user_form.cleaned_data['password1'],user_form.cleaned_data['password2'])
+            account_errors = check_account_valid(user_form.cleaned_data['username'], user_form.cleaned_data['email'], person_form.cleaned_data['github_url'])
 
-            if errors:
-                for error in errors:
+            if account_errors:
+                for error in account_errors:
+                    messages.error(req, error)
+                return HttpResponseRedirect('/register')
+
+            password_errors = check_password_valid(user_form.cleaned_data['password1'],user_form.cleaned_data['password2'])
+
+            if password_errors:
+                for error in password_errors:
                     messages.error(req, error)
                 return HttpResponseRedirect('/register')
             
