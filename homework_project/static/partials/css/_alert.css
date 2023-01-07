@@ -1,4 +1,6 @@
 .alert__container{
+    z-index: 998;
+    background: rgba(0,0,0,0.5);
     position: absolute;
     top: 10vh;
     right: 1vw !important;
@@ -6,12 +8,13 @@
     flex-direction: column;
     gap: 10px;
     max-width: 30%;
-    max-height: 20vh !important;
+    max-height: 100vh !important;
     overflow: scroll;
     overflow-x: hidden !important;
 
 }
 .alert__message{
+    z-index: 999;
     color: white !important;
     background-color: rgba(4,88,146,0.5)!important;
     border: none !important;
@@ -19,8 +22,9 @@
 
 @media (max-width: 767.98px) { 
     .alert__container{
+        padding-top: 0 !important;
         min-width: 70% !important;
-        max-height: 10vh !important;
+        max-height: 100vh !important;
         font-size: 15px;
     }
  }
