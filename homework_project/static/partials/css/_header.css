@@ -1,8 +1,12 @@
+.navbar {
+    z-index: 1001 !important;
+}
+
 .header__person__buttons{
   margin-left:auto;
 }
 
-.header__userInfo{
+.header__userInfo {
     border-radius:100%;
     width:40px ;
     height:40px;
