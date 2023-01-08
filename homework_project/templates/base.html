@@ -24,6 +24,9 @@
     <link rel="stylesheet" href="{% static 'partials/css/_footer.css' %}">
     <link rel="stylesheet" href="{% static 'partials/css/_alert.css' %}">
 
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon/favicon.ico' %}"/>
+
   </head>
   <body style="position: relative;">
 
@@ -41,6 +44,9 @@
       <script src="{% static js_file %}"></script>
       {% endfor %}
     {% endif %}
+
+    <!-- Alert Js Files -->
+    <script src={% static 'partials/js/_alert.js' %}></script>
 
     <!-- Optional J xavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
