@@ -34,7 +34,7 @@ class Person(models.Model):
     created_at = models.DateField(auto_now=True)
 
     def __str__(self) -> str:
-        return f"{self.name} {self.surname}"
+        return f"{self.name} {self.surname} ({self.user.username})"
 
 
 class UserToken(models.Model):

@@ -7,6 +7,8 @@ from .models import Category, Homework, HomeworkDetail, Post
 
 from .forms import PostForm
 
+from .utils import get_timestamp
+
 from django.contrib import messages
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -69,7 +71,7 @@ class HomeworkDetailById(LoginRequiredMixin, View):
             'title': f'WEB | Ödevler - {homework.name}',
             'homework' : homework,
             'details': HomeworkDetail.objects.filter(homework__id = homework.id),
-            'posts': Post.objects.filter(homework__id = homework.id),
+            'posts': sorted(Post.objects.filter(homework__id = homework.id), key=lambda person: get_timestamp(person.post_at)),
             'posted': False,
             'update_form': self.post_form(),
             'style_file': 'posts/css/homework_detail.css',
@@ -85,27 +87,43 @@ class HomeworkDetailById(LoginRequiredMixin, View):
 
         return HttpResponse(render(req, 'posts/homework_detail.html', content))
 
-    def post(self, req, *args, **kwargs):
+class HomeworkPostNew(View):
+
+    post_form = PostForm
+
+    def post(self, req, id, *args, **kwargs):
 
         user = req.user
-        form = self.post_form(req.POST)
+        person = Person.objects.get(pk=user.pk)
+        try:
+            homework = Homework.objects.get(pk=id) 
+        except Exception:
+            homework = None
 
-        if not isinstance(user, AnonymousUser):
+        if homework is None:
+            messages.warning(req, "Uygun ödev bulunamamıştır")
+            return HttpResponseRedirect('/homeworks')
 
-            if form.is_valid():
-                if form.cleaned_data['user'].id == user.id:
-                    # form.save()
-                    messages.info("Post başarıyla atıldı")
-            else:
-                messages.error("Post gönderilemedi")
-            
-            return HttpResponseRedirect(req.path_info)
-        
-        else:
-            messages.warning("Post atmak için önce giriş yapmalısın")
-            return HttpResponseRedirect('/login')
+        post_form = self.post_form(req.POST)
+        if not post_form.is_valid():
+            messages.warning(req, "Uygun veriler gönderilmedi")
+            return HttpResponseRedirect(f'homeworks/id/{id}')
 
-        '''
-        messages.info("Post send successfully")
-        return HttpResponseRedirect(RETURN_CURRENT_PAGE)
-        '''
+        if not post_form.cleaned_data['github_url'].startswith(person.github_url):
+            messages.warning(req, "Gönderilen ödev size ait olamak zorundadır")
+            return HttpResponseRedirect(f'homeworks/id/{id}')
+
+        post = Post.objects.create(person=person, homework=homework, post_url=post_form.cleaned_data['github_url'])
+        post.save()
+        messages.success(req, "Post başarıyla atıldı")
+        return HttpResponseRedirect(f'homeworks/id/{id}')
+
+class HomeworkPostUpdate(View):
+    def post(self, req, *args, **kwargs):
+
+        pass
+
+class HomeworkPostDelete(View):
+    def post(self, req, *args, **kwargs):
+
+        pass

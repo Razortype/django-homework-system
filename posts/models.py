@@ -61,11 +61,12 @@ class Post(models.Model):
     post_url = models.URLField(max_length=200)
     post_at = models.DateField(auto_now=True)
 
+
+    def __str__(self) -> str:
+        return f"{self.person.name} - {self.homework.name}"
+        
     def get_time_diff(self):
         if self.post_at:
             now = datetime.utcnow().replace(tzinfo=utc)
             timediff = now - self.time_posted
             return timediff.total_seconds()
-
-    def __str__(self) -> str:
-        return f"{self.person.name} - {self.homework.name}"
