@@ -1,4 +1,6 @@
 {% extends 'base.html' %} 
+
+{% load static %}
 {% block content %}
 
 <!-- Banner Section-->
@@ -77,7 +79,7 @@
         </ul>
       </article>
       <figure class="col-md-5 order-1 order-md-2" style="text-align: center;">
-        <img class="img-fluid mx-auto rounded-circle about__image" src="https://media.licdn.com/dms/image/D4D35AQFfNP0Qugc03Q/profile-framedphoto-shrink_400_400/0/1671109906169?e=1673107200&v=beta&t=CIhHnoslpebmfFZqY5RFYfzL4i_4wBPFqEgW82kSSF4" alt="photo" width="350" height="350">
+        <img class="img-fluid mx-auto rounded-circle about__image" src={% static 'partials/images/orkun.jpeg' %} alt="photo" width="350" height="350">
       </figure>
     </div>
 

@@ -1,63 +1,47 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.contrib.auth import authenticate, login, logout
 
 from posts.models import Post
 from .models import Person, CustomUser, SignUserModel, UserToken
 from .forms import LoginForm, UpdateUserForm, PersonForm, SignUserForm, TokenForm, ForgotPasswordForm, EmailForm
-from .utils import generate_token, EmailThread, check_password_valid, check_account_valid, generate_forgot_token
+from .utils import generate_token, email_sender, valid_checker, generate_forgot_token
 
 from django.contrib import messages 
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
-from django.template.loader import render_to_string
 
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_str, DjangoUnicodeDecodeError
-
-from django.core.mail import EmailMessage
-from django.conf import settings
+from django.utils.encoding import force_bytes, force_str
 
 def send_verification_email(user: CustomUser, req):
-    person = Person.objects.get(pk=user.pk)
-    current_site = get_current_site(req)
-    email_subject = "Email aktivasyon linki"
-    email_body = render_to_string("users/activate.html", {
-        'person': person,
-        'domain': current_site,
-        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        'token': generate_token.make_token(user),
-    })
 
-    email = EmailMessage(
-        subject = email_subject,
-        body = email_body,
-        from_email = settings.EMAIL_FROM_USER,
-        to=[user.email]
+    email_sender.send_email(
+        to = [user.email],
+        email_subject = "Email Aktivasyon URL",
+        html_file     = "users/activate.html",
+        content       = {
+            'person': Person.objects.get(pk=user.pk),
+            'domain': get_current_site(req),
+            'uid'   : urlsafe_base64_encode(force_bytes(user.pk)),
+            'token' : generate_token.make_token(user),
+        }
     )
-
-    EmailThread(email).start()
 
 def send_forgot_email(user: CustomUser, token, req):
-    person = Person.objects.get(pk=user.pk)
-    current_site = get_current_site(req)
-    email_subject = "Email şifre değiştirme"
-    email_body = render_to_string("users/forgot_email.html", {
-        'person': person,
-        'domain': current_site,
-        'token': token,
-    })
 
-    email = EmailMessage(
-        subject = email_subject,
-        body = email_body,
-        from_email = settings.EMAIL_FROM_USER,
-        to = [user.email]
+    email_sender.send_email(
+        to = [user.email],
+        email_subject = "Şifre Değiştirme Emaili",
+        html_file     = "users/forgot_email.html",
+        content       = {
+            'person': Person.objects.get(pk=user.pk),
+            'domain': get_current_site(req),
+            'token' : token,
+        }
     )
-    
-    EmailThread(email).start()
 
 # Authentication
 class LoginView(View):
@@ -68,12 +52,13 @@ class LoginView(View):
         form = self.form_class(data=req.POST)
 
         if not form.is_valid():
-            return HttpResponse("Form is not valid")
+            messages.warning(req, "Girilen form geçerli değildir")
+            return HttpResponseRedirect('/login')
 
-        username = form.cleaned_data["username"]
-        password = form.cleaned_data["password"]
-
-        user = authenticate(req, username=username, password=password)
+        user = authenticate(req,
+            username = form.cleaned_data["username"],
+            password = form.cleaned_data["password"]
+        )
 
         if user is None:
             messages.error(req, "Kullanıcı adı veya Şifre hatalı")
@@ -94,21 +79,22 @@ class LoginView(View):
             
 
     def get(self, req, *args, **kwargs):
-        form = self.form_class()
-        content = {'title': 'Login', 'style_file': 'users/css/login.css', 'form': form}
+        content = {
+            'title'     : 'Login',
+            'style_file': 'users/css/login.css',
+            'form'      : self.form_class()
+        }
         return HttpResponse(render(req, 'users/login.html', content))
 
 class LogoutView(View):
     def get(self, req, *args, **kwargs):
-        user = req.user
-        if isinstance(user, AnonymousUser):
+        if isinstance(req.user, AnonymousUser):
             messages.error(req, "Çıkış yapabilmek için önce giriş yapmanız gerekmektedir")
             return HttpResponseRedirect('/login')
         else:
             logout(req)
             messages.success(req, "Başarıyla çıkış yapıldı")
             return HttpResponseRedirect("/")
-
 
 class Register(View):
 
@@ -117,15 +103,14 @@ class Register(View):
 
     def get(self, req, *args, **kwargs):
         content = {
-            'user_form': self.user_form(),
+            'user_form'  : self.user_form(),
             'person_form': self.person_form(),
-            'style_file': 'users/css/register.css',
-            'js_files': [
+            'style_file' : 'users/css/register.css',
+            'js_files'   : [
                 'users/js/register.js',
                 'partials/js/_navbar.js'
-                ],
+            ],
         }
-
         return HttpResponse(render(req, 'users/register.html', content))
 
     def post(self, req, *args, **kwargs):
@@ -135,14 +120,21 @@ class Register(View):
 
         if user_form.is_valid() and person_form.is_valid():
             
-            account_errors = check_account_valid(user_form.cleaned_data['username'], user_form.cleaned_data['email'], person_form.cleaned_data['github_url'])
+            account_errors = valid_checker.check_account_valid(
+                username   = user_form.cleaned_data['username'],
+                email      = user_form.cleaned_data['email'],
+                github_url = person_form.cleaned_data['github_url']
+            )
 
             if account_errors:
                 for error in account_errors:
                     messages.error(req, error)
                 return HttpResponseRedirect('/register')
 
-            password_errors = check_password_valid(user_form.cleaned_data['password1'],user_form.cleaned_data['password2'])
+            password_errors = valid_checker.check_password_valid(
+                password1 = user_form.cleaned_data['password1'],
+                password2 = user_form.cleaned_data['password2']
+            )
 
             if password_errors:
                 for error in password_errors:
@@ -150,17 +142,17 @@ class Register(View):
                 return HttpResponseRedirect('/register')
             
             user = CustomUser.objects.create_user(
-                username=user_form.cleaned_data['username'],
-                email=user_form.cleaned_data['email'],
-                password=user_form.cleaned_data['password1'],
+                username = user_form.cleaned_data['username'],
+                email    = user_form.cleaned_data['email'],
+                password = user_form.cleaned_data['password1'],
             )
 
             person = Person(
-                user=user,
-                name=person_form.cleaned_data['name'].title(),
-                surname=person_form.cleaned_data['surname'].title(),
-                age=person_form.cleaned_data['age'],
-                github_url=person_form.cleaned_data['github_url'],
+                user       = user,
+                name       = person_form.cleaned_data['name'].title(),
+                surname    = person_form.cleaned_data['surname'].title(),
+                age        = person_form.cleaned_data['age'],
+                github_url = person_form.cleaned_data['github_url'],
             )
 
             person.save()
@@ -181,8 +173,7 @@ class ActivateUser(View):
         try:
             uid = force_str(urlsafe_base64_decode(uidb64))
             user = CustomUser.objects.get(pk=uid)
-        except Exception as e:
-            print(e)
+        except Exception:
             user = None
 
         if user and generate_token.check_token(user, token):
@@ -202,7 +193,12 @@ class ForgotPasswordGenerate(View):
     def get(self, req, *args, **kwargs):
         
         content = {
-            'form': self.email_form()
+            'title': 'Web | Şifremi unuttum',
+            'form' : self.email_form(),
+            'style_file': 'forgot_password_email.css',
+            'js_files' : [
+                'forgot_password_email.js'
+            ],
         }
         return HttpResponse(render(req, 'users/password_forgot_email.html', content))
 
@@ -233,9 +229,9 @@ class ForgotPasswordGenerate(View):
 
         if token is None:
             token = UserToken(user=user, token=generated_token)
-            token.save()
         else:
             token.token = generated_token
+        token.save()
 
         send_forgot_email(user, token.token, req)
 
@@ -249,7 +245,12 @@ class ForgotPasswordToken(View):
     def get(self, req, *args, **kwargs):
 
         content = {
-            'form': self.token_form()
+            'title': 'Web | Token',
+            'form' : self.token_form(),
+            'style_file': 'forgot_password_token.css',
+            'js_files' : [
+                'forgot_password_token.js'
+            ],
         }
         return HttpResponse(render(req, 'users/password_token.html', content))
 
@@ -296,7 +297,11 @@ class ForgotPassword(View):
         content = {
             'user': user,
             'person_content': Person.objects.get(user=token.user),
-            'form': self.forgot_form()
+            'form': self.forgot_form(),
+            'style_file': 'forgot_password_generator.css',
+            'js_files' : [
+                'forgot_password_generator.js'
+            ],
         }
 
         return HttpResponse(render(req, 'users/password_forgot.html', content))
@@ -314,7 +319,10 @@ class ForgotPassword(View):
             messages.error(req, "Girdiğiniz değerler forma uygun olmalıdır")
             return HttpResponseRedirect('/users/forgot-password/new')
 
-        errors = check_password_valid(forgot_form.cleaned_data['password1'], forgot_form.cleaned_data['password2'])
+        errors = valid_checker.check_password_valid(
+            password1 = forgot_form.cleaned_data['password1'],
+            password2 = forgot_form.cleaned_data['password2']
+        )
 
         if errors:
             for error in errors:
