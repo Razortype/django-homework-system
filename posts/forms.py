@@ -12,7 +12,5 @@ class HomeworkDetailForm(forms.ModelForm):
         model = HomeworkDetail
         fields = '__all__'
 
-class PostForm(forms.ModelForm):
-    class Meta:
-        model = Post
-        fields = ['person', 'post_url', 'post_url']
+class PostForm(forms.Form):
+    github_url = forms.URLField(label="Ödev (URL)", max_length=100)
