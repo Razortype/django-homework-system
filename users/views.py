@@ -81,8 +81,11 @@ class LoginView(View):
     def get(self, req, *args, **kwargs):
         content = {
             'title'     : 'Login',
+            'form'      : self.form_class(),
             'style_file': 'users/css/login.css',
-            'form'      : self.form_class()
+            'js_files': [
+                'partials/js/_navbar.js'
+            ]
         }
         return HttpResponse(render(req, 'users/login.html', content))
 
@@ -352,7 +355,8 @@ class Home(View):
         content = {
             'style_file': 'partials/css/home.css',
             'js_files': [
-                'partials/js/_header.js'
+                'partials/js/_header.js',
+                'partials/js/_navbar.js'
             ],
         }
 
@@ -375,6 +379,9 @@ class Profile(LoginRequiredMixin, View):
         content = {
             'title': 'WEB | Profil',
             'posts': Post.objects.filter(person__user__id = user.id),
+            'js_files': [
+                'partials/js/_navbar.js'
+            ]
         }
 
         if not isinstance(user, AnonymousUser):

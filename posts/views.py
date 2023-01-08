@@ -24,7 +24,10 @@ class HomeworkList(LoginRequiredMixin, View):
             'title': 'WEB | Ödevler',
             'categories': Category.objects.all(),
             'homeworks': Homework.objects.all(),
-            'style_file': 'posts/css/homework_list.css'
+            'style_file': 'posts/css/homework_list.css',
+            'js_files': [
+                'partials/js/_navbar.js'
+            ]
         }
 
         if not isinstance(user, AnonymousUser):
