@@ -15,7 +15,7 @@ blueNav.map((blue)=>{
 })
 
 transparentNav.map((tr)=>{
-    if(url==="http://127.0.0.1:8000/"){
+    if(url==="http://127.0.0.1:8000/" || "https://ankaweb.dev/" || "https://www.ankaweb.dev/" ){
         makeTransparentByScroll(375)
     }
     else if(url.includes(tr)){
