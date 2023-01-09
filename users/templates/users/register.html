@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
 <div class="login__container" style="min-height: 100vh; background-size: cover;
-background-image: url('https://mdbootstrap.com/img/Photos/Others/images/76.jpg');
+background-image: url('{% static 'partials/images/background1.jpg' %}');
 background-position: center center;
 display: flex;
 align-items: center;

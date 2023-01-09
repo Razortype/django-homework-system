@@ -8,7 +8,7 @@
     class="banner"
     style="
     background-size: cover;
-    background-image: url('https://mdbootstrap.com/img/Photos/Others/images/76.jpg');
+    background-image: url('{% static 'partials/images/background1.jpg' %}');
     background-position: center center;
   "
 >
@@ -33,11 +33,11 @@
             Front-end teknolojileri gelecek için çok önem arz etmektedir.</p>
           <h5>Kullanılan Teknolojiler :</h5>
           <ul class="list-inline">
-            <li class="list-inline-item"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" /></li>
-            <li class="list-inline-item"><img src="https://cdn.freebiesupply.com/logos/large/2x/react-1-logo-png-transparent.png" /></li>
-            <li class="list-inline-item"><img src="https://w7.pngwing.com/pngs/201/90/png-transparent-logo-html-html5.png"/></li>
-            <li class="list-inline-item"><img src="https://cdn.pixabay.com/photo/2017/08/05/11/16/logo-2582747_1280.png"></li>
-            <li class="list-inline-item"><img src="https://brandslogos.com/wp-content/uploads/thumbs/bootstrap-logo-vector.svg"></li>
+            <li class="list-inline-item"><img src={% static 'partials/images/tech-js.png' %} /></li>
+            <li class="list-inline-item"><img src={% static 'partials/images/tech-react.png' %} /></li>
+            <li class="list-inline-item"><img src={% static 'partials/images/tech-html.png' %} /></li>
+            <li class="list-inline-item"><img src={% static 'partials/images/tech-css.webp' %} /></li>
+            <li class="list-inline-item"><img src={% static 'partials/images/tech-bootstrap.svg' %} /></li>
           </ul>
         </div>  
         </article>
@@ -49,11 +49,11 @@
           </p>
           <h5>Kullanılan Teknolojiler :</h5>
           <ul class="list-inline">
-            <li class="list-inline-item"><img src="https://brandslogos.com/wp-content/uploads/images/large/java-logo-1.png" /></li>
-            <li class="list-inline-item"><img src="https://dz2cdn1.dzone.com/storage/temp/12434118-spring-boot-logo.png" /></li>
-            <li class="list-inline-item"><img src="https://assets.stickpng.com/images/58480887cef1014c0b5e48ec.png"/></li>
-            <li class="list-inline-item"><img src="https://assets.stickpng.com/images/584815fdcef1014c0b5e497a.png"></li>
-            <li class="list-inline-item"><img src="https://apps.odoo.com/apps/icon_image?module_id=37657"></li>
+            <li class="list-inline-item"><img src={% static 'partials/images/tech-java.png' %} /></li>
+            <li class="list-inline-item"><img src={% static 'partials/images/tech-spring.png' %} /></li>
+            <li class="list-inline-item"><img src={% static 'partials/images/tech-jpa.png' %} /></li>
+            <li class="list-inline-item"><img src={% static 'partials/images/tech-postgres.png' %} /></li>
+            <li class="list-inline-item"><img src={% static 'partials/images/tech-api.png' %} /></li>
           </ul>
         </article>
       </div>
@@ -72,10 +72,10 @@
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab exercitationem nostrum quidem id facere blanditiis ad dolorum eius incidunt qui.
         </p>
         <ul class="list-inline">
-          <li class="list-inline-item"> <a href="https://github.com/Razortype" target="_blank"> <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="github-logo" width="30" height="30"></a> </li>
-          <li class="list-inline-item"> <a href="https://www.linkedin.com/in/orkun-kurul/" target="_blank"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/640px-LinkedIn_logo_initials.png" alt="linkedin-logo" width="30" height="30"></a>
-          <li class="list-inline-item"> <a href="https://www.youtube.com/@orkunkurul2770" target="_blank"> <img src="https://www.iconpacks.net/icons/2/free-youtube-logo-icon-2431-thumb.png" alt="linkedin-logo" width="30" height="30"></a>
-          <li class="list-inline-item"> <a href="mailto:orkun.kurul@gmail.com" target="_blank"> <img src="https://cdn-icons-png.flaticon.com/512/5968/5968534.png" alt="linkedin-logo" width="30" height="30"></a>
+          <li class="list-inline-item"> <a href="https://github.com/Razortype" target="_blank"> <img src={% static 'partials/images/social-github.png' %} alt="github-logo" width="30" height="30"></a> </li>
+          <li class="list-inline-item"> <a href="https://www.linkedin.com/in/orkun-kurul/" target="_blank"> <img src={% static 'partials/images/social-linkedin.webp' %} alt="linkedin-logo" width="30" height="30"></a>
+          <li class="list-inline-item"> <a href="https://www.youtube.com/@orkunkurul2770" target="_blank"> <img src={% static 'partials/images/social-youtube.png' %} alt="youtube-logo" width="30" height="30"></a>
+          <li class="list-inline-item"> <a href="mailto:orkun.kurul@gmail.com" target="_blank"> <img src={% static 'partials/images/social-gmail.png' %} alt="gmail-logo" width="30" height="30"></a>
         </ul>
       </article>
       <figure class="col-md-5 order-1 order-md-2" style="text-align: center;">
@@ -93,10 +93,10 @@
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab exercitationem nostrum quidem id facere blanditiis ad dolorum eius incidunt qui.
         </p>
         <ul class="list-inline">
-          <li class="list-inline-item"> <a href="https://www.github.com/fatihbahadir" target="_blank"> <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="github-logo" width="30" height="30"></a> </li>
-          <li class="list-inline-item"> <a href="https://www.linkedin.com/in/fatihbahadir/" target="_blank"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/640px-LinkedIn_logo_initials.png" alt="linkedin-logo" width="30" height="30"></a>
-          <li class="list-inline-item"> <a href="https://www.youtube.com/@fatihbahadr5916" target="_blank"> <img src="https://www.iconpacks.net/icons/2/free-youtube-logo-icon-2431-thumb.png" alt="linkedin-logo" width="30" height="30"></a>
-          <li class="list-inline-item"> <a href="mailto:hunkarhyme@gmail.com" target="_blank"> <img src="https://cdn-icons-png.flaticon.com/512/5968/5968534.png" alt="linkedin-logo" width="30" height="30"></a>
+          <li class="list-inline-item"> <a href="https://www.github.com/fatihbahadir" target="_blank"> <img src={% static 'partials/images/social-github.png' %} alt="github-logo" width="30" height="30"></a> </li>
+          <li class="list-inline-item"> <a href="https://www.linkedin.com/in/fatihbahadir/" target="_blank"> <img src={% static 'partials/images/social-linkedin.webp' %} alt="linkedin-logo" width="30" height="30"></a>
+          <li class="list-inline-item"> <a href="https://www.youtube.com/@fatihbahadr5916" target="_blank"> <img src={% static 'partials/images/social-youtube.png' %} alt="youtube-logo" width="30" height="30"></a>
+          <li class="list-inline-item"> <a href="mailto:hunkarhyme@gmail.com" target="_blank"> <img src={% static 'partials/images/social-gmail.png' %} alt="gmail-logo" width="30" height="30"></a>
         </ul>
       </article>
       <figure class="col-md-5 order-1" style="text-align: center;">
