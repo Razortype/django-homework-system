@@ -21,7 +21,7 @@
   <div id="main">
     <button class="openbtn " onclick="openNav()">☰ Ödev Tipi</button>  
         {% for homework in homeworks %}
-        <a href="/homeworks/id/{{ homework.id }}" class="homework__card card mt-5 p-4" style="position: relative;">
+        <a href="/homeworks/id/{{ homework.id }}/detail" class="homework__card card mt-5 p-4" style="position: relative;">
           {% if homework.category.name %}
           <span class="bg-primary text-light rounded p-2 small" style="position: absolute; top: -17.6px; left: 10px;"> {{ homework.category.name }} </span>
           {% endif %}
