@@ -1,4 +1,99 @@
-.list-group .active {
-    background-color: #5bc0de;
-    border: 1px solid #5bc0de;
-}
+
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    background: #eff6f6; 
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+  
+  .aside__active{
+    font-weight: 800;
+  }
+  .sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    color: #374772;
+    display: block;
+    transition: 0.2s;
+  }
+  
+  .sidebar a:hover {
+    background-color: #446E9C;
+    color: white;
+  }
+
+  
+  .sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+
+  .closebtn:hover {
+    background-color: transparent !important;
+    color:#446E9C !important;
+  }
+  
+  .openbtn {
+    font-size: 1.1rem;
+    cursor: pointer;
+    background-color: #446E9C;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 0.25rem;
+    transition: 0.3s;
+  }
+  
+  .openbtn:active {
+    transform: scale(1.01);
+  }
+  
+  #main {
+    transition: margin-left .5s;
+    padding: 16px;
+  }
+  
+  /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+    .sidebar {
+        padding-top: 15px;
+    }
+    .sidebar a {font-size: 18px;}
+  }
+
+  .bg-blue{
+    background: #22313f; 
+    color: #e4f1fe;;
+  }
+
+  .homework__card{
+    transition: 0.3s;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+
+  .homework__card:focus,:hover,:active{
+    text-decoration: none !important;
+  }
+
+  .homework__card:hover{
+    transform: scale(1.02);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+  
+  .homework__date{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+  }

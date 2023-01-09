@@ -3,51 +3,58 @@
 {% load post_extras %}
 
 {% block content %}
-<div class="container-fluid my-5">
+<div style="margin-top: 56px; width: 100%;" class="pb-5" >
+<div class="container">
+<div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <a href="/homeworks" class="{% if request.path == '/homeworks' %}aside__active{% endif %}">Hepsi</a>
+
+    {% for category in categories %}
+    <a href="/homeworks/{{ category.name }}" class="{% if request.path|endswith:category.name %}aside__active{% endif %}">
+        {{ category.name }}
+    </a>
+    {% endfor %}
+                
+
+  </div>
+  
+  <div id="main">
+    <button class="openbtn " onclick="openNav()">☰ Ödev Tipi</button>  
+        {% for homework in homeworks %}
+        <a href="/homeworks/id/{{ homework.id }}/detail" class="homework__card card mt-5 p-4" style="position: relative;">
+          {% if homework.category.name %}
+          <span class="bg-primary text-light rounded p-2 small" style="position: absolute; top: -17.6px; left: 10px;"> {{ homework.category.name }} </span>
+          {% endif %}
+          <h3 class="font-bold text-dark text-center" style="text-transform: uppercase; letter-spacing: 1px;"> {{ homework.name }} </h3>
+          <p class="text-primary"> {{ homework.description }} </p>
+
+          <div class="homework__date text-muted small">
+            <p><img src="https://www.pngmart.com/files/8/Schedule-Transparent-Images-PNG.png" width="20" height="20" />  {{ homework.start_at }} </p>
+            <p><img src="https://www.pngmart.com/files/17/Caution-Warning-Transparent-Background.png" width="20" height="20" />  {{ homework.expired_date }} </p>
+          </div>
+        </a>
+
+        {% endfor %}
+
+
+</div>
+</div>
+
+
+  <script>
+    function openNav() {
+      if(window.innerWidth<576){
+      document.getElementById("mySidebar").style.width = "100%";
+      }
+      else{
+        document.getElementById("mySidebar").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+      }
+    }
     
-    <div class="row mx-3">
-
-        
-        <div class="col-sm-3 mt-5">
-            <div class="title p-2 rounded-sm bg-dark text-light">
-                <h3 class="text-center mb-0">Ödev Tipi</h3>
-            </div>
-            <div class="list-group">
-                <a href="/homeworks" class="list-group-item list-group-item-action {% if request.path == '/homeworks' %}active{% endif %}">Hepsi</a>
-                
-                {% for category in categories %}
-                <a href="/homeworks/{{ category.name }}" class="list-group-item list-group-item-action {% if request.path|endswith:category.name %}active{% endif %}">
-                    {{ category.name }}
-                </a>
-                {% endfor %}
-            </div>
-        </div>
-        
-        <div class="col-sm-9">
-            
-            <div class="list-group">
-                
-                {% for homework in homeworks %}
-                <a href="/homeworks/id/{{ homework.id }}" class="list-group-item list-group-item-action flex-column align-items-start bg-light">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">{{ homework.name }}</h5>
-                        <span class="badge badge-info pt-2">{{ homework.category.name }}</span>
-                    </div>
-                    <p class="mb-1 mt-3">{{ homework.description }}</p>
-                    <hr>
-                    <div class="d-flex">
-                        <p>Başlama Tarihi : {{ homework.start_at }}</p>
-                        <hr>
-                        <p>Bitiş Tarihi : {{ homework.expired_date }}</p>
-                    </div>
-                </a>
-                {% endfor %}
-
-            </div>
-            
-        </div>
-        
-    </div>
-        
-    </div>
-{% endblock %}
+    function closeNav() {
+      document.getElementById("mySidebar").style.width = "0";
+      document.getElementById("main").style.marginLeft= "0";
+    }
+    </script>
+  {% endblock %}
