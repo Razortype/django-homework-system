@@ -63,6 +63,34 @@
 
     <div class="container mt-5">
 
+        <div class="container py-5 mb-5 bg-dark text-white">
+        {% if personpost %}
+
+            <h3>Senin Post'un</h3>
+            <p>
+                {% now "j F Y" %}
+                <small>(today)</small>
+            </p>
+            
+            <form action={% url 'post_update' homework.pk personpost.pk %} method='POST'>
+                {% csrf_token %}
+                {{ form.as_table }}
+                <input name="updte" type="submit" value="Güncelle" class="btn btn-warning btn-block mt-3">
+            </form>
+            <button class="btn btn-danger mt-3" onclick="document.location.href='{% url 'post_delete' homework.pk personpost.pk %}'">Postu Sil</button>
+        
+        {% else %}
+
+            <h3>Henüz Ödevini paylaşmadın</h3>
+            <form action={% url 'post_new' homework.pk %} method='POST'>
+                {% csrf_token %}
+                {{ form.as_table }}
+                <input name="submit" type="submit" value="Gönder" class="btn btn-primary btn-block mt-3">
+            </form>
+            
+        {% endif %}
+        </div>
+
         <div class="title p-2 rounded-sm bg-dark text-light">
             <h2 class="text-left">Postlar :</h2>
         </div>
@@ -79,38 +107,15 @@
             </thead>
             <tbody>
 
-                {% if not posted %}
-                    <th scope="row"> - </th>
-                    <td>{{ person.name }} {{ person.surname }}</td>
-                    <td> {% now "j F Y" %} <small class="text-muted">( today )</small> </td>
-                    <form action="" method="post">
-                        <td> 
-                            <form action="" method="post" id="update-post-form" class="d-flex flex-column w-50 mx-auto">
-                                {% csrf_token %}
-                                {{ update_form.github_url }} 
-                            </form>
-                        </td>
-                        <td> <button class="btn btn-light" form="update-post-form" type="submit" value="Submit">Submit</button> </td>
-                    </form>
-
-
-                {% endif %}
                 {% for post in posts %}
                 <tr>
                     <th scope="row">{{ forloop.counter }}</th>
                     <td>{{ post.person.name }} {{ post.person.surname }}</td>
                     <td>{{ post.post_at }}</td>
                     <td> <a href="{{ post.post_url }}" class="btn btn-link pl-0">{{ post.post_url }}</a> </td>
-                    {% if post.person == person %}
-                    <td>
-                        <button class="btn btn-light">Update</button>
-                        <button class="btn btn-secondary">Delete</button>
-                    </td>
-                    {% else %}
                     <td>
                         <button class="btn btn-info" onclick="document.location.href='{{ person.github_url }}'">GitHub Profili</button>
                     </td>
-                    {% endif %}
                 </tr>
                 {% endfor %}
             </tbody>
