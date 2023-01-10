@@ -14,3 +14,106 @@
 #accordion .card-body pre {
     color: #f8f9fa;
 }
+
+.border-right{
+    border-right: 1px solid;
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid #d2d2dc;
+    border-radius: 0.25rem;
+}
+
+.card .card-title {
+    color: #000000;
+    margin-bottom: 0.625rem;
+    text-transform: capitalize;
+    font-size: 1.475rem;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: .7px;
+}
+
+.table thead th{
+    border-top: 0;
+    border-bottom-width: 1px;
+    font-weight: 500;
+    font-size: .875rem;
+    text-transform: uppercase;
+}
+
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+}
+
+.badge {
+    border-radius: 0;
+    font-size: 13px;
+    line-height: 1;
+    padding: .375rem .5625rem;
+    font-weight: normal;
+}
+
+.table td {
+    font-size: 0.875rem;
+}
+
+
+.input__label{
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.paper{
+    position: relative;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.paper::before {
+    content: '';
+    width: 2px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 40px;
+    background-color: rgba(255,0,0,0.6);
+ }
+
+.pattern {
+    height: 100%;
+    background-image: repeating-linear-gradient(white 0px, white 24px, teal 25px);
+}
+
+.content {
+    padding-top: 6px;
+    padding-left: 56px;
+    padding-right: 16px;
+    line-height: 25px;
+    letter-spacing: 1px;
+    word-spacing: 5px;
+  }
+.content>p{
+    font-size: 19px;
+}
+
+.card{
+    position: relative;
+}
+.card__icon{
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+
+}

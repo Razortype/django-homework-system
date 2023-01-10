@@ -27,7 +27,7 @@ Bunu gönderilen mesajın türü için kullanabilirsin
     {% if messages %}
     <div class="alert__container pt-3" >
     {% for message in messages %}
-    <div class="alert alert__message alert-danger alert-dismissible fade show row" role="alert">
+    <div class="alert main__alert alert__message alert-danger alert-dismissible fade show row" role="alert">
         <div class="col-sm-2 col-2 d-flex align-items-center justify-content-center">
             {% if DEFAULT_MESSAGE_LEVELS.ERROR  == message.level %}
 

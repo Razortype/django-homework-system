@@ -97,3 +97,29 @@
     align-items: center;
     justify-content: center;
   }
+
+  .homework__category{
+    position: relative;
+    transition: 0.5s ease-in-out !important;
+  }
+
+  .homework__category::after{
+    content: '';
+    width: 10%;
+    border-bottom: solid 3px var(--line-color);
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: rotate(90deg);
+    z-index: 1;
+    transition: .5s ease-in-out;
+  }
+
+  .homework__category:hover {
+    color: var(--line-color) !important;
+  }
+
+  .homework__category:hover:after {
+    left: 80px !important;
+    transform: rotate(-90deg);
+  }

@@ -7,12 +7,14 @@
 <div class="container">
 <div id="mySidebar" class="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-    <a href="/homeworks" class="{% if request.path == '/homeworks' %}aside__active{% endif %}">Hepsi</a>
+    <a href="/homeworks" class="{% if request.path == '/homeworks' %}aside__active{% endif %} homework__category">Hepsi</a>
 
     {% for category in categories %}
-    <a href="/homeworks/{{ category.name }}" class="{% if request.path|endswith:category.name %}aside__active{% endif %}">
+
+    <a href="/homeworks/{{ category.name }}" class="{% if request.path|endswith:category.name %}aside__active{% endif %} homework__category" style="--line-color: #{{ category.color }};">
         {{ category.name }}
     </a>
+
     {% endfor %}
                 
 
@@ -20,10 +22,13 @@
   
   <div id="main">
     <button class="openbtn " onclick="openNav()">☰ Ödev Tipi</button>  
+        
+        {% if homeworks %}
+    
         {% for homework in homeworks %}
         <a href="/homeworks/id/{{ homework.id }}/detail" class="homework__card card mt-5 p-4" style="position: relative;">
           {% if homework.category.name %}
-          <span class="bg-primary text-light rounded p-2 small" style="position: absolute; top: -17.6px; left: 10px;"> {{ homework.category.name }} </span>
+          <span class=" text-light rounded p-2 small" style="background-color: #{{ homework.category.color }}; position: absolute; top: -17.6px; left: 10px;"> {{ homework.category.name }} </span>
           {% endif %}
           <h3 class="font-bold text-dark text-center" style="text-transform: uppercase; letter-spacing: 1px;"> {{ homework.name }} </h3>
           <p class="text-primary"> {{ homework.description }} </p>
@@ -36,6 +41,11 @@
 
         {% endfor %}
 
+        {% else %}
+
+        <!-- Aynı şeyi buraya da yapar mısın -->
+
+        {% endif %}
 
 </div>
 </div>
