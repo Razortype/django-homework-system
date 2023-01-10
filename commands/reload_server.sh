@@ -4,9 +4,6 @@
 source .env
 set -e
 
-# Check current user validation
-echo $SYSTEM_USER_PASSWORD | sudo orkun
-
 echo " ------------------------------------ "
 echo "|                                    |"
 echo "|    Program Registered As User      |"
@@ -26,9 +23,9 @@ echo "|                                    |"
 echo " ------------------------------------ "
 
 # Restart running services
-sudo systemctl restart gunicorn
-sudo systemctl restart nginx
-sudo nginx -t
+echo $SYSTEM_USER_PASSWORD | sudo -S systemctl restart gunicorn
+echo $SYSTEM_USER_PASSWORD | sudo -S systemctl restart nginx
+echo $SYSTEM_USER_PASSWORD | sudo -S nginx -t
 
 echo " ------------------------------------ "
 echo "|                                    |"
