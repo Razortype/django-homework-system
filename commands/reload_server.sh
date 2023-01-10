@@ -11,10 +11,7 @@ echo "|                                    |"
 echo " ------------------------------------ "
 
 # Send pull request
-git pull origin master <<EOF
-$GITHUB_USERNAME
-$GITHUB_PASSWORD
-EOF
+git pull https://<$GITHUB_PASSWORD>:x-oauth-basic@github.com/Razortype/django-homework-system.git
 
 echo " ------------------------------------ "
 echo "|                                    |"
