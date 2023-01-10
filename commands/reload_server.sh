@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Importing .env source and config
-source ../.env
+source .env
 set -e
 
 # Check current user validation
