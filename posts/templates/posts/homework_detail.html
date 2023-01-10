@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load post_extras %}
+
 {% block content %}
 
 <div class="mb-5 pb-5">
@@ -52,7 +54,7 @@
                         </h5>                        
 
                     <div class="card-text">
-                     {{ detail.detail_description }}
+                     {{ detail.detail_description|markdown|safe }}
                     </div>
                 </div>
             {% endfor %}
