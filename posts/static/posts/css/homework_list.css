@@ -118,8 +118,3 @@
   .homework__category:hover {
     color: var(--line-color) !important;
   }
-
-  .homework__category:hover:after {
-    left: 80px !important;
-    transform: rotate(-90deg);
-  }
