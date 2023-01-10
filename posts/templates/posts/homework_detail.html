@@ -40,20 +40,16 @@
             {% for detail in details %}
                 <div class="card p-3 mt-4">
                         <span class="card__icon"><img src="https://www.freeiconspng.com/thumbs/details-icon/details-icon-png-cc-by-3-0--it-1.png" width="30" height="30"></span>
+                        
+                        <h5 class="text-dark"> {{ detail.detail_name }}
                         {% if detail.detail_risk == 'N' %}
-                            <h5 class="text-primary"> {{ detail.detail_name }}
-                                 <span class="badge badge-primary rounded">Normal</span> 
-                            </h5>
-
+                            <span class="badge badge-warning rounded">Normal</span>
                         {% elif detail.detail_risk == "L" %}
-                            <h5 class="text-secondary"> {{ detail.detail_name }}
-                                <span class="badge badge-secondary rounded">Low</span> 
-                            </h5>
+                            <span class="badge badge-info rounded">Low</span>
                         {% else %}
-                        <h5 class="text-danger"> {{ detail.detail_name }}
                             <span class="badge badge-danger rounded">High</span> 
-                        </h5>                        
                         {% endif %}
+                        </h5>                        
 
                     <div class="card-text">
                      {{ detail.detail_description }}
@@ -77,7 +73,7 @@
                 {% for field in form %}
                 <div class="form-group mt-3">
                     <label class="input__label" for="{{  "id_"|add:field.name }}">{{ field.label }}:</label>
-                    <input class="form-control" aria-describedby="inputHelp" type="url" maxlength="100" name="{{ field.name }}" required id="{{  "id_"|add:field.name }}">
+                    <input class="form-control" aria-describedby="inputHelp" type="url" maxlength="100" name="{{ field.name }}" required id="{{  "id_"|add:field.name }}" value="{{ personpost.post_url }}">
                     <small id="inputHelp" class="form-text text-secondary">
                         Göndermiş olduğunuz ödevi güncellemek için yeni ödev adresinin url ini giriniz.
                     </small>
