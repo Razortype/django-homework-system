@@ -2,34 +2,27 @@
 
 {% block content %}
 
-<div class="mb-5 pb-5">
+<div class="mb-5 py-5">
 
     <!-- MAIN AREA -->
-    <div class="container my-5">
-        <div id="homework-info">
-            <div class="title p-2 rounded-sm bg-dark text-light">
-                <h2 class="text-center">{{ homework.name }}</h2>
-            </div>
-            <div class="row">
-                <div class="col-sm-6 pr-0">
-                    <div class="list-group-item bg-light">
-                        <p class="blockquote">{{ homework.description }}</p>
-                    </div>
-                </div>
-                <div class="col-sm-6 pl-0">
-                    <ul class="list-group text-dark">
-                        <h3>Category</h3>
-                        <li class="list-group-item bg-light">Alan : {{ homework.category.name }}</li>
-                        <li class="list-group-item bg-light">Color : {{ homework.category.color }}</li>
-                        <li class="list-group-item bg-light">description : {{ homework.category.description }}</li>
-                        <h3>Homework</h3>
-                        <li class="list-group-item bg-light">Oluşturulma Tarihi : {{ homework.created_at }}</li>
-                        <li class="list-group-item bg-light">Ödev Başlangıcı : {{ homework.start_at }}</li>
-                        <li class="list-group-item bg-light">Ödev Sonu : {{ homework.expired_date }}</li>
-                    </ul>
-                </div>
-            </div>
+
+    <div class="container mt-5">
+       <div class="card shadow-sm">
+        <div class="card-header">
+            <h3 class="card-title">{{ homework.name }}</h3>
+            <p class="card-subtitle text-muted text-center" style="margin-top: -15px;font-family: monospace;">{{ homework.category }} </p>
         </div>
+        <div class="card-body">
+            <p class="card-text" style="font-family: Arial, Helvetica, sans-serif;">
+                {{ homework.description }}
+            </p>
+        </div>
+        <div class="card-footer">
+            <p><img class="mr-1" src="https://www.pngmart.com/files/8/Schedule-Transparent-Images-PNG.png" width="25" height="25" /> Başlangıç: <strong class="text-success"> {{ homework.start_at }}  </strong> </p>
+            <p><img class="mr-1" src="https://www.pngmart.com/files/17/Caution-Warning-Transparent-Background.png" width="25" height="25" /> Son Tarih:<strong class="text-danger">  {{ homework.expired_date }} </strong>  </p>
+        </div>
+
+       </div>
     </div>
 
 
