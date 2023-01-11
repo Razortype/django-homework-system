@@ -10,7 +10,9 @@ urlpatterns = [
 
     ##################### Handler Test URLs #####################
     path('handler404', views.handler404Test, name="handler404Test"),
-    path('handler500', views.handler500Test, name="handler500Test")
+    path('handler500', views.handler500Test, name="handler500Test"),
+
+    path('server-commands', views.ServerController.as_view(), name="sw_controller"),
 ]
 
 
