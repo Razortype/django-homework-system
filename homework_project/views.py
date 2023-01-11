@@ -1,5 +1,9 @@
-from django.http import HttpResponse
+from django.contrib import messages 
+from django.views import View
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+
+from .utils import get_commands, run_sh
 
 def handler404(request, exception):
 
@@ -42,3 +46,40 @@ def handler500Test(request):
         ]
     }
     return HttpResponse(render(request, 'partials/_500.html', content))
+
+class ServerController(View):
+
+    def get(self, req, *args, **kwargs):
+
+        if not req.user.is_superuser:
+            messages.warning(req, "Bu sayfaya giriş izininiz bulunmamaktadır")
+            return HttpResponseRedirect('/')
+
+        content = {
+            'commands': get_commands().keys()
+        }
+        return HttpResponse(render(req, 'commands.html', content))
+
+    def post(self, req, *args, **kwargs):
+        
+        if not req.user.is_superuser:
+            messages.warning(req, "Bu sayfada işlem izininiz bulunmamaktadır")
+            return HttpResponseRedirect('/')
+        
+        commands = get_commands()
+        command_name = None
+
+        for name in commands.keys():
+            if name in req.POST:
+                command_name = name
+
+        if command_name is None:
+            messages.error(req, "Komut bulunamadı")
+            return HttpResponseRedirect('/server-commands')
+
+        sh_file = commands[command_name]
+        run_sh(sh_file)
+
+        messages.success(req, "Komut başarıyla aktive edildi.")
+        return HttpResponseRedirect('/server-commands')
+        
