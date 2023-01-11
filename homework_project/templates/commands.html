@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if commands %}
+<div class="container mt-5">
+    <form method="post">
+        {% csrf_token %}
+        {% for command_name in commands %}
+        <input type='submit' name="{{ command_name }}" value="{{ command_name }}" />
+        {% endfor %}
+    </form>
+</div>
+{% endif %}
+
+{% endblock content %}
