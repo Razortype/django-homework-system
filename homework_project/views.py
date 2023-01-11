@@ -1,7 +1,9 @@
-from django.contrib import messages 
 from django.views import View
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+
+from django.contrib import messages 
+from django.contrib.auth.models import AnonymousUser
 
 from .utils import get_commands, run_sh
 
@@ -62,7 +64,7 @@ class ServerController(View):
 
     def post(self, req, *args, **kwargs):
         
-        if not req.user.is_superuser:
+        if not req.user.is_superuser and not isinstance(req.user, AnonymousUser):
             messages.warning(req, "Bu sayfada işlem izininiz bulunmamaktadır")
             return HttpResponseRedirect('/')
         
