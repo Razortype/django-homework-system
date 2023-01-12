@@ -49,6 +49,7 @@ def handler500Test(request):
     }
     return HttpResponse(render(request, 'partials/_500.html', content))
 
+# Server Controller View Created
 class ServerController(View):
 
     def get(self, req, *args, **kwargs):
