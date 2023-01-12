@@ -11,7 +11,7 @@ echo "|                                    |"
 echo " ------------------------------------ "
 
 # Send pull request
-git pull https://$GITHUB_PASSWORD:x-oauth-basic@github.com/Razortype/django-homework-system.git
+git pull --rebase https://$GITHUB_PASSWORD:x-oauth-basic@github.com/Razortype/django-homework-system.git
 
 echo " ------------------------------------ "
 echo "|                                    |"
