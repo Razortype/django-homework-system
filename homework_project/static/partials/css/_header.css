@@ -61,3 +61,16 @@
     transition-timing-function:ease-in;
     transition:all 0.3s;
 }
+
+.dropdown-menu{
+    background-color: #446E9C;
+}
+
+.dropdown-item{
+    color: white !important;
+}
+
+.dropdown-item:hover{
+    background-color: #fdc6af;
+    color: black !important;
+}
