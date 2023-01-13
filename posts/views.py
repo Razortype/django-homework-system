@@ -7,7 +7,7 @@ from .models import Category, Homework, HomeworkDetail, Post
 
 from .forms import PostForm
 
-from .utils import get_timestamp
+from .utils import get_timestamp, seperate_homeworks
 
 from django.contrib import messages
 from django.contrib.auth.models import AnonymousUser
@@ -22,10 +22,13 @@ class HomeworkList(LoginRequiredMixin, View):
 
     def get(self, req, *args, **kwargs):
         user = req.user
+
+        enabled_homeworks, disabled_homeworks = seperate_homeworks(Homework.objects.all())
+
         content = {
             'title': 'WEB | Ödevler',
             'categories': Category.objects.all(),
-            'homeworks': Homework.objects.all(),
+            'homeworks': enabled_homeworks + disabled_homeworks,
             'style_file': 'posts/css/homework_list.css',
             'js_files': [
                 'partials/js/_navbar.js'
@@ -44,10 +47,13 @@ class HomeworkListByType(LoginRequiredMixin, View):
 
     def get(self, req, category, *args, **kwargs):
         user = req.user
+
+        enabled_homeworks, disabled_homeworks = seperate_homeworks(Homework.objects.filter(category__name = category))
+
         content = {
             'title': f'WEB | Ödevler - {category}',
             'categories': Category.objects.all(),
-            'homeworks': Homework.objects.filter(category__name = category).values(),
+            'homeworks': enabled_homeworks + disabled_homeworks,
             'style_file': 'posts/css/homework_list.css',
             'js_files': [
                 'partials/js/_navbar.js',
