@@ -5,6 +5,9 @@ from django.utils import timezone
 from django.utils.timezone import utc
 
 from datetime import datetime, timedelta
+import time
+
+from .utils import get_timestamp
 
 class Category(models.Model):
     name        = models.CharField(max_length=50)
@@ -25,10 +28,9 @@ class Homework(models.Model):
     expired_date = models.DateField()
 
     def check_expired(self):
-        if self.start_at and self.expired_date:
-            now = datetime.utcnow().replace(tzinfo=utc)
-            expired = datetime(self.expired_date.year, self.expired_date.month, self.expired_date.day)
-            return now.now() < expired.now()
+        now = time.time()
+        expired = get_timestamp(self.expired_date)
+        return now > expired
 
     def __str__(self) -> str:
         return f"{self.name} ({self.category.name})"
