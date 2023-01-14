@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    {% for video in videos %}
+
+    <div class="mt-5 py-3">
+
+        <div class="video__bg_color" style="--category-color: #{{ video.category.color }};">
+        {{ video.name }} <br>
+        {{ video.category }} <br>
+        {{ video.video_type}} <br>
+        {{ video.release_date }} <br>
+        {{ video.category.name }} <br>
+        {{ video.category.color }} <br>
+        </div>
+
+        <iframe width="834" height="521" src="https://www.youtube.com/embed/{{ video.video_id }}" allowfullscreen></iframe>
+
+        
+
+    <div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock content %}
