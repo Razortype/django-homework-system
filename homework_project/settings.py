@@ -37,6 +37,7 @@ ALLOWED_HOSTS = ['ankaweb.dev', 'www.ankaweb.dev', '24.199.104.52', '127.0.0.1',
 INSTALLED_APPS = [
     'posts.apps.PostsConfig',
     'users.apps.UsersConfig',
+    'videos.apps.VideosConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -64,6 +65,7 @@ TEMPLATES = [
                     os.path.join(BASE_DIR, "homework_project", "templates"),
                     os.path.join(BASE_DIR, "posts", "templates"),
                     os.path.join(BASE_DIR, "users", "templates"),
+                    os.path.join(BASE_DIR, "videos", "templates")
                 ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -149,6 +151,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "homework_project", "static"),
     os.path.join(BASE_DIR, "posts", "static"),
     os.path.join(BASE_DIR, "users", "static"),
+    os.path.join(BASE_DIR, "videos", "static"),
 ]
 
 AUTHENTICATION_BACKENDS = (
