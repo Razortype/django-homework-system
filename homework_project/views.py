@@ -4,6 +4,7 @@ from django.shortcuts import render
 
 from django.contrib import messages 
 from django.contrib.auth.models import AnonymousUser
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .utils import get_commands, run_sh
 
@@ -50,7 +51,7 @@ def handler500Test(request):
     return HttpResponse(render(request, 'partials/_500.html', content))
 
 # Server Controller View Created TEST
-class ServerController(View):
+class ServerController(LoginRequiredMixin, View):
 
     def get(self, req, *args, **kwargs):
 

@@ -7,6 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('posts.urls')),
     path('', include('users.urls')),
+    path('', include('videos.urls')),
 
     ##################### Handler Test URLs #####################
     path('handler404', views.handler404Test, name="handler404Test"),
