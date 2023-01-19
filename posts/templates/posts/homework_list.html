@@ -4,7 +4,7 @@
 {% load static %}
 
 {% block content %}
-<div style="margin-top: 56px; width: 100%;" class="pb-5" >
+<div class="hwlist__container" class="pb-5" >
 <div class="container">
 <div id="mySidebar" class="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
@@ -27,11 +27,11 @@
         {% if homeworks %}
     
         {% for homework in homeworks %}
-        <a href="/homeworks/id/{{ homework.id }}/detail" class="homework__card card mt-5 p-4 btn {% if homework.check_expired %}disabled{% endif %} text-left" style="position: relative;">
+        <a href="/homeworks/id/{{ homework.id }}/detail" class="homework__card card mt-5 p-4 btn {% if homework.check_expired %}disabled{% endif %} text-left">
           {% if homework.category.name %}
-          <span class=" text-light rounded p-2 small" style="background-color: #{{ homework.category.color }}; position: absolute; top: -17.6px; left: 10px;"> {{ homework.category.name }} </span>
+          <span class="homework__category text-light rounded p-2 small" style="background-color: #{{ homework.category.color }};"> {{ homework.category.name }} </span>
           {% endif %}
-          <h3 class="font-bold text-dark text-center" style="text-transform: uppercase; letter-spacing: 1px;"> {{ homework.name }} </h3>
+          <h3 class="font-bold text-dark text-center homework__title"> {{ homework.name }} </h3>
           <p class="text-primary"> {{ homework.description }} </p>
 
           <div class="homework__date text-muted small">
@@ -43,9 +43,9 @@
         {% endfor %}
 
         {% else %} 
-        <div class="d-flex align-items-center justify-content-center " style="flex-direction: column;">
+        <div class="d-flex align-items-center justify-content-center homework__notfound ">
           <img class="homework__gif" src={% static 'posts/images/homework_not_found.gif' %} > 
-          <div style="background-color: #D4C2FF; color: black; border: none; font-size: 1.5rem;" class="alert homework__alert"> Henüz bir şey yok</div>
+          <div class="alert homework__alert"> Henüz bir şey yok</div>
         </div>
       
         {% endif %}
@@ -53,21 +53,4 @@
 </div>
 </div>
 
-
-  <script>
-    function openNav() {
-      if(window.innerWidth<576){
-      document.getElementById("mySidebar").style.width = "100%";
-      }
-      else{
-        document.getElementById("mySidebar").style.width = "250px";
-        document.getElementById("main").style.marginLeft = "250px";
-      }
-    }
-    
-    function closeNav() {
-      document.getElementById("mySidebar").style.width = "0";
-      document.getElementById("main").style.marginLeft= "0";
-    }
-    </script>
   {% endblock %}

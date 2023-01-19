@@ -1,5 +1,5 @@
 const url=window.location.href
-const blueNav=["/homeworks","/homeworks/","/homeoworks/id","/profile"]
+const blueNav=["/homeworks","/homeworks/","/homeoworks/id","/profile","/videos"]
 const transparentNav=["homepage","/register","/login"]
 const nav=document.querySelector('nav')
 const toggle=document.querySelector('.navbar-toggler')
