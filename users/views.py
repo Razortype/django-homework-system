@@ -198,9 +198,9 @@ class ForgotPasswordGenerate(View):
         content = {
             'title': 'Web | Şifremi unuttum',
             'form' : self.email_form(),
-            'style_file': 'forgot_password_email.css',
+            'style_file': 'users/css/forgot_password_email.css',
             'js_files' : [
-                'forgot_password_email.js'
+                'users/js/forgot_password_email.js'
             ],
         }
         return HttpResponse(render(req, 'users/password_forgot_email.html', content))
@@ -250,9 +250,9 @@ class ForgotPasswordToken(View):
         content = {
             'title': 'Web | Token',
             'form' : self.token_form(),
-            'style_file': 'forgot_password_token.css',
+            'style_file': 'users/css/forgot_password_token.css',
             'js_files' : [
-                'forgot_password_token.js'
+                'users/js/forgot_password_token.js'
             ],
         }
         return HttpResponse(render(req, 'users/password_token.html', content))
@@ -301,9 +301,9 @@ class ForgotPassword(View):
             'user': user,
             'person_content': Person.objects.get(user=token.user),
             'form': self.forgot_form(),
-            'style_file': 'forgot_password_generator.css',
+            'style_file': 'users/css/forgot_password_generate.css',
             'js_files' : [
-                'forgot_password_generator.js'
+                'users/js/forgot_password_generate.js'
             ],
         }
 
@@ -380,6 +380,7 @@ class Profile(LoginRequiredMixin, View):
         content = {
             'title': 'WEB | Profil',
             'posts': Post.objects.filter(person__user__id = user.id),
+            'style_file':'partials/css/profile.css',
             'js_files': [
                 'partials/js/_navbar.js'
             ]
