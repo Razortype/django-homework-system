@@ -119,16 +119,16 @@ class HomeworkPostNew(View):
         post_form = self.post_form(req.POST)
         if not post_form.is_valid():
             messages.warning(req, "Uygun veriler gönderilmedi")
-            return HttpResponseRedirect(homework_page_url)
+            return HttpResponseRedirect(homework_page_url+"#post__area")
 
         if not post_form.cleaned_data['github_url'].startswith(person.github_url):
-            messages.warning(req, "Gönderilen ödev size ait olamak zorundadır")
-            return HttpResponseRedirect(homework_page_url)
+            messages.warning(req, "Gönderilen ödev size ait olmak zorundadır")
+            return HttpResponseRedirect(homework_page_url+"#post__area")
 
         post = Post.objects.create(person=person, homework=homework, post_url=post_form.cleaned_data['github_url'])
         post.save()
         messages.success(req, "Post başarıyla atıldı")
-        return HttpResponseRedirect(homework_page_url)
+        return HttpResponseRedirect(homework_page_url+"#post__table")
 
 class HomeworkPostUpdate(View):
 
@@ -137,7 +137,7 @@ class HomeworkPostUpdate(View):
     def post(self, req, homework_id, post_id, *args, **kwargs):
 
         update_form = self.update_post(req.POST)
-        return_url = f'/homeworks/id/{homework_id}/detail'
+        return_url = f'/homeworks/id/{homework_id}/detail#post__area'
 
         try:
             post = Post.objects.get(pk=post_id)
@@ -169,7 +169,7 @@ class HomeworkPostDelete(View):
 
     def get(self, req, homework_id, post_id, *args, **kwargs):
 
-        return_url = f'/homeworks/id/{homework_id}/detail'
+        return_url = f'/homeworks/id/{homework_id}/detail#post__area'
         try:
             post = Post.objects.get(pk=post_id)
         except Exception:

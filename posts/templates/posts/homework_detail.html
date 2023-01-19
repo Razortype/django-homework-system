@@ -55,7 +55,7 @@
     </div>
 
     <!-- POST AREA -->    
-    <div class="container mt-5 mb-5">
+    <div id="post__area" class="container mt-5 mb-5">
         <div class="card shadow-sm p-4">
         {% if personpost %}
 
@@ -88,7 +88,7 @@
                     <label class="input__label" for="{{  "id_"|add:field.name }}">{{ field.label }}:</label>
                     <input class="form-control" aria-describedby="inputHelp" type="url" maxlength="100" name="{{ field.name }}" required id="{{  "id_"|add:field.name }}">
                     <small id="inputHelp" class="form-text text-secondary">
-                        Ödevinizi github urli şeklinde paylaşmanız gerekmektedir. (örn: https://github.com/User/~)
+                        Ödevinizi github urli şeklinde paylaşmanız gerekmektedir. (örn: {{ person.github_url }}/~)
                     </small>
                 </div>
                 {% endfor %}
@@ -102,7 +102,7 @@
 
 
     <!-- Table -->
-    <div class="container">
+    <div id="post__table" class="container">
         <div class="card shadow-sm ">
             <div class="card-body">
                 <h4 class="card-title">

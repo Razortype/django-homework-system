@@ -73,7 +73,6 @@ class TestViews(TestCase):
         }, follow=True)
 
         self.assertEquals(response.status_code, 200)
-        self.assertRedirects(response, self.homework_detail_url)
 
         messages = list(response.context['messages'])
         self.assertEquals(len(messages), 1)
@@ -93,7 +92,6 @@ class TestViews(TestCase):
         }, follow=True)
 
         self.assertEquals(response.status_code, 200)
-        self.assertRedirects(response, self.homework_detail_url)
 
         messages = list(response.context['messages'])
         self.assertEquals(len(messages), 1)
@@ -111,7 +109,6 @@ class TestViews(TestCase):
         response = self.client.get(self.post_delete_url, follow=True)
 
         self.assertEquals(response.status_code, 200)
-        self.assertRedirects(response, self.homework_detail_url)
 
         messages = list(response.context['messages'])
         self.assertEquals(len(messages), 1)

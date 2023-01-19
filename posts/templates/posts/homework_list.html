@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load post_extras %}
+{% load static %}
 
 {% block content %}
 <div style="margin-top: 56px; width: 100%;" class="pb-5" >
@@ -43,11 +44,10 @@
 
         {% else %} 
         <div class="d-flex align-items-center justify-content-center " style="flex-direction: column;">
-          <img class="homework__gif" src="https://i.pinimg.com/originals/5d/35/e3/5d35e39988e3a183bdc3a9d2570d20a9.gif"> 
+          <img class="homework__gif" src={% static 'posts/images/homework_not_found.gif' %} > 
           <div style="background-color: #D4C2FF; color: black; border: none; font-size: 1.5rem;" class="alert homework__alert"> Henüz bir şey yok</div>
         </div>
       
-
         {% endif %}
 
 </div>
