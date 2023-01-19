@@ -72,6 +72,11 @@
                     <small id="inputHelp" class="form-text text-secondary">
                         Göndermiş olduğunuz ödevi güncellemek için yeni ödev adresinin url ini giriniz.
                     </small>
+                    {% if personpost.post_404 %}
+                    <small id="inputHelp" class="form-text text-danger">
+                        Projenizi privatedan public e çevirdiyseniz güncellemeniz gerekmektedir !
+                    </small>
+                    {% endif %}
                 </div>
                 {% endfor %}
                 <input name="updte" type="submit" value="Güncelle" class="btn btn-outline-primary btn-block mt-3">
