@@ -79,3 +79,25 @@ html {
 .text-justify{
     text-align: justify;
 }
+
+.banner__button{
+    text-decoration: none !important;
+    color: white;
+    border: 3px solid white;
+    text-transform: uppercase;
+    border-radius:15px;
+    padding: 5px 20px ;
+    font-size: 1em;
+    letter-spacing:5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: .3s;
+    background-color: transparent;
+}
+
+.banner__button:hover {
+    color: white;
+    background-color: #446E9C;
+    border-color:#446E9C ;
+    letter-spacing: 6px !important;
+  }

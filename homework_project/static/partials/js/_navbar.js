@@ -1,6 +1,6 @@
 const url=window.location.href
 const blueNav=["/homeworks","/homeworks/","/homeoworks/id","/profile"]
-const transparentNav=["homepage","/register"]
+const transparentNav=["homepage","/register","/login"]
 const nav=document.querySelector('nav')
 const toggle=document.querySelector('.navbar-toggler')
 
@@ -27,7 +27,6 @@ transparentNav.map((tr)=>{
 function makeNavBlue(){
     nav.classList.remove('bg-transparent')
     nav.classList.add('bg-darkblue')
-    nav.classList.add('navbar-dark')
 }
 
 
@@ -36,11 +35,9 @@ function makeTransparentByScroll(height){
         if(window.scrollY>height){
             nav.classList.remove('bg-transparent')
             nav.classList.add('bg-darkblue')
-            nav.classList.add('navbar-dark')
         }
         else{
             nav.classList.remove('bg-darkblue')
-            nav.classList.remove('navbar-dark')
         }   
     })
 }

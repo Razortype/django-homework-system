@@ -117,3 +117,24 @@
   .homework__category:hover {
     color: var(--line-color) !important;
   }
+
+  .homework__gif{
+    width: 600px ;
+    height: 400px;
+  }
+
+  .homework__alert{
+    font-size: 1rem !important;
+  }
+
+  @media screen and (max-width: 576px) {
+    .homework__gif{
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .homework__alert{
+      font-size: 1em !important;
+    }
+  }
+
+  

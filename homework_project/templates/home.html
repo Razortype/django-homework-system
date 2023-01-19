@@ -12,9 +12,10 @@
     background-position: center center;
   "
 >
-    <div class="banner__contents">
+    <div class="banner__contents" style="  background:rgba(0,0,0,0.3);    ">
         <h1 class="display-4 text-center ">Web Ödev Sistemi</h1>
         <small class="lead">Web Geliştirme Departmanı | MAU - Anka</small>
+        <a class="mt-4 banner__button" onclick="functionforscroll('info')">Hemen Keşfet</a>
 </div>
 </header>
 
@@ -22,8 +23,12 @@
 <!-- Main Section-->
 <main class="container" style="padding-bottom: 100px;">
 
+
+
+  <hr class="main__divider">
+
   <!-- Front-end & Back-end-->
-  <section class="main__info">
+  <section class="main__info" id="info">
       <div class="row mt-5">
         <article class="col-12 main__article col-sm-6 text-light text-center p-0 mb-3 mb-sm-0 p-sm-1" id="about" >
           <div class="p-5" style="background-color: #013B79; border-radius: 5px;">  
@@ -121,4 +126,9 @@ class="text-center p-1 p-sm-2 text-light"
 </div>
 </footer>
 
+<script>
+const functionforscroll = function(id){
+    const reqId = "#"+id;
+    window.scrollTo(0, $(reqId).offset().top-85);
+}</script>
 {% endblock %}

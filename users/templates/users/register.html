@@ -3,14 +3,17 @@
 {% load static %}
 
 {% block content %}
-<div class="login__container" style="min-height: 100vh; background-size: cover;
+<div class="login__container" style="background-size: cover;
 background-image: url('{% static 'partials/images/background1.jpg' %}');
 background-position: center center;
+">    
+<div style="min-height: 100vh;
 display: flex;
 align-items: center;
 justify-content: center;
 color: white;
-">    
+background:rgba(0,0,0,0.3);
+ ">
 <div class="form-area p-2 p-sm-5 my-5 my-sm-0">
     <div class="__form mt-5 mt-sm-0 p-3 p-sm-5 container w-100" style="background-color: rgba(4,88,146,0.5) !important;border-radius: 0.25rem;">
         <h2 class="text-center mb-3 mt-4 mt-sm-0">Web | Ödev Sistemi</h2>
@@ -73,5 +76,7 @@ color: white;
 
 
 </div>
+</div>
+
 </div>
 {% endblock %}
