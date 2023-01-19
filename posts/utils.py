@@ -9,9 +9,10 @@ def seperate_homeworks(homeworks):
     disabled_homeworks = []
 
     for homework in homeworks:
-        if homework.check_expired():
-            disabled_homeworks.append(homework)
-        else:
-            enabled_homeworks.append(homework)
+        if homework.check_started():
+            if homework.check_expired():
+                disabled_homeworks.append(homework)
+            else:
+                enabled_homeworks.append(homework)
     
     return enabled_homeworks, disabled_homeworks
