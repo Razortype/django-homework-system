@@ -4,14 +4,16 @@
 
 {% block content %}
 
-<div class="login__container" style="min-height: 100vh; background-size: cover;
+<div class="login__container" style="background-size: cover;
 background-image: url('{% static 'partials/images/background1.jpg' %}');
 background-position: center center;
-display: flex;
-align-items: center;
-color: white;
-justify-content: center;
 ">
+    <div style="
+    min-height: 100vh;
+    background:rgba(0,0,0,0.3);display: flex;
+    align-items: center;
+    color: white;
+    justify-content: center;">
     <div class="login__form p-4 mx-2 p-sm-5" style="background-color: rgba(4,88,146,0.5) !important;
     border-radius: 0.25rem;
     ">
@@ -32,6 +34,7 @@ justify-content: center;
         </form>
 
     </div>
+</div>
 
 </div>
 
