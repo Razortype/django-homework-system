@@ -5,9 +5,6 @@ from django.utils import timezone
 from django.utils.timezone import utc
 
 from datetime import datetime, timedelta
-import time
-
-from .utils import get_timestamp
 
 class Category(models.Model):
     name        = models.CharField(max_length=50)
@@ -27,10 +24,13 @@ class Homework(models.Model):
     start_at = models.DateField(default=timezone.now)
     expired_date = models.DateField()
 
+    def check_started(self):
+        dt = datetime(self.start_at.year, self.start_at.month, self.start_at.day)
+        return dt < timezone.now().now()
+
     def check_expired(self):
-        now = time.time()
-        expired = get_timestamp(self.expired_date)
-        return now > expired
+        dt = datetime(self.expired_date.year, self.expired_date.month, self.expired_date.day)
+        return dt < timezone.now().now()
 
     def __str__(self) -> str:
         return f"{self.name} ({self.category.name})"
@@ -63,12 +63,11 @@ class Post(models.Model):
     post_url = models.URLField(max_length=200)
     post_at = models.DateField(auto_now=True)
 
-
     def __str__(self) -> str:
         return f"{self.person.name} - {self.homework.name}"
         
     def get_time_diff(self):
-        if self.post_at:
-            now = datetime.utcnow().replace(tzinfo=utc)
-            timediff = now - self.time_posted
-            return timediff.total_seconds()
+        now = timezone.now()
+        dt = datetime(self.post_at.year, self.post_at.month, self.post_at.day)
+        res = datetime(now.year, now.month, now.day) - dt
+        return res.days

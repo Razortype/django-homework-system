@@ -96,14 +96,9 @@ class HomeworkDetailById(LoginRequiredMixin, View):
 
         return HttpResponse(render(req, 'posts/homework_detail.html', content))
 
-    def post(self, req, *args, **kwargs):
-        return HttpResponseRedirect('/homeworks')
-
-class HomeworkPostNew(LoginRequiredMixin, View):
+class HomeworkPostNew(View):
 
     post_form = PostForm
-    login_url = "login"
-    redirect_field_name = "next"
 
     def post(self, req, _id, *args, **kwargs):
 
@@ -135,11 +130,9 @@ class HomeworkPostNew(LoginRequiredMixin, View):
         messages.success(req, "Post başarıyla atıldı")
         return HttpResponseRedirect(homework_page_url)
 
-class HomeworkPostUpdate(LoginRequiredMixin, View):
+class HomeworkPostUpdate(View):
 
     update_post = PostForm
-    login_url = "login"
-    redirect_field_name = "next"
 
     def post(self, req, homework_id, post_id, *args, **kwargs):
 
@@ -172,10 +165,7 @@ class HomeworkPostUpdate(LoginRequiredMixin, View):
         messages.success(req, 'Post başarıyla değiştirildi')
         return HttpResponseRedirect(return_url)
 
-class HomeworkPostDelete(LoginRequiredMixin, View):
-
-    login_url = "login"
-    redirect_field_name = "next"
+class HomeworkPostDelete(View):
 
     def get(self, req, homework_id, post_id, *args, **kwargs):
 
