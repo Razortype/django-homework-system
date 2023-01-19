@@ -356,7 +356,8 @@ class Home(View):
             'style_file': 'partials/css/home.css',
             'js_files': [
                 'partials/js/_header.js',
-                'partials/js/_navbar.js'
+                'partials/js/_navbar.js',
+                'partials/js/home.js',
             ],
         }
 

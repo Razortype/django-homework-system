@@ -1,0 +1,22 @@
+.register__container{
+    background-size: cover !important;
+    background-position: center center !important;
+}
+
+.form__container{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background:rgba(0,0,0,0.3);
+}
+
+.register__form{
+    background-color: rgba(4,88,146,0.5) !important;
+    border-radius: 0.25rem;
+}
+
+.register__redirect{
+    font-weight: bold;
+}

@@ -12,10 +12,10 @@
        <div class="card shadow-sm">
         <div class="card-header">
             <h3 class="card-title">{{ homework.name }}</h3>
-            <p class="card-subtitle text-muted text-center" style="margin-top: -15px;font-family: monospace;">{{ homework.category }} </p>
+            <p class="card-subtitle text-muted text-center">{{ homework.category }} </p>
         </div>
         <div class="card-body">
-            <p class="card-text" style="font-family: Arial, Helvetica, sans-serif;">
+            <p class="card-text">
                 {{ homework.description }}
             </p>
         </div>
@@ -60,7 +60,7 @@
         {% if personpost %}
 
             <h3 class="card-title">Paylaştığın Ödev</h3>
-            <small class="text-center text-muted" style="margin-top: -10px;">{% now "j F Y" %} (today)</small>
+            <small class="text-center text-muted post__date">{% now "j F Y" %} (today)</small>
          
             
             <form action={% url 'post_update' homework.pk personpost.pk %} method='POST'>

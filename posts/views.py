@@ -31,7 +31,8 @@ class HomeworkList(LoginRequiredMixin, View):
             'homeworks': left_started_homeworks(enabled_homeworks) + left_started_homeworks(disabled_homeworks),
             'style_file': 'posts/css/homework_list.css',
             'js_files': [
-                'partials/js/_navbar.js'
+                'partials/js/_navbar.js',
+                'posts/js/homework_list.js',
             ]
         }
 
@@ -57,6 +58,7 @@ class HomeworkListByType(LoginRequiredMixin, View):
             'style_file': 'posts/css/homework_list.css',
             'js_files': [
                 'partials/js/_navbar.js',
+                'posts/js/homework_list.js',
             ]
         }
 
@@ -86,6 +88,7 @@ class HomeworkDetailById(LoginRequiredMixin, View):
             'style_file': 'posts/css/homework_detail.css',
             'js_files': [
                 'partials/js/_navbar.js',
+                'posts/js/homework_detail.js'
             ]
         }
         
