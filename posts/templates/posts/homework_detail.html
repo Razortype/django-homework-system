@@ -125,7 +125,12 @@
                             <tr>
                                 <td>{{ post.person.name }} {{ post.person.surname }}</td>
                                 <td>{{ post.post_at }}</td>
-                                <td><a href="{{ post.post_url }}" target="_blank" class="text-decoration-none text-info">{{ post.post_url }}</a></td>
+                                <td>
+                                    <a href="{{ post.post_url }}" target="_blank" class="text-decoration-none text-info">{{ post.post_url }}</a>
+                                    {% if post.post_404 %}
+                                    <small class="bg-dark text-white"> 404 <small>
+                                    {% endif %}
+                                </td>
                                 <td><a class="badge badge-primary" href='{{ person.github_url }}' target="_blank"> Github Profili </a> </td>
 
                             </tr>

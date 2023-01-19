@@ -1,4 +1,5 @@
 from datetime import datetime
+import requests
 
 def get_timestamp(date):
     dt = datetime(date.year, date.month, date.day)
@@ -18,3 +19,7 @@ def seperate_homeworks(homeworks):
 
 def left_started_homeworks(homeworks):
     return [i for i in homeworks if i.check_started()]
+
+def check_post_404(post_url):
+    r = requests.get(post_url)
+    return r.status_code == 404

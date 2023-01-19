@@ -61,6 +61,7 @@ class Post(models.Model):
     person = models.ForeignKey(Person, on_delete=models.PROTECT)
     homework = models.ForeignKey(Homework, on_delete=models.CASCADE)
     post_url = models.URLField(max_length=200)
+    post_404 = models.BooleanField(default=False)
     post_at = models.DateField(auto_now=True)
 
     def __str__(self) -> str:
