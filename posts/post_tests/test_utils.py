@@ -45,3 +45,11 @@ class TestUtils(TestCase):
 
         self.assertEquals(passed_homework.name, "Homework - not expired - not started")
         self.assertEquals(failed_homework.name, "Homework - expired - started")
+
+    def test_left_started_homeworks_function(self):
+        
+        homeworks = [i for i in Homework.objects.all() if i.check_started()]
+        self.assertEquals(len(homeworks), 1)
+        
+        homework = homeworks[0]
+        self.assertEquals(homework.name, self.homework_1.name)
