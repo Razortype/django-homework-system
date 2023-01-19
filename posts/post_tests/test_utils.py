@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from posts.utils import get_timestamp, seperate_homeworks
+from posts.utils import get_timestamp, seperate_homeworks, check_post_404
 from posts.models import Category, Homework
 
 from django.utils import timezone
@@ -53,3 +53,13 @@ class TestUtils(TestCase):
         
         homework = homeworks[0]
         self.assertEquals(homework.name, self.homework_1.name)
+
+    def test_check_post_404_function_VALID(self):
+        valid_github_url = "https://github.com/Razortype/Python-QA-Manager"
+        res = check_post_404(valid_github_url)
+        self.assertFalse(res)
+
+    def test_check_post_404_function_ERROR(self):
+        invalid_github_url = "https://github.com/test/test-project"
+        res = check_post_404(invalid_github_url)
+        self.assertTrue(res)

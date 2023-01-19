@@ -7,7 +7,7 @@ from .models import Category, Homework, HomeworkDetail, Post
 
 from .forms import PostForm
 
-from .utils import get_timestamp, seperate_homeworks, left_started_homeworks
+from .utils import get_timestamp, seperate_homeworks, left_started_homeworks, check_post_404
 
 from django.contrib import messages
 from django.contrib.auth.models import AnonymousUser
@@ -126,6 +126,7 @@ class HomeworkPostNew(View):
             return HttpResponseRedirect(homework_page_url+"#post__area")
 
         post = Post.objects.create(person=person, homework=homework, post_url=post_form.cleaned_data['github_url'])
+        post.post_404 = check_post_404(post.post_url)
         post.save()
         messages.success(req, "Post başarıyla atıldı")
         return HttpResponseRedirect(homework_page_url+"#post__table")
@@ -161,6 +162,7 @@ class HomeworkPostUpdate(View):
             return HttpResponseRedirect(return_url)
 
         post.post_url = update_form.cleaned_data['github_url']
+        post.post_404 = check_post_404(post.post_url)
         post.save()
         messages.success(req, 'Post başarıyla değiştirildi')
         return HttpResponseRedirect(return_url)
