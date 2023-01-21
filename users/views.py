@@ -241,7 +241,7 @@ class ForgotPasswordGenerate(View):
         send_forgot_email(user, token.token, req)
 
         messages.success(req, "Şifre değiştirme kodu emailinize gönderildi")
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/users/forgot-password/token')
 
 class ForgotPasswordToken(View):
 
@@ -274,7 +274,7 @@ class ForgotPasswordToken(View):
 
         if token_object is None:
             messages.warning(req, "Girilen token geçerli değildir")
-            return HttpResponseRedirect('/login')
+            return HttpResponseRedirect('/users/forgot-password/token')
             
         if not token_object.check_token_valid():
             token_object.delete()
