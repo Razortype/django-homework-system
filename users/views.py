@@ -16,6 +16,8 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 
+from django.forms.models import model_to_dict
+
 def send_verification_email(user: CustomUser, req):
 
     email_sender.send_email(
@@ -372,21 +374,46 @@ class Home(View):
 
 class Profile(LoginRequiredMixin, View):
 
-    user_form = UpdateUserForm
     person_form = PersonForm
 
     def get(self, req, *args, **kwargs):
         user = req.user
+        person = Person.objects.get(pk=user.id)
         content = {
             'title': 'WEB | Profil',
+            'person': person,
             'posts': Post.objects.filter(person__user__id = user.id),
-            'style_file':'partials/css/profile.css',
+            'update_person_form': self.person_form(initial=model_to_dict(person)),
+            'style_file':'users/css/profile.css',
             'js_files': [
                 'partials/js/_navbar.js'
             ]
         }
 
-        if not isinstance(user, AnonymousUser):
-            content['person'] = Person.objects.get(pk=user.id)
-
         return HttpResponse(render(req, 'users/profile.html', content))
+
+    def post(self, req, *args, **kwargs):
+
+        user = req.user
+        form = self.person_form(req.POST)
+
+        if not form.is_valid():
+            messages.warning(req, "Girilen verilen geçerli değildir")
+            return HttpResponseRedirect('/profile')
+
+        updated_person = Person.objects.get(user=user)
+        updated_person.name = form.cleaned_data['name']
+        updated_person.surname = form.cleaned_data['surname']
+        updated_person.age = form.cleaned_data['age']
+
+        old_person_github_url = updated_person.github_url
+        updated_person.github_url = form.cleaned_data['github_url']
+
+        updated_person.save()
+
+        if old_person_github_url != updated_person.github_url:
+            messages.warning(req, "GitHub hesap bilgisi değiştirildiği için önceki postlar silindi")
+            Post.objects.filter(person=updated_person).delete()
+
+        messages.success(req, "Profile bilgileri başarıyla değiştirldi")
+        return HttpResponseRedirect("/profile")

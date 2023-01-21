@@ -1,7 +1,6 @@
 from django import forms
 
-from .models import Person, SignUserModel, ForgotPasswordModel
-from django.contrib.auth.models import User
+from .models import Person, CustomUser, SignUserModel, ForgotPasswordModel
 
 from django.utils.translation import gettext_lazy as _
 
@@ -65,8 +64,9 @@ class EmailForm(forms.Form):
     email = forms.EmailField(label="E-mail", max_length=100)
 
 class UpdateUserForm(forms.ModelForm):
+
     class Meta:
-        model = User
+        model = CustomUser
         fields = '__all__'
 
 class PersonForm(forms.ModelForm):
