@@ -7,7 +7,7 @@ from .models import Category, Homework, HomeworkDetail, Post
 
 from .forms import PostForm
 
-from .utils import get_timestamp, seperate_homeworks
+from .utils import get_timestamp, seperate_homeworks, left_started_homeworks, check_post_404
 
 from django.contrib import messages
 from django.contrib.auth.models import AnonymousUser
@@ -28,10 +28,11 @@ class HomeworkList(LoginRequiredMixin, View):
         content = {
             'title': 'WEB | Ödevler',
             'categories': Category.objects.all(),
-            'homeworks': enabled_homeworks + disabled_homeworks,
+            'homeworks': left_started_homeworks(enabled_homeworks) + left_started_homeworks(disabled_homeworks),
             'style_file': 'posts/css/homework_list.css',
             'js_files': [
-                'partials/js/_navbar.js'
+                'partials/js/_navbar.js',
+                'posts/js/homework_list.js',
             ]
         }
 
@@ -53,10 +54,11 @@ class HomeworkListByType(LoginRequiredMixin, View):
         content = {
             'title': f'WEB | Ödevler - {category}',
             'categories': Category.objects.all(),
-            'homeworks': enabled_homeworks + disabled_homeworks,
+            'homeworks': left_started_homeworks(enabled_homeworks) + left_started_homeworks(disabled_homeworks),
             'style_file': 'posts/css/homework_list.css',
             'js_files': [
                 'partials/js/_navbar.js',
+                'posts/js/homework_list.js',
             ]
         }
 
@@ -86,24 +88,20 @@ class HomeworkDetailById(LoginRequiredMixin, View):
             'style_file': 'posts/css/homework_detail.css',
             'js_files': [
                 'partials/js/_navbar.js',
+                'posts/js/homework_detail.js'
             ]
         }
         
         if not isinstance(user, AnonymousUser):
             content['person'] = Person.objects.get(pk=user.id)
             if content['person'] in [i.person for i in content["posts"]]:
-                content['personpost'] = Post.objects.get(person = content['person'])
+                content['personpost'] = Post.objects.get(person = content['person'], homework=content['homework'])
 
         return HttpResponse(render(req, 'posts/homework_detail.html', content))
 
-    def post(self, req, *args, **kwargs):
-        return HttpResponseRedirect('/homeworks')
-
-class HomeworkPostNew(LoginRequiredMixin, View):
+class HomeworkPostNew(View):
 
     post_form = PostForm
-    login_url = "login"
-    redirect_field_name = "next"
 
     def post(self, req, _id, *args, **kwargs):
 
@@ -124,27 +122,26 @@ class HomeworkPostNew(LoginRequiredMixin, View):
         post_form = self.post_form(req.POST)
         if not post_form.is_valid():
             messages.warning(req, "Uygun veriler gönderilmedi")
-            return HttpResponseRedirect(homework_page_url)
+            return HttpResponseRedirect(homework_page_url+"#post__area")
 
         if not post_form.cleaned_data['github_url'].startswith(person.github_url):
-            messages.warning(req, "Gönderilen ödev size ait olamak zorundadır")
-            return HttpResponseRedirect(homework_page_url)
+            messages.warning(req, "Gönderilen ödev size ait olmak zorundadır")
+            return HttpResponseRedirect(homework_page_url+"#post__area")
 
         post = Post.objects.create(person=person, homework=homework, post_url=post_form.cleaned_data['github_url'])
+        post.post_404 = check_post_404(post.post_url)
         post.save()
         messages.success(req, "Post başarıyla atıldı")
-        return HttpResponseRedirect(homework_page_url)
+        return HttpResponseRedirect(homework_page_url+"#post__table")
 
-class HomeworkPostUpdate(LoginRequiredMixin, View):
+class HomeworkPostUpdate(View):
 
     update_post = PostForm
-    login_url = "login"
-    redirect_field_name = "next"
 
     def post(self, req, homework_id, post_id, *args, **kwargs):
 
         update_form = self.update_post(req.POST)
-        return_url = f'/homeworks/id/{homework_id}/detail'
+        return_url = f'/homeworks/id/{homework_id}/detail#post__area'
 
         try:
             post = Post.objects.get(pk=post_id)
@@ -168,18 +165,16 @@ class HomeworkPostUpdate(LoginRequiredMixin, View):
             return HttpResponseRedirect(return_url)
 
         post.post_url = update_form.cleaned_data['github_url']
+        post.post_404 = check_post_404(post.post_url)
         post.save()
         messages.success(req, 'Post başarıyla değiştirildi')
         return HttpResponseRedirect(return_url)
 
-class HomeworkPostDelete(LoginRequiredMixin, View):
-
-    login_url = "login"
-    redirect_field_name = "next"
+class HomeworkPostDelete(View):
 
     def get(self, req, homework_id, post_id, *args, **kwargs):
 
-        return_url = f'/homeworks/id/{homework_id}/detail'
+        return_url = f'/homeworks/id/{homework_id}/detail#post__area'
         try:
             post = Post.objects.get(pk=post_id)
         except Exception:

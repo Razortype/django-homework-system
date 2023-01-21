@@ -12,10 +12,10 @@
        <div class="card shadow-sm">
         <div class="card-header">
             <h3 class="card-title">{{ homework.name }}</h3>
-            <p class="card-subtitle text-muted text-center" style="margin-top: -15px;font-family: monospace;">{{ homework.category }} </p>
+            <p class="card-subtitle text-muted text-center">{{ homework.category }} </p>
         </div>
         <div class="card-body">
-            <p class="card-text" style="font-family: Arial, Helvetica, sans-serif;">
+            <p class="card-text">
                 {{ homework.description }}
             </p>
         </div>
@@ -55,12 +55,12 @@
     </div>
 
     <!-- POST AREA -->    
-    <div class="container mt-5 mb-5">
+    <div id="post__area" class="container mt-5 mb-5">
         <div class="card shadow-sm p-4">
         {% if personpost %}
 
             <h3 class="card-title">Paylaştığın Ödev</h3>
-            <small class="text-center text-muted" style="margin-top: -10px;">{% now "j F Y" %} (today)</small>
+            <small class="text-center text-muted post__date">{% now "j F Y" %} (today)</small>
          
             
             <form action={% url 'post_update' homework.pk personpost.pk %} method='POST'>
@@ -72,6 +72,11 @@
                     <small id="inputHelp" class="form-text text-secondary">
                         Göndermiş olduğunuz ödevi güncellemek için yeni ödev adresinin url ini giriniz.
                     </small>
+                    {% if personpost.post_404 %}
+                    <small id="inputHelp" class="form-text text-danger">
+                        Projenizi privatedan public e çevirdiyseniz güncellemeniz gerekmektedir !
+                    </small>
+                    {% endif %}
                 </div>
                 {% endfor %}
                 <input name="updte" type="submit" value="Güncelle" class="btn btn-outline-primary btn-block mt-3">
@@ -88,7 +93,7 @@
                     <label class="input__label" for="{{  "id_"|add:field.name }}">{{ field.label }}:</label>
                     <input class="form-control" aria-describedby="inputHelp" type="url" maxlength="100" name="{{ field.name }}" required id="{{  "id_"|add:field.name }}">
                     <small id="inputHelp" class="form-text text-secondary">
-                        Ödevinizi github urli şeklinde paylaşmanız gerekmektedir. (örn: https://github.com/User/~)
+                        Ödevinizi github urli şeklinde paylaşmanız gerekmektedir. (örn: {{ person.github_url }}/~)
                     </small>
                 </div>
                 {% endfor %}
@@ -97,12 +102,11 @@
             
         {% endif %}
         </div>
-        </div>
-
+    </div>
 
 
     <!-- Table -->
-    <div class="container">
+    <div id="post__table" class="container">
         <div class="card shadow-sm ">
             <div class="card-body">
                 <h4 class="card-title">
@@ -125,7 +129,12 @@
                             <tr>
                                 <td>{{ post.person.name }} {{ post.person.surname }}</td>
                                 <td>{{ post.post_at }}</td>
-                                <td><a href="{{ post.post_url }}" target="_blank" class="text-decoration-none text-info">{{ post.post_url }}</a></td>
+                                <td>
+                                    <a href="{{ post.post_url }}" target="_blank" class="text-decoration-none text-info">{{ post.post_url }}</a>
+                                    {% if post.post_404 %}
+                                    <small class="bg-dark text-white"> 404 <small>
+                                    {% endif %}
+                                </td>
                                 <td><a class="badge badge-primary" href='{{ person.github_url }}' target="_blank"> Github Profili </a> </td>
 
                             </tr>
@@ -134,8 +143,6 @@
                     </table>
                 </div>
                 {% else %}
-                <!-- sok offfgghh >.< -->
-                <!-- Tam olarak nasıl olur bilmiyorum ama detaylarda html kodu yazabilmemiz şart -->
                 <div class="alert alert-warning mt-3 text-center">Kimse ödevini göndermedi. İlk gönderen sen ol  ^-^ </div>
                 {% endif %}
             </div>

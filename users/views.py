@@ -16,6 +16,8 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 
+from django.forms.models import model_to_dict
+
 def send_verification_email(user: CustomUser, req):
 
     email_sender.send_email(
@@ -198,9 +200,9 @@ class ForgotPasswordGenerate(View):
         content = {
             'title': 'Web | Şifremi unuttum',
             'form' : self.email_form(),
-            'style_file': 'forgot_password_email.css',
+            'style_file': 'users/css/forgot_password_email.css',
             'js_files' : [
-                'forgot_password_email.js'
+                'users/js/forgot_password_email.js'
             ],
         }
         return HttpResponse(render(req, 'users/password_forgot_email.html', content))
@@ -239,7 +241,7 @@ class ForgotPasswordGenerate(View):
         send_forgot_email(user, token.token, req)
 
         messages.success(req, "Şifre değiştirme kodu emailinize gönderildi")
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/users/forgot-password/token')
 
 class ForgotPasswordToken(View):
 
@@ -250,9 +252,9 @@ class ForgotPasswordToken(View):
         content = {
             'title': 'Web | Token',
             'form' : self.token_form(),
-            'style_file': 'forgot_password_token.css',
+            'style_file': 'users/css/forgot_password_token.css',
             'js_files' : [
-                'forgot_password_token.js'
+                'users/js/forgot_password_token.js'
             ],
         }
         return HttpResponse(render(req, 'users/password_token.html', content))
@@ -272,7 +274,7 @@ class ForgotPasswordToken(View):
 
         if token_object is None:
             messages.warning(req, "Girilen token geçerli değildir")
-            return HttpResponseRedirect('/login')
+            return HttpResponseRedirect('/users/forgot-password/token')
             
         if not token_object.check_token_valid():
             token_object.delete()
@@ -301,9 +303,9 @@ class ForgotPassword(View):
             'user': user,
             'person_content': Person.objects.get(user=token.user),
             'form': self.forgot_form(),
-            'style_file': 'forgot_password_generator.css',
+            'style_file': 'users/css/forgot_password_generate.css',
             'js_files' : [
-                'forgot_password_generator.js'
+                'users/js/forgot_password_generate.js'
             ],
         }
 
@@ -356,7 +358,8 @@ class Home(View):
             'style_file': 'partials/css/home.css',
             'js_files': [
                 'partials/js/_header.js',
-                'partials/js/_navbar.js'
+                'partials/js/_navbar.js',
+                'partials/js/home.js',
             ],
         }
 
@@ -371,20 +374,46 @@ class Home(View):
 
 class Profile(LoginRequiredMixin, View):
 
-    user_form = UpdateUserForm
     person_form = PersonForm
 
     def get(self, req, *args, **kwargs):
         user = req.user
+        person = Person.objects.get(pk=user.id)
         content = {
             'title': 'WEB | Profil',
+            'person': person,
             'posts': Post.objects.filter(person__user__id = user.id),
+            'update_person_form': self.person_form(initial=model_to_dict(person)),
+            'style_file':'users/css/profile.css',
             'js_files': [
                 'partials/js/_navbar.js'
             ]
         }
 
-        if not isinstance(user, AnonymousUser):
-            content['person'] = Person.objects.get(pk=user.id)
-
         return HttpResponse(render(req, 'users/profile.html', content))
+
+    def post(self, req, *args, **kwargs):
+
+        user = req.user
+        form = self.person_form(req.POST)
+
+        if not form.is_valid():
+            messages.warning(req, "Girilen verilen geçerli değildir")
+            return HttpResponseRedirect('/profile')
+
+        updated_person = Person.objects.get(user=user)
+        updated_person.name = form.cleaned_data['name']
+        updated_person.surname = form.cleaned_data['surname']
+        updated_person.age = form.cleaned_data['age']
+
+        old_person_github_url = updated_person.github_url
+        updated_person.github_url = form.cleaned_data['github_url']
+
+        updated_person.save()
+
+        if old_person_github_url != updated_person.github_url:
+            messages.warning(req, "GitHub hesap bilgisi değiştirildiği için önceki postlar silindi")
+            Post.objects.filter(person=updated_person).delete()
+
+        messages.success(req, "Profile bilgileri başarıyla değiştirldi")
+        return HttpResponseRedirect("/profile")

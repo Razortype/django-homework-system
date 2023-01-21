@@ -22,6 +22,9 @@ class VideoList(LoginRequiredMixin, View):
             'title': 'WEB | Videolar',
             'videos': Video.objects.all(),
             'style_file': 'videos/css/video_list.css',
+            'js_files': [
+                'partials/js/_navbar.js'
+            ]
         }
 
         if not isinstance(user, AnonymousUser):

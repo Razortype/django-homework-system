@@ -7,26 +7,29 @@
 <header
     class="banner"
     style="
-    background-size: cover;
     background-image: url('{% static 'partials/images/background1.jpg' %}');
-    background-position: center center;
-  "
+    "
 >
     <div class="banner__contents">
         <h1 class="display-4 text-center ">Web Ödev Sistemi</h1>
         <small class="lead">Web Geliştirme Departmanı | MAU - Anka</small>
+        <a class="mt-4 banner__button" onclick="functionforscroll('info')">Hemen Keşfet</a>
 </div>
 </header>
 
 
 <!-- Main Section-->
-<main class="container" style="padding-bottom: 100px;">
+<main class="container main__container">
+
+
+
+  <hr class="main__divider">
 
   <!-- Front-end & Back-end-->
-  <section class="main__info">
+  <section class="main__info" id="info">
       <div class="row mt-5">
         <article class="col-12 main__article col-sm-6 text-light text-center p-0 mb-3 mb-sm-0 p-sm-1" id="about" >
-          <div class="p-5" style="background-color: #013B79; border-radius: 5px;">  
+          <div class="p-5 main__front">  
           <h3>Frontend</h3>
           <p class="text-justify" >Websitelerinde kullanıcıların direkt etkileşime girdiği görsel taraf. Türkçesi ön yüz olan Front-end kısmında HTML ve CSS ile birlikte ReactJS librarysini kullanmaktayız. 
          Günümüzde de gelişmekte olan Front-end teknolojileri gelecek için çok önem arz etmektedir.</p>
@@ -41,7 +44,7 @@
         </div>  
         </article>
         <article class="col-12 main__article col-sm-6 text-dark text-center p-0 mb-3 mb-sm-0 p-sm-1">
-          <div class="p-5" style="background-color: #F8F9FA; border-radius: 5px;">
+          <div class="p-5 main__back">
           <h3>Backend</h3>
           <p class="text-justify" >
             Websitelerin işlevlerinin sağlanmasında, güvenlik açıklarında, alışveriş işlemlerinde vb. bir çok olayda görev yapan teknolojidir Back-end. Eğitimimizde Back-end teknolojisi olarak Spring Boot framework ünü kullanıyoruz. Halihazırda gelişmekte olan ve hemen hemen her dilde teknolojisi olan bir web alanıdır.
@@ -76,7 +79,7 @@
           <li class="list-inline-item"> <a href="mailto:orkun.kurul@gmail.com" target="_blank"> <img src={% static 'partials/images/social-gmail.png' %} alt="gmail-logo" width="30" height="30"></a>
         </ul>
       </article>
-      <figure class="col-md-5 order-1 order-md-2" style="text-align: center;">
+      <figure class="col-md-5 order-1 order-md-2 about__figure">
         <img class="img-fluid mx-auto rounded-circle about__image" src={% static 'partials/images/orkun.jpeg' %} alt="photo" width="350" height="350">
       </figure>
     </div>
@@ -96,7 +99,7 @@
           <li class="list-inline-item"> <a href="mailto:hunkarhyme@gmail.com" target="_blank"> <img src={% static 'partials/images/social-gmail.png' %} alt="gmail-logo" width="30" height="30"></a>
         </ul>
       </article>
-      <figure class="col-md-5 order-1" style="text-align: center;">
+      <figure class="col-md-5 order-1 about__figure">
         <img class="img-fluid mx-auto rounded-circle about__image" src="https://media.licdn.com/dms/image/D4D03AQF_abvNi41kdQ/profile-displayphoto-shrink_800_800/0/1670189440682?e=1677715200&v=beta&t=WljlP1LZ0wytH_ap_E43rU_BuBiO4jpWgeD3VsRodgw" alt="photo" width="350" height="350">
       </figure>
     </div>
@@ -110,7 +113,6 @@
 
 <footer
 class="text-center text-lg-start  footer__container"
-style="background-color: #3e4551"
 >
 <div
 class="text-center p-1 p-sm-2 text-light"

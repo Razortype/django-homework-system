@@ -24,8 +24,47 @@
                 </div>
             </div>
         </div>
+
+        <div class="container col-md-6">
+            <form method="post">
+                {% csrf_token %}
+                {{ update_person_form.as_p }}
+                <input type="submit" value="Değiştir" class="btn btn-primary btn-block mt-3">
+            </form>
+            <button class="btn btn-outline-warning mt-1" onclick="document.location.href='{% url 'forgot_pw' %}'">Şifre Değiştir</button>
+        </div>
+
     </div>
+
+    <div>
+
+    <h1>Postlar</h1>
+
+    <div>
+        {% for post in posts %}
+
+        <div class="my-5">
+
+            {{ post.homework.name }} <br>
+
+            {{ post.post_url }} <br>
+
+            {% if post.post_404 %}
+            <p class="text-danger"> Github hesabı bulunamadı veya gizli </p>
+            {% endif %}
+
+            <button class="btn btn-outline-info mt-1" onclick="document.location.href='{% url 'hw_detail_by_id' post.homework.id %}'">Ödev</button> <br>
+
+            {{ post.post_at }} <br>
+        </div>
+
+        {% endfor %}
+    </div>
+
+</div>
     
 </div>
+
+
 
 {% endblock %}

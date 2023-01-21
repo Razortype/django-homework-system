@@ -1,3 +1,7 @@
+.hwlist__container{
+  margin-top: 56px; 
+  width: 100%;
+}
 
 .sidebar {
     height: 100%;
@@ -69,9 +73,20 @@
     color: #e4f1fe;;
   }
 
+  .homework__category{
+    position: absolute !important;
+    top: -17.6px !important; 
+    left: 10px;
+  }
+
+  .homework__title{
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+  }
   .homework__card{
     transition: 0.3s;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    position: relative;
   }
 
   .homework__card:focus,:hover,:active{
@@ -116,4 +131,32 @@
 
   .homework__category:hover {
     color: var(--line-color) !important;
+  }
+
+  .homework__gif{
+    width: 600px ;
+    height: 400px;
+  }
+
+  .homework__alert{
+    font-size: 1rem !important;
+    background-color: #D4C2FF; 
+    color: black; 
+    border: none; 
+    font-size: 1.5rem;
+  }
+
+  @media screen and (max-width: 576px) {
+    .homework__gif{
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .homework__alert{
+      font-size: 1em !important;
+    }
+  }
+
+  
+  .homework__notfound{
+    flex-direction: column !important;
   }
