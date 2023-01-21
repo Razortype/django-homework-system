@@ -8,6 +8,18 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .utils import get_commands, run_sh
 
+def handler403(request, exception):
+
+    content = {
+        'title': 'Web | 403',
+        'style_file': 'partials/css/_403.css',
+        'js_files': [
+            'partials/js/_403.js'
+        ]
+    }
+
+    return HttpResponse(render(request, 'partials/_403.html', content))
+
 def handler404(request, exception):
 
     content = {
@@ -30,9 +42,21 @@ def handler500(request, *args, **argv):
     return HttpResponse(render(request, 'partials/_500.html', content))
 
 ######################### Handler Test Views ###########################
+
+def handler403Test(request):
+    content = {
+        'title': 'Web | 403',
+        'style_file': 'partials/css/_403.css',
+        'js_files': [
+            'partials/js/_403.js'
+        ]
+    }
+
+    return HttpResponse(render(request, 'partials/_403.html', content))
+
 def handler404Test(request):
     content = {
-        'title': 'Web | Sayfa Bulunamadı',
+        'title': 'Web | 404',
         'style_file': 'partials/css/_404.css',
         'js_files': [
             'partials/js/_404.js'
