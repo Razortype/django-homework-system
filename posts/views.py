@@ -95,7 +95,7 @@ class HomeworkDetailById(LoginRequiredMixin, View):
         if not isinstance(user, AnonymousUser):
             content['person'] = Person.objects.get(pk=user.id)
             if content['person'] in [i.person for i in content["posts"]]:
-                content['personpost'] = Post.objects.get(person = content['person'])
+                content['personpost'] = Post.objects.get(person = content['person'], homework=content['homework'])
 
         return HttpResponse(render(req, 'posts/homework_detail.html', content))
 

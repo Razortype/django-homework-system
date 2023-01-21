@@ -24,6 +24,16 @@
                 </div>
             </div>
         </div>
+
+        <div class="container col-md-6">
+            <form method="post">
+                {% csrf_token %}
+                {{ update_person_form.as_p }}
+                <input type="submit" value="Değiştir" class="btn btn-primary btn-block mt-3">
+            </form>
+            <button class="btn btn-outline-warning mt-1" onclick="document.location.href='{% url 'forgot_pw' %}'">Şifre Değiştir</button>
+        </div>
+
     </div>
     
 </div>
