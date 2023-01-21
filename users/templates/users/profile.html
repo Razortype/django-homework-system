@@ -35,7 +35,36 @@
         </div>
 
     </div>
+
+    <div>
+
+    <h1>Postlar</h1>
+
+    <div>
+        {% for post in posts %}
+
+        <div class="my-5">
+
+            {{ post.homework.name }} <br>
+
+            {{ post.post_url }} <br>
+
+            {% if post.post_404 %}
+            <p class="text-danger"> Github hesabı bulunamadı veya gizli </p>
+            {% endif %}
+
+            <button class="btn btn-outline-info mt-1" onclick="document.location.href='{% url 'hw_detail_by_id' post.homework.id %}'">Ödev</button> <br>
+
+            {{ post.post_at }} <br>
+        </div>
+
+        {% endfor %}
+    </div>
+
+</div>
     
 </div>
+
+
 
 {% endblock %}
