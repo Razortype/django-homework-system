@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 from datetime import datetime, timedelta
-from django.utils.timezone import utc
+from django.utils import timezone
 
 # Create your models here.
 class CustomUser(AbstractUser):
@@ -39,7 +39,7 @@ class Person(models.Model):
 
 class UserToken(models.Model):
     
-    MAX_EXPIRE_DATE_MINUTE = 15
+    MAX_EXPIRE_DATE_MINUTE = 2
     
     user = models.OneToOneField(
         CustomUser,
@@ -47,9 +47,12 @@ class UserToken(models.Model):
         primary_key=True
     )
     token = models.CharField(max_length=6, null=False, blank=False)
-    created_at = models.DateField(auto_now=True)
+    created_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return f"{self.user.username} ({self.token})"
 
     def check_token_valid(self):
-        now = datetime.utcnow().replace(tzinfo=utc)
-        expired = datetime(self.created_at.year, self.created_at.month, self.created_at.day) + timedelta(minutes=self.MAX_EXPIRE_DATE_MINUTE)
-        return now.now() < expired.now()
+        now = timezone.now()
+        expired = self.created_at + timedelta(minutes=self.MAX_EXPIRE_DATE_MINUTE)
+        return now < expired
