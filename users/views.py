@@ -4,7 +4,7 @@ from django.views import View
 from django.contrib.auth import authenticate, login, logout
 
 from posts.models import Post
-from .models import Person, CustomUser, SignUserModel, UserToken
+from .models import Person, CustomUser, SignUserModel, UserVerificationToken, UserToken
 from .forms import LoginForm, UpdateUserForm, PersonForm, SignUserForm, TokenForm, ForgotPasswordForm, EmailForm
 from .utils import generate_token, email_sender, valid_checker, generate_forgot_token
 
@@ -20,6 +20,12 @@ from django.forms.models import model_to_dict
 
 def send_verification_email(user: CustomUser, req):
 
+    token = generate_token.make_token(user)
+    UserVerificationToken.objects.create(
+        user  = user,
+        token = token
+    )
+
     email_sender.send_email(
         to = [user.email],
         email_subject = "Email Aktivasyon URL",
@@ -28,7 +34,7 @@ def send_verification_email(user: CustomUser, req):
             'person': Person.objects.get(pk=user.pk),
             'domain': get_current_site(req),
             'uid'   : urlsafe_base64_encode(force_bytes(user.pk)),
-            'token' : generate_token.make_token(user),
+            'token' : token,
         }
     )
 
@@ -66,8 +72,19 @@ class LoginView(View):
             messages.error(req, "Kullanıcı adı veya Şifre hatalı")
             return HttpResponseRedirect('/login')
 
+        try:
+            verification_token = UserVerificationToken.objects.get(user=user)
+        except UserVerificationToken.DoesNotExist:
+            verification_token = None
+
         if not user.is_email_valid:
-            messages.warning(req, "Emailinizi aktive etmeniz gerekmektedir")
+
+            if verification_token.check_token_valid():
+                messages.warning(req, "Emailinizi aktive etmeniz gerekmektedir")
+            else:
+                verification_token.delete()
+                send_verification_email(user, req)
+                messages.warning(req, "Girilen tokenin süresü dolmuştur. Aktivasyon için yeni bir email gönderildi.")
             return HttpResponseRedirect('/login')
         else:
             login(req, user)
@@ -178,8 +195,17 @@ class ActivateUser(View):
         try:
             uid = force_str(urlsafe_base64_decode(uidb64))
             user = CustomUser.objects.get(pk=uid)
+            verification_token = UserVerificationToken.objects.get(user=user)
         except Exception:
             user = None
+            verification_token = None
+
+        if verification_token:
+            if not verification_token.check_token_valid():
+                verification_token.delete()
+                send_verification_email(user, req)
+                messages.warning(req, "Girilen tokenin süresü dolmuştur. Aktivasyon için yeni bir email gönderildi.")
+                return HttpResponseRedirect('/')
 
         if user and generate_token.check_token(user, token):
             user.is_email_valid = True
