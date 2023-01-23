@@ -36,6 +36,22 @@ class Person(models.Model):
     def __str__(self) -> str:
         return f"{self.name} {self.surname} ({self.user.username})"
 
+class UserVerificationToken(models.Model):
+
+    MAX_EXPIRE_DATE_MINUTE = 5
+
+    user = models.OneToOneField(
+        CustomUser,
+        on_delete=models.CASCADE,
+        primary_key=True
+    )
+    token = models.CharField(max_length=39, null=False, blank=False)
+    created_at = models.DateTimeField(auto_now=True)
+
+    def check_token_valid(self):
+        now = timezone.now()
+        expired = self.created_at + timedelta(minutes=self.MAX_EXPIRE_DATE_MINUTE)
+        return now < expired
 
 class UserToken(models.Model):
     
