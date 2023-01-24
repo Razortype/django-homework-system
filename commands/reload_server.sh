@@ -11,7 +11,9 @@ echo "|                                    |"
 echo " ------------------------------------ "
 
 # Send pull request
+git stash
 git pull https://$GITHUB_PASSWORD:x-oauth-basic@github.com/Razortype/django-homework-system.git
+git stash pop
 
 echo " ------------------------------------ "
 echo "|                                    |"
