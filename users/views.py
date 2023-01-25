@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 
 from posts.models import Post
 from .models import Person, CustomUser, SignUserModel, UserVerificationToken, UserToken
-from .forms import LoginForm, UpdateUserForm, PersonForm, SignUserForm, TokenForm, ForgotPasswordForm, EmailForm
+from .forms import LoginForm, PersonForm, SignUserForm, TokenForm, ForgotPasswordForm, EmailForm
 from .utils import generate_token, email_sender, valid_checker, generate_forgot_token
 
 from django.contrib import messages 
@@ -400,6 +400,9 @@ class Home(View):
 
 class Profile(LoginRequiredMixin, View):
 
+    login_url = "login"
+    redirect_field_name = "next"
+
     person_form = PersonForm
 
     def get(self, req, *args, **kwargs):
@@ -441,5 +444,5 @@ class Profile(LoginRequiredMixin, View):
             messages.warning(req, "GitHub hesap bilgisi değiştirildiği için önceki postlar silindi")
             Post.objects.filter(person=updated_person).delete()
 
-        messages.success(req, "Profile bilgileri başarıyla değiştirldi")
+        messages.success(req, "Profile bilgileri başarıyla değiştirildi")
         return HttpResponseRedirect("/profile")
