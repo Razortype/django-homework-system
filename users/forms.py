@@ -63,12 +63,6 @@ class TokenForm(forms.Form):
 class EmailForm(forms.Form):
     email = forms.EmailField(label="E-mail", max_length=100)
 
-class UpdateUserForm(forms.ModelForm):
-
-    class Meta:
-        model = CustomUser
-        fields = '__all__'
-
 class PersonForm(forms.ModelForm):
     class Meta:
         model = Person
