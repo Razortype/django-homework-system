@@ -31,6 +31,7 @@ class Person(models.Model):
     surname = models.CharField(max_length=30, null=False, blank=False)
     age = models.SmallIntegerField()
     github_url = models.URLField(max_length=200)
+    photo = models.ImageField(upload_to="users/media/photos", blank=True)
     created_at = models.DateField(auto_now=True)
 
     def __str__(self) -> str:
