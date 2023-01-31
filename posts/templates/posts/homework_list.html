@@ -35,8 +35,8 @@
           <p class="text-primary"> {{ homework.description }} </p>
 
           <div class="homework__date text-muted small">
-            <p><img src="https://www.pngmart.com/files/8/Schedule-Transparent-Images-PNG.png" width="20" height="20" />  {{ homework.start_at }} </p>
-            <p><img src="https://www.pngmart.com/files/17/Caution-Warning-Transparent-Background.png" width="20" height="20" />  {{ homework.expired_date }} </p>
+            <p><img src={% static 'posts/images/start_homework_date.png' %} width="20" height="20" />  {{ homework.start_at }} </p>
+            <p><img src={% static 'posts/images/end_homework_date.png' %} width="20" height="20" />  {{ homework.expired_date }} </p>
           </div>
         </a>
 
