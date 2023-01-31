@@ -7,7 +7,7 @@ from .models import Category, Homework, HomeworkDetail, Post
 
 from .forms import PostForm
 
-from .utils import get_timestamp, seperate_homeworks, left_started_homeworks, check_post_404
+from .utils import get_timestamp, seperate_homeworks, left_started_homeworks, check_post_404, valid_checker
 
 from django.contrib import messages
 from django.contrib.auth.models import AnonymousUser
@@ -124,8 +124,11 @@ class HomeworkPostNew(View):
             messages.warning(req, "Uygun veriler gönderilmedi")
             return HttpResponseRedirect(homework_page_url+"#post__area")
 
-        if not post_form.cleaned_data['github_url'].startswith(person.github_url):
-            messages.warning(req, "Gönderilen ödev size ait olmak zorundadır")
+        errors = valid_checker.check_post_valid(post_form.cleaned_data['github_url'], person.github_url)
+
+        if errors:
+            for error in errors:
+                messages.warning(req, error)
             return HttpResponseRedirect(homework_page_url+"#post__area")
 
         post = Post.objects.create(person=person, homework=homework, post_url=post_form.cleaned_data['github_url'])
@@ -140,6 +143,7 @@ class HomeworkPostUpdate(View):
 
     def post(self, req, homework_id, post_id, *args, **kwargs):
 
+        person = req.user.person
         update_form = self.update_post(req.POST)
         return_url = f'/homeworks/id/{homework_id}/detail#post__area'
 
@@ -152,7 +156,7 @@ class HomeworkPostUpdate(View):
             messages.warning(req, "Aranılan post bulunamadı")
             return HttpResponseRedirect(return_url)
 
-        if post.person != req.user.person:
+        if post.person != person:
             messages.warning(req, "Postu atan kişi siz olmak zorundasınız")
             return HttpResponseRedirect(return_url)
 
@@ -160,8 +164,11 @@ class HomeworkPostUpdate(View):
             messages.warning(req, "Girilen veriler geçerli değildir")
             return HttpResponseRedirect(return_url)
 
-        if not update_form.cleaned_data['github_url'].startswith(req.user.person.github_url):
-            messages.warning(req, "Gönderilen ödev size ait olamak zorundadır")
+        errors = valid_checker.check_post_valid(update_form.cleaned_data['github_url'], person.github_url)
+
+        if errors:
+            for error in errors:
+                messages.warning(req, error)
             return HttpResponseRedirect(return_url)
 
         post.post_url = update_form.cleaned_data['github_url']
