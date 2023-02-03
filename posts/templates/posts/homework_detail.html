@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load post_extras %}
+{% load static %}
 
 {% block content %}
 
@@ -20,8 +21,8 @@
             </p>
         </div>
         <div class="card-footer">
-            <p><img class="mr-1" src="https://www.pngmart.com/files/8/Schedule-Transparent-Images-PNG.png" width="25" height="25" /> Başlangıç: <strong class="text-success"> {{ homework.start_at }}  </strong> </p>
-            <p><img class="mr-1" src="https://www.pngmart.com/files/17/Caution-Warning-Transparent-Background.png" width="25" height="25" /> Son Tarih:<strong class="text-danger">  {{ homework.expired_date }} </strong>  </p>
+            <p><img class="mr-1" src={% static 'posts/images/start_homework_date.png' %} width="25" height="25" /> Başlangıç: <strong class="text-success"> {{ homework.start_at }}  </strong> </p>
+            <p><img class="mr-1" src={% static 'posts/images/end_homework_date.png' %} width="25" height="25" /> Son Tarih:<strong class="text-danger">  {{ homework.expired_date }} </strong>  </p>
         </div>
 
        </div>
@@ -29,12 +30,13 @@
 
 
     <!-- DETAIL AREA-->
+    {% if details %}
     <div class="container mt-5 mb-5">
         <div class="card shadow-sm p-4">
             <h3 class="card-title">Detaylar</h3>
             {% for detail in details %}
                 <div class="card p-3 mt-4">
-                        <span class="card__icon"><img src="https://www.freeiconspng.com/thumbs/details-icon/details-icon-png-cc-by-3-0--it-1.png" width="30" height="30"></span>
+                        <span class="card__icon"><img src={% static 'posts/images/homework_detail_icon.png' %} width="30" height="30"></span>
                         
                         <h5 class="text-dark"> {{ detail.detail_name }}
                         {% if detail.detail_risk == 'N' %}
@@ -53,6 +55,7 @@
             {% endfor %}
         </div>
     </div>
+    {% endif %}
 
     <!-- POST AREA -->    
     <div id="post__area" class="container mt-5 mb-5">

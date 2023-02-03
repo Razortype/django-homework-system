@@ -79,3 +79,10 @@ class PersonForm(forms.ModelForm):
             'age': _("Yaş"),
             'github_url': _("Github Hesabı (url)")
         }
+
+class ProfilePhotoForm(forms.ModelForm):
+    class Meta:
+        model = Person
+        fields = [
+            "photo"
+        ]

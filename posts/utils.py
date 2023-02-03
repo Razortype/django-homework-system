@@ -23,3 +23,17 @@ def left_started_homeworks(homeworks):
 def check_post_404(post_url):
     r = requests.get(post_url)
     return r.status_code == 404
+
+class ValidChecker:
+
+    @staticmethod
+    def check_post_valid(post_url, person_github_url):
+
+            tests = {
+                'Gönderilen ödev size ait olmalıdır': not post_url.startswith(person_github_url),
+                'Ödev yerine kendi github hesabınızı koyamazsınız': post_url == person_github_url or post_url == person_github_url+"/",
+            }
+            
+            return [name for name,res in tests.items() if res]
+
+valid_checker = ValidChecker()
