@@ -137,3 +137,29 @@
 .post__date{
     margin-top: -10px;
 }
+
+.table__row {
+    position: relative;
+}
+
+.post__404__url {
+    pointer-events: none;
+    color: red !important;
+    transition: 0.3s ease-in-out;
+}
+
+.post__404{
+    pointer-events: none;
+    position: absolute;
+    transition: 1s;
+    display: inline-block;
+    transform: rotate(90deg);
+}
+
+.table__row:hover .post__404 {
+    padding: 0 105px;
+    transform: translate(-100%) rotate(0);
+    color: white;
+    background-color: rgb(250, 150, 150);
+    border-radius: 10px;
+}

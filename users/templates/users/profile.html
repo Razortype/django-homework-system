@@ -1,67 +1,136 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container vh-100">
+<div class="vh-100" style="background-image: url('https://mdbootstrap.com/img/Photos/Others/images/13.jpg');
+    object-fit: contain;
+    background-size: cover;
+    background-position: center center;
+    margin-left: 0 !important;
+    margin-right: 0 !important;">
+    <div style="background:rgba(0,0,0,0.3);">
+    <div class="container">
     <div class="row vh-100 h-100">
         <div class="col-md-6 my-auto offset-md-3">
-            <div class="p-4 shadow bg-light" style="border-radius: 10px;" >
+            <div class="p-4 shadow bg-transparent-blue" style="border-radius: 10px;" >
                 <div class="row">
                     <div class="col-12 d-flex justify-content-center">
-                        <div class="d-flex align-items-center justify-content-center shadow" style="background-color: #FCB3A0; border: 1px solid white; border-radius: 100%; width: 100px; height: 100px; font-size: 40px;">
-                            <p class="text-light">{{ person.name|first }} </p>
+                        <div class="d-flex align-items-center justify-content-center shadow profile__circle" style="background-color: #FCB3A0; border-radius: 100%; width: 100px; height: 100px; font-size: 40px;">
+                            <p class="profile__letter">{{ person.name|first }} </p>
                         </div>
                     </div>
                     <div class="col-12 mt-3">
-                           <h3 class="text-center">
+                           <h3 class="text-center text-light profile__name">
                                 {{person.name}} {{person.surname}}
-                                <span class="text-muted">({{person.age}})</span>
+                                <span class="profile__title">({{person.age}})</span>
                          </h3>
-                            <p class="mt-3"><span class="text-muted">Username:</span> {{person.user.username}}</p>
-                            <p><span class="text-muted">Email:</span> {{person.user.email}}</p>
-                            <p><span class="text-muted">Github:</span> <a href="{{person.github_url}}" target="_blank">{{person.github_url}}</a> </p>
+                            <p class="mt-3 profile__info"><span class="profile__title mr-1 font-weight-bold">Username :</span> {{person.user.username}}</p>
+                            <p class="profile__info"><span class="profile__title mr-1 font-weight-bold">Email :</span> {{person.user.email}}</p>
+                            <p class="profile__info"><span class="profile__title mr-1 font-weight-bold">Github :</span> <a class="text-decoration-none profile__git" href="{{person.github_url}}" target="_blank">{{person.github_url}}</a> </p>
+                            <div class="profile__buttons mt-3">
+                                <button type="button" class="btn profile__button mr-2" data-toggle="modal" data-target="#updateModal">Bilgileri Güncelle</button>
+                                <button type="button" class="btn profile__button__2 " data-toggle="modal" data-target="#seePosts">Postları Görüntüle</button>
+                            </div>
+
                     </div>
 
                 </div>
             </div>
         </div>
 
-        <div class="container col-md-6">
-            <form method="post">
-                {% csrf_token %}
-                {{ update_person_form.as_p }}
-                <input type="submit" value="Değiştir" class="btn btn-primary btn-block mt-3">
-            </form>
-            <button class="btn btn-outline-warning mt-1" onclick="document.location.href='{% url 'forgot_pw' %}'">Şifre Değiştir</button>
-        </div>
+         
 
     </div>
 
-    <div>
-
-    <h1>Postlar</h1>
-
-    <div>
-        {% for post in posts %}
-
-        <div class="my-5">
-
-            {{ post.homework.name }} <br>
-
-            {{ post.post_url }} <br>
-
-            {% if post.post_404 %}
-            <p class="text-danger"> Github hesabı bulunamadı veya gizli </p>
-            {% endif %}
-
-            <button class="btn btn-outline-info mt-1" onclick="document.location.href='{% url 'hw_detail_by_id' post.homework.id %}'">Ödev</button> <br>
-
-            {{ post.post_at }} <br>
-        </div>
-
-        {% endfor %}
-    </div>
 
 </div>
+
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Bilgileri Güncelle</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form method="post">
+                <div class="row">
+                {% csrf_token %}
+                {% for field in update_person_form %}
+                {% if field.name == "age" %}
+                <div class="form-group col-md-6">
+                    <label for="{{  "id_"|add:field.name }}">{{ field.label }}:</label>
+                    <input class="form-control" type="number" placeholder="{{ field.value }}" name="{{ field.name }}" max="100" min="0" required id="{{  "id_"|add:field.name }}">
+                </div>
+                {% elif field.name == "github_url" %}
+                <div class="form-group col-md-6">
+                    <label for="{{  "id_"|add:field.name }}">{{ field.label }}:</label>
+                    <input class="form-control" type="url" placeholder="{{ field.value|truncatechars:23 }}" name="{{ field.name }}" maxlength="200" required id="{{  "id_"|add:field.name }}">
+                </div>
+                {% else %}
+                <div class="form-group col-md-6">
+                    <label for="{{  "id_"|add:field.name }}">{{ field.label }}:</label>
+                    <input class="form-control" type="text" placeholder="{{ field.value }}" name="{{ field.name }}" maxlength="50" required id="{{  "id_"|add:field.name }}">
+                </div>
+                {% endif %}
+                {% endfor %}
+                <div class="col-12 p-0 ">
+                    <hr class="profile__divider"/>
+                </div>
+                <div class="form__buttons col-12">
+                <button type="button" class="btn btn-info" onclick="document.location.href='{% url 'forgot_pw' %}'">Şifre Değiştir</button>
+                <input type="submit" value="Değiştir" class="btn btn-primary">
+                </div>
+                </div>
+
+             </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="seePosts" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title post__title">Postlar</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div>
+                <table class="table table-borderless table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Tarih</th>
+                            <th scope="col">Ödev ismi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for post in posts %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td class="text-muted"><em>{{ post.post_at }}</em></td>
+                                <td class="profile__homework" onclick="document.location.href='{% url 'hw_detail_by_id' post.homework.id %}'"> <span class="badge post__badge badge-primary badge-pill p-2"> {{ post.homework.name }}</span></td>
+                            </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+        
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
     
 </div>
 

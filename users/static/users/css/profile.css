@@ -1,0 +1,114 @@
+.form__buttons{
+    text-align: right;
+}
+
+.profile__circle{
+    transition: 0.5s;
+}
+
+.profile__circle:hover{
+    transform: scale(1.1);
+}
+.post__title{
+    width: 100%;
+    text-align: center;
+    font-size: 1.8rem !important;
+}
+
+.post__badge{
+    transition: 0.3s;
+}
+
+.post__badge:active{
+    transform: scale(1.2);
+}
+
+.profile__homework{
+    cursor: pointer;
+}
+
+.profile__git{
+    color:  #ECF3F9  !important;
+    transition: color .3s ;
+}
+
+.profile__git:hover{
+    color: #017BFE !important;
+}
+
+.profile__letter{
+    margin-top: 15px;
+    color: #FFF8DC;
+}
+
+.bg-transparent-blue{
+    background-color: rgba(4,88,146,0.8) !important;
+    border-radius: 0.25rem;
+}
+
+.profile__title{
+     color:  #FFF8DC ;
+}
+
+.profile__info{
+    color: #ECF3F9;
+}
+
+.profile__buttons{
+    text-align: center !important;
+}
+
+@media (max-width: 992px) { 
+   .profile__button{
+    width: 130px !important;
+    font-size: .7rem;
+   }
+   .profile__button__2{
+    width: 130px !important;
+    font-size: .7rem;
+   }
+   .bg-transparent-blue{
+    font-size: .7rem;
+   }
+   .profile__name{
+    font-size: 1rem !important;
+   }
+ }
+
+.profile__button{
+    color: white;
+    border:1px solid #446E9C;
+    border-radius: 0.25rem;
+    background: linear-gradient(to right, #FFF8DC 50%, #446E9C 50%);
+    background-size: 220% 100%;
+    background-position: right bottom;
+    transition: all .4s ease-out;
+}
+
+.profile__button:hover {
+    background-position: left bottom;
+    color: black;
+}
+
+.profile__button:focus{
+    box-shadow: none !important;
+}
+
+.profile__button__2{
+    color: white;
+    border:1px solid #446E9C;
+    border-radius:  0.25rem;
+    background: linear-gradient(to left, #FFF8DC 50%, #446E9C 50%);
+    background-size: 210% 100%;
+    background-position: left bottom;
+    transition: all .4s ease-out;
+}
+  
+.profile__button__2:hover {
+    background-position: right bottom;
+    color: black;
+}
+
+.profile__button_2:focus{
+    box-shadow: none !important;
+}
