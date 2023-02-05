@@ -40,8 +40,9 @@ class EmailSender:
                 subject = email_subject,
                 body = email_body,
                 from_email = settings.EMAIL_FROM_USER,
-                to = to
+                to = to,
             )
+            email.content_subtype = "html"
 
             EmailThread(email).start()
 
