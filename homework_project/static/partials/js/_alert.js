@@ -1,4 +1,4 @@
-// setTimeout(()=>{
-//     $('.main__alert').alert('close')	
-// },10000)
+setTimeout(()=>{
+    $('.main__alert').alert('close')	
+},10000)
 
