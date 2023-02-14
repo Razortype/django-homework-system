@@ -82,3 +82,19 @@
 button{
     text-decoration: none !important;
 }
+
+.openbtn {
+    margin-top: 5rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    background-color: #446E9C;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 0.25rem;
+    transition: 0.3s;
+  }
+  
+  .openbtn:active {
+    transform: scale(1.01);
+  }

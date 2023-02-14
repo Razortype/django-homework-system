@@ -6,7 +6,7 @@
 {% block content %}
 <div class="hwlist__container" class="pb-5" >
 <div class="container">
-<div id="mySidebar" class="sidebar">
+  <div id="mySidebar" class="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
     <a href="/homeworks" class="{% if request.path == '/homeworks' %}aside__active{% endif %} homework__category">Hepsi</a>
 
@@ -50,7 +50,7 @@
       
         {% endif %}
 
-</div>
+  </div>
 </div>
 
   {% endblock %}

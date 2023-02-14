@@ -49,6 +49,10 @@ class HomeworkListByType(LoginRequiredMixin, View):
     def get(self, req, category, *args, **kwargs):
         user = req.user
 
+        if not Category.objects.filter(name=category).exists():
+            messages.error(req, f"Uygun kategori bulunamadı: {category}")
+            return HttpResponseRedirect("/homeworks")
+
         enabled_homeworks, disabled_homeworks = seperate_homeworks(Homework.objects.filter(category__name = category))
 
         content = {
