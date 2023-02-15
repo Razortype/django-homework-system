@@ -1,7 +1,7 @@
 .alert__container{
+    padding: 20px;
     z-index: 998;
-    background: rgba(0,0,0,0.5);
-    position: absolute;
+    position: fixed;
     top: 10vh;
     right: 1vw !important;
     display: flex;
@@ -14,10 +14,11 @@
 
 }
 .alert__message{
+    padding-right: 1rem;
     z-index: 999;
-    color: white !important;
-    background-color: rgba(4,88,146,0.5)!important;
     border: none !important;
+    border-radius: 20px !important;
+    padding: 1.5rem;
 }
 
 @media (max-width: 767.98px) { 

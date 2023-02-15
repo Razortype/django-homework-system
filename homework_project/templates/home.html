@@ -11,24 +11,48 @@
     "
 >
     <div class="banner__contents">
-        <h1 class="display-4 text-center ">Web Ödev Sistemi</h1>
+        <h1 class="text-center">Web Ödev Sistemi</h1>
         <small class="lead">Web Geliştirme Departmanı | MAU - Anka</small>
-        <a class="mt-4 banner__button" onclick="functionforscroll('info')">Hemen Keşfet</a>
+        <a class="mt-4 banner__button" onclick="functionforscroll('intro')">Hemen Keşfet</a>
 </div>
 </header>
 
 
 <!-- Main Section-->
 <main class="container main__container">
+  <hr class="main__divider">
+  <section class="intro" id="intro">
+    <div class="row">
+    <div class="col-md-4 d-none d-md-block" >
+      <img src="https://cdn.pixabay.com/photo/2019/10/09/07/28/development-4536630_1280.png" class="site__image2" style="width: 100%;height: 100%;" >
+    </div>
+    <div class="col-md-8 text-center pt-sm-0 mt-sm-0">
+      <h3 class="site__heading" style="font-size: 32px;text-align: center;font-weight: 400;">
+          Site Hakkında
+      </h3>
+      <p class="text-left lead mt-3">
+        Maltepe Üniversitesi Anka Yazılım Kulübü Web Geliştirme Departmanı olarak her hafta perşembe saat 14:00 de front-end ve cuma saat 14:00 de back-end dersleri vermekteyiz.
+      </p>
+      <p class="text-left lead">
+        Öğrenme aşamasında dersler kadar ödevlerin de önemli olduğunu fark ettik. Bu sebepten dolayı eğitim verdiğimiz arkadaşlarımızın verdiğimiz ödevleri daha rahat takip edebilmeleri için bu siteyi oluşturduk.
+      </p>
+      <p class="text-left lead">
+        Verdiğimiz ödevleri görüntülemek için kayıt olduktan sonra ödevler sayfasına göz atabilirsiniz. Ayrıca Youtube kanalına yüklediğimiz her eğitim videomuz sitemizdeki videolar sayfasında da bulunacak.
+      </p>
+      <button type="button" class="btn site__button mr-2 mt-3"  onclick="functionforscroll('info')">Frontend & Backend</button>
+      <button type="button" class="btn site__button__two mt-3"  onclick="functionforscroll('about')">Biz Kimiz ? </button>
 
+    </div>
+  </div>
 
+  </section>
 
   <hr class="main__divider">
 
   <!-- Front-end & Back-end-->
   <section class="main__info" id="info">
       <div class="row mt-5">
-        <article class="col-12 main__article col-sm-6 text-light text-center p-0 mb-3 mb-sm-0 p-sm-1" id="about" >
+        <article class="col-12 main__article col-sm-6 text-light text-center p-0 mb-3 mb-sm-0 p-sm-1" >
           <div class="p-5 main__front">  
           <h3>Frontend</h3>
           <p class="text-justify" >Websitelerinde kullanıcıların direkt etkileşime girdiği görsel taraf. Türkçesi ön yüz olan Front-end kısmında HTML ve CSS ile birlikte ReactJS librarysini kullanmaktayız. 
@@ -65,14 +89,14 @@
   <hr class="main__divider">
 
 
-  <section class="main__about">
+  <section class="main__about"  id="about" >
     <div class="row">
       <article class="col-md-7 about__text order-2 order-md-1">
         <h2 class="about__heading">Orkun Kurul</h2>
         <p class="text-muted">Back-end developer</p>
-        <p class="lead text-justify">
+        <p class="about__p text-justify">
           Merhabalar ben Orkun. Maltepe üniversitesinde Yazılım Mühendisliği okuyorum. Bir çok alanda ceşitli çalışmalarda bulundum. Şuanda farklı Backend teknolojileri ile Web alanı da çalışmaktayım. Yardım için danışabileceğiniz teknolojileri ve dilleri GitHub hesabının teknolojisi bölümünde bulabilirsiniz. Herhangi kurs içeriği, site içi sorularını veya önerilerinizi aşağıdaki sosyal medya adreslerinden bana iletebilirsiniz.        </p>
-        <ul class="list-inline">
+        <ul class="list-inline mt-2">
           <li class="list-inline-item"> <a href="https://github.com/Razortype" target="_blank"> <img src={% static 'partials/images/social-github.png' %} alt="github-logo" width="30" height="30"></a> </li>
           <li class="list-inline-item"> <a href="https://www.linkedin.com/in/orkun-kurul/" target="_blank"> <img src={% static 'partials/images/social-linkedin.webp' %} alt="linkedin-logo" width="30" height="30"></a>
           <li class="list-inline-item"> <a href="https://www.youtube.com/@orkunkurul2770" target="_blank"> <img src={% static 'partials/images/social-youtube.png' %} alt="youtube-logo" width="30" height="30"></a>
@@ -90,9 +114,9 @@
       <article class="col-md-7 about__text order-2">
         <h2 class="about__heading">Fatih Bahadır</h2>
         <p class="text-muted">Front-end developer</p>
-        <p class="lead text-justify" >
+        <p class="about__p text-justify" >
           Merhaba ben Fatih. 20 yaşımdayım. Yazılım mühendisliği ikinci sınıf öğrencisiyim. Yaklaşık 1.5 yıldır front-end alanında deneyimim bulunmakta. HTML, CSS, Javascript, React hakkında bilgi sahibiyim. İletişim ve sorular için aşağıdaki sosyal medya adreslerimi kullanabilirsiniz.        </p>
-        <ul class="list-inline">
+        <ul class="list-inline mt-2">
           <li class="list-inline-item"> <a href="https://www.github.com/fatihbahadir" target="_blank"> <img src={% static 'partials/images/social-github.png' %} alt="github-logo" width="30" height="30"></a> </li>
           <li class="list-inline-item"> <a href="https://www.linkedin.com/in/fatihbahadir/" target="_blank"> <img src={% static 'partials/images/social-linkedin.webp' %} alt="linkedin-logo" width="30" height="30"></a>
           <li class="list-inline-item"> <a href="https://www.youtube.com/@fatihbahadr5916" target="_blank"> <img src={% static 'partials/images/social-youtube.png' %} alt="youtube-logo" width="30" height="30"></a>
@@ -107,9 +131,11 @@
 
   <hr class="main__divider">
 
-
-
 </main>
+
+<!-- Go to top button-->
+<button onclick="topFunction()" id="topBtn">&#8593</button>
+
 
 <footer
 class="text-center text-lg-start  footer__container"
@@ -117,9 +143,9 @@ class="text-center text-lg-start  footer__container"
 <div
 class="text-center p-1 p-sm-2 text-light"
 >
-© 2022 Copyright: Developed by 
-<a class="text-pink font-weight-bold" href="https://github.com/Razortype"
->Razortype</a> & <a class="text-pink font-weight-bold" href="https://github.com/fatihbahadir">fatihbahadir</a>
+© 2023 Copyright: Developed by 
+<a class="text-warning footer__link font-weight-bold" href="https://github.com/Razortype"
+>Razortype</a> & <a class="text-warning footer__link font-weight-bold" href="https://github.com/fatihbahadir">fatihbahadir</a>
 </div>
 </footer>
 

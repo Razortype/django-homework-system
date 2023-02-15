@@ -58,7 +58,7 @@ class TestModel(TestCase):
     def test_homework_category_is_assigned_on_creation(self):
         self.assertEquals(self.homework_1.category.name, self.category_1.name)
 
-    def test_homewowk_is_check_started_STARTED(self):
+    def test_homework_is_check_started_STARTED(self):
         self.assertTrue(self.homework_1.check_started())
 
     def test_homework_is_check_started_NOT_STARTED(self):

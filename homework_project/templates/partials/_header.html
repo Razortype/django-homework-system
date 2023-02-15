@@ -16,7 +16,7 @@
         <a class="nav-link  {% if request.path == '/homeworks' %}active{% endif %}" href="/homeworks">Ödevler</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link  disabled " href="/homeworks">Videolar</a>
+        <a class="nav-link  {% if request.path == '/videos' %}active{% endif %}"  href="/videos">Videolar</a>
       </li>
       <li>
         <a class="nav-link  d-lg-none" href='/profile'">Profil</a>

@@ -62,7 +62,7 @@ class Post(models.Model):
     homework = models.ForeignKey(Homework, on_delete=models.CASCADE)
     post_url = models.URLField(max_length=200)
     post_404 = models.BooleanField(default=False)
-    post_at = models.DateField(auto_now=True)
+    post_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
         return f"{self.person.name} - {self.homework.name}"

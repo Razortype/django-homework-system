@@ -40,8 +40,9 @@ class EmailSender:
                 subject = email_subject,
                 body = email_body,
                 from_email = settings.EMAIL_FROM_USER,
-                to = to
+                to = to,
             )
+            email.content_subtype = "html"
 
             EmailThread(email).start()
 
@@ -55,7 +56,7 @@ class ValidChecker:
             tests = {
                 'Şifre ve şifre tekrarı eşleşmeli': password1 != password2,
                 'Şifre uzunluğu 8 karakterden uzun olmalıdır': len(password1) < 8,
-                'Bütün karakterler rakam olamaz': re.search(r"\d", password1) is None,
+                'Şifrede en az bir rakam bulunmalıdır': re.search(r"\d", password1) is None,
                 'Şifre en az bir tane büyük harf içermelidir': re.search(r"[A-Z]", password1) is None,
                 'Şifre en az bir tane küçük harf içermelidir': re.search(r"[a-z]", password1) is None,
                 'Şifre en az bir tane sembol içermelidir': re.search(r"[ !#$%&'()*+,-./[\\\]^_`{|}~"+r'"]', password1) is None,
