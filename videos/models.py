@@ -1,7 +1,5 @@
 from django.db import models
 
-from posts.models import Category
-
 from django.utils import timezone
 
 class Video(models.Model):
@@ -13,7 +11,7 @@ class Video(models.Model):
     ]
 
     name = models.CharField(max_length=100)
-    category = models.ForeignKey(Category,on_delete=models.CASCADE)
+    category = models.ForeignKey('posts.Category',on_delete=models.CASCADE)
     video_type = models.CharField(
         max_length=3,
         choices=VIDEO_TYPE,

@@ -27,7 +27,7 @@ class HomeworkList(LoginRequiredMixin, View):
 
         content = {
             'title': 'WEB | Ödevler',
-            'categories': Category.objects.all(),
+            'categories': [i for i in Category.objects.all() if i.get_hw_amount() > 0],
             'homeworks': left_started_homeworks(enabled_homeworks) + left_started_homeworks(disabled_homeworks),
             'style_file': 'posts/css/homework_list.css',
             'js_files': [
@@ -57,7 +57,7 @@ class HomeworkListByType(LoginRequiredMixin, View):
 
         content = {
             'title': f'WEB | Ödevler - {category}',
-            'categories': Category.objects.all(),
+            'categories': [i for i in Category.objects.all() if i.get_hw_amount() > 0],
             'homeworks': left_started_homeworks(enabled_homeworks) + left_started_homeworks(disabled_homeworks),
             'style_file': 'posts/css/homework_list.css',
             'js_files': [
