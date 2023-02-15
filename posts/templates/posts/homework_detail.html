@@ -134,9 +134,6 @@
                                 <td>{{ post.post_at }}</td>
                                 <td class="table__row">
                                     <a href="{{ post.post_url }}" target="_blank" class="{% if post.post_404 %}post__404__url{% endif %} text-decoration-none text-info">{{ post.post_url }}</a>
-                                    {% if post.post_404 %}
-                                    <div class="post__404">404</div>
-                                    {% endif %}
                                 </td>
                                 <td><a class="badge badge-primary" href='{{ post.person.github_url }}' target="_blank"> Github Profili </a> </td>
 
