@@ -1,15 +1,38 @@
 {% extends 'base.html' %}
 
+{% load static %}
 {% block content %}
 
 {% if commands %}
-<div class="container mt-5">
-    <form method="post">
-        {% csrf_token %}
-        {% for command_name in commands %}
-        <input type='submit' name="{{ command_name }}" value="{{ command_name }}" />
-        {% endfor %}
-    </form>
+<div id="servercommands" class="container">
+    <div class="row">
+        <div class="col-12 col-sm-6">
+            <div class="sever__comannds">
+                <h2>Server Commands</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {% for command_name in commands %}
+                    <input class="btn btn-secondary" type='submit' name="{{ command_name }}" value="{{ command_name }}" />
+                    {% endfor %}
+                </form>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6">
+            <div class="server__output">
+                <h2>Maintenance</h2>
+                <div class="maintenance__commands">
+                    <form method="post"> 
+                    {% for key, val in maintenance.items %}
+                    {% csrf_token %}
+                    <input class="btn btn-{% if val %}success{% else %}danger{% endif %}" type='submit' name="{{ key }}_maintenance" value="{{ key }}{% if val %} 🚧{% endif %}" />
+                    {% endfor %}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
 </div>
 {% endif %}
 
