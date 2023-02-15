@@ -8,3 +8,8 @@ register = template.Library()
 @stringfilter
 def endswith(value, arg):
     return value.endswith(arg)
+
+@register.filter(name='endswith')
+@stringfilter
+def endswith(value, arg):
+    return value.endswith(arg)
