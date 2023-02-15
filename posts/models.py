@@ -1,5 +1,6 @@
 from django.db import models
 from users.models import Person
+from videos.models import Video
 
 from django.utils import timezone
 from django.utils.timezone import utc
@@ -13,6 +14,12 @@ class Category(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    def get_hw_amount(self):
+        return Homework.objects.filter(category=self).count()
+
+    def get_video_amount(self):
+        return Video.objects.filter(category=self).count()
 
 class Homework(models.Model):
     
