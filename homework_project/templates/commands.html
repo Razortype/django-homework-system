@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-12 col-sm-6">
             <div class="sever__comannds">
-                <h2>Server Commands</h2>
+                <h2>Server Komutları</h2>
                 <form method="post">
                     {% csrf_token %}
                     {% for command_name in commands %}
@@ -19,7 +19,7 @@
         </div>
         <div class="col-12 col-sm-6">
             <div class="server__output">
-                <h2>Maintenance</h2>
+                <h2>Bakım (Çalışmıyor)</h2>
                 <div class="maintenance__commands">
                     <form method="post"> 
                     {% for key, val in maintenance.items %}
