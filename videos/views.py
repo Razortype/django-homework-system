@@ -21,7 +21,8 @@ class VideoList(LoginRequiredMixin, View):
 
         content = {
             'title': 'WEB | Videolar',
-            'videos': Video.objects.all(),
+            'categories': Category.objects.all(),
+            'videos': Video.objects.all().order_by("release_date"),
             'style_file': 'videos/css/video_list.css',
             'js_files': [
                 'partials/js/_navbar.js',
@@ -50,7 +51,7 @@ class VideoListByType(LoginRequiredMixin, View):
         content = {
             'title': 'WEB | Videolar',
             'categories': Category.objects.all(),
-            'videos': Video.objects.filter(category__name=category),
+            'videos': Video.objects.filter(category__name=category).order_by("release_date"),
             'style_file': 'videos/css/video_list.css',
             'js_files': [
                 'partials/js/_navbar.js',

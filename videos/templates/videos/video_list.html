@@ -6,8 +6,8 @@
 
 {% block content %}
 
-<div class="container">
-  <div id="mySidebar" class="sidebar mt-5">
+<div class="videolist__container container">
+  <div id="mySidebar" class="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
     <a href="/videos" class="{% if request.path == '/videos' %}aside__active{% endif %} video__category">Hepsi</a>
 
@@ -22,34 +22,30 @@
 
   </div>
   <div id="main" class="main__container" >
-    <button class="openbtn " onclick="openNav()">☰ Ödev Tipi</button>
-      <!-- 
-      {{ video.video_type}} <br>
-      {{ video.release_date }} <br>
-      {{ video.category.color }} <br>  -->
+    <button class="openbtn " onclick="openNav()">☰ Video Tipi</button>
     <div class="container video__container">
       <div class="accordion" id="accordionVideos">
-          {% for video in videos %}
-          <div class="accordion-item">
+        {% for video in videos %}
+        <div class="accordion-item">
           <div>
-              <h2 class="link__container">
-                <button class="accordion__button btn btn-link {% if forloop.counter0 != 0 %} collapsed {% endif %}" type="button" data-toggle="collapse" data-target="#collapse{{ video.video_id }}" aria-expanded="{% if forloop.counter0 == 0 %} true {% else %} false {% endif %}" aria-controls="collapse{{ video.video_id }}">
-                  {% if video.name|length > 23  %} {{ video.name|truncatechars:20 }} {% else %} {{ video.name }} {% endif %}  <span class="video__badge badge badge-secondary ml-2  p-1" style="--category-color: #{{ video.category.color }};">{{ video.category.name }}</span>
-              </button>
-              </h2>
-              <div id="collapse{{ video.video_id }}" class="collapse {% if forloop.counter0 == 0 %} show {% endif %}" data-parent="#accordionVideos">
-                <div class="embed-responsive embed-responsive-16by9">
-                  <iframe  class="embed-responsive-item" src="https://www.youtube.com/embed/{{ video.video_id }}" allowfullscreen></iframe>
-                </div>
+            <h2 class="link__container">
+              <button class="accordion__button btn btn-link {% if forloop.counter0 != 0 %} collapsed {% endif %}" type="button" data-toggle="collapse" data-target="#collapse{{ video.video_id }}" aria-expanded="{% if forloop.counter0 == 0 %} true {% else %} false {% endif %}" aria-controls="collapse{{ video.video_id }}">
+                {% if video.name|length > 23  %} {{ video.name|truncatechars:20 }} {% else %} {{ video.name }} {% endif %}  <span class="video__badge badge badge-secondary ml-2  p-1" style="--category-color: #{{ video.category.color }};">{{ video.category.name }}</span>
+            </button>
+            </h2>
+            <div id="collapse{{ video.video_id }}" class="collapse {% if forloop.counter0 == 0 %} show {% endif %}" data-parent="#accordionVideos">
+              <div class="embed-responsive embed-responsive-16by9">
+                <iframe  class="embed-responsive-item" src="https://www.youtube.com/embed/{{ video.video_id }}" allowfullscreen></iframe>
               </div>
             </div>
           </div>
-  
-          {% endfor %}
+        </div>
+
+        {% endfor %}
       
       </div>
     </div>
-</div>
+  </div>
       
 </div>
 

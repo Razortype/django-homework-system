@@ -7,6 +7,9 @@ def get_commands():
     sh_files = [i for i in os.listdir('./commands') if i.endswith('.sh')]
     return {command.replace('_', ' ').title().split('.')[0]:command for command in sh_files}
 
+def get_maintenance_commands(file_dir):
+    return [i+"_maintenance" for i in get_json_dot_seperated(file_dir).maintenance.keys()]
+
 def run_sh(sh_file):
     subprocess.Popen(["/bin/bash", f"./commands/{sh_file}"], close_fds = True)
 
@@ -33,4 +36,4 @@ def dump_json_data(file_dir, data):
 def scan_url_file(app_name):
     module = importlib.import_module(f"{app_name}.urls")
     urls = getattr(module, "urlpatterns")
-    return [(url.pattern, url.name) for url in urls]
+    return [(url.pattern.regex.pattern, url.name) for url in urls]
