@@ -143,23 +143,28 @@
 }
 
 .post__404__url {
+    position: relative;
     pointer-events: none;
     color: red !important;
     transition: 0.3s ease-in-out;
 }
 
-.post__404{
-    pointer-events: none;
+.post__404__url::after {
+    content:"Sayfa Bulunamadı!";
     position: absolute;
-    transition: 1s;
-    display: inline-block;
-    transform: rotate(90deg);
+    padding: 4px 14px;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    transform: translate(0, 10%);
+    color:white;
+    font-weight: bold;
+    transition: transform 0.5s, color .5s, background-color .5s, text-align .5s;
+    border-radius: 2px;
 }
 
-.table__row:hover .post__404 {
-    padding: 0 105px;
-    transform: translate(-100%) rotate(0);
-    color: white;
+.table__row:hover .post__404__url::after {
+    color:black;
+    transform: translate(0, -50%);
     background-color: rgb(250, 150, 150);
-    border-radius: 10px;
 }
