@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load profile_extras %}
+
 {% block content %}
 <div class="vh-100" style="background-image: url('https://mdbootstrap.com/img/Photos/Others/images/13.jpg');
     object-fit: contain;
@@ -115,7 +117,9 @@
                             <tr>
                                 <th scope="row">{{ forloop.counter }}</th>
                                 <td class="text-muted"><em>{{ post.post_at }}</em></td>
-                                <td class="profile__homework" onclick="document.location.href='{% url 'hw_detail_by_id' post.homework.id %}'"> <span class="badge post__badge badge-primary badge-pill p-2"> {{ post.homework.name }}</span></td>
+                                <td class="profile__homework" onclick="document.location.href='{% url 'hw_detail_by_id' post.homework.id %}'"> 
+                                    <span class="badge post__badge badge-primary badge-pill p-2"> {{ post.homework.name }}</span>
+                                </td>
                             </tr>
 
                         {% endfor %}

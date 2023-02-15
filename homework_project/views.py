@@ -111,3 +111,35 @@ class ServerController(LoginRequiredMixin, View):
         messages.success(req, "Komut başarıyla aktive edildi.")
         return HttpResponseRedirect('/server-commands')
         
+# Application Handler Views
+
+class ApplicationHandler:
+
+    class PostsURLHandler(LoginRequiredMixin, View):
+
+        login_url = "login"
+        redirect_field_name = "next"
+        
+        def get(self, req, *args, **kwargs):
+            messages.error(req, "Ödevler sayfası geçici süreyle kapatılmıştır. En kısa zamanda düzeltilecektir.")
+            return HttpResponseRedirect('/')
+
+        def post(self, req, *args, **kwargs):
+            return self.get(req)
+
+    class VideosURLHandler(LoginRequiredMixin, View):
+
+        login_url = "login"
+        redirect_field_name = "next"
+
+        def get(self, req, *args, **kwargs):
+            messages.error(req, "Videolar sayfası geçici süreyle kapatılmıştır. En kısa zamanda düzeltilecektir.")
+            return HttpResponseRedirect('/')
+
+        def post(self, req, *args, **kwargs):
+            return self.get(req)
+
+    handlers = {
+        'posts': PostsURLHandler,
+        'videos': VideosURLHandler
+    }

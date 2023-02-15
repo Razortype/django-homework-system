@@ -78,6 +78,7 @@ TEMPLATES = [
             'libraries':{
                 "post_extras": 'posts.templatetags.post_extras',
                 "video_extras": 'videos.templatetags.video_extras',
+                "profile_extras": 'users.templatetags.profile_extras',
             },
         },
     },
@@ -180,3 +181,6 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_FRAME_DENY = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
+
+# App Configurations Variables
+URL_CONFIG_DIR = os.path.join(BASE_DIR, "homework_project", "project_config", "url.json")
