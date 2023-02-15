@@ -36,4 +36,4 @@ def dump_json_data(file_dir, data):
 def scan_url_file(app_name):
     module = importlib.import_module(f"{app_name}.urls")
     urls = getattr(module, "urlpatterns")
-    return [(url.pattern, url.name) for url in urls]
+    return [(url.pattern.regex.pattern, url.name) for url in urls]

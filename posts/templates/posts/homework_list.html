@@ -5,50 +5,50 @@
 
 {% block content %}
 <div class="hwlist__container" class="pb-5" >
-<div class="container">
-  <div id="mySidebar" class="sidebar">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-    <a href="/homeworks" class="{% if request.path == '/homeworks' %}aside__active{% endif %} homework__category">Hepsi</a>
+  <div class="container">
+    <div id="mySidebar" class="sidebar">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+      <a href="/homeworks" class="{% if request.path == '/homeworks' %}aside__active{% endif %} homework__category">Hepsi</a>
 
-    {% for category in categories %}
+      {% for category in categories %}
 
-    <a href="/homeworks/{{ category.name }}" class="{% if request.path|endswith:category.name %}aside__active{% endif %} homework__category" style="--line-color: #{{ category.color }};">
-        {{ category.name }}
-    </a>
+      <a href="/homeworks/{{ category.name }}" class="{% if request.path|endswith:category.name %}aside__active{% endif %} homework__category" style="--line-color: #{{ category.color }};">
+          {{ category.name }}
+      </a>
 
-    {% endfor %}
-                
+      {% endfor %}
+                  
 
-  </div>
-  
-  <div id="main">
-    <button class="openbtn " onclick="openNav()">☰ Ödev Tipi</button>  
-        
-        {% if homeworks %}
+    </div>
     
-        {% for homework in homeworks %}
-        <a href="/homeworks/id/{{ homework.id }}/detail" class="homework__card card mt-5 p-4 btn {% if homework.check_expired %}disabled{% endif %} text-left">
-          {% if homework.category.name %}
-          <span class="homework__categoryIcon text-light rounded p-2 small" style="background-color: #{{ homework.category.color }};"> {{ homework.category.name }} </span>
-          {% endif %}
-          <h3 class="font-bold text-dark text-center homework__title"> {{ homework.name }} </h3>
-          <p class="text-primary"> {{ homework.description }} </p>
-
-          <div class="homework__date text-muted small">
-            <p><img src={% static 'posts/images/start_homework_date.png' %} width="20" height="20" />  {{ homework.start_at }} </p>
-            <p><img src={% static 'posts/images/end_homework_date.png' %} width="20" height="20" />  {{ homework.expired_date }} </p>
-          </div>
-        </a>
-
-        {% endfor %}
-
-        {% else %} 
-        <div class="d-flex align-items-center justify-content-center homework__notfound ">
-          <img class="homework__gif" src={% static 'posts/images/homework_not_found.gif' %} > 
-          <div class="alert homework__alert"> Henüz bir şey yok</div>
-        </div>
-      
+    <div id="main">
+      <button class="openbtn " onclick="openNav()">☰ Ödev Tipi</button>  
+          
+      {% if homeworks %}
+  
+      {% for homework in homeworks %}
+      <a href="/homeworks/id/{{ homework.id }}/detail" class="homework__card card mt-5 p-4 btn {% if homework.check_expired %}disabled{% endif %} text-left">
+        {% if homework.category.name %}
+        <span class="homework__categoryIcon text-light rounded p-2 small" style="background-color: #{{ homework.category.color }};"> {{ homework.category.name }} </span>
         {% endif %}
+        <h3 class="font-bold text-dark text-center homework__title"> {{ homework.name }} </h3>
+        <p class="text-primary"> {{ homework.description }} </p>
+
+        <div class="homework__date text-muted small">
+          <p><img src={% static 'posts/images/start_homework_date.png' %} width="20" height="20" />  {{ homework.start_at }} </p>
+          <p><img src={% static 'posts/images/end_homework_date.png' %} width="20" height="20" />  {{ homework.expired_date }} </p>
+        </div>
+      </a>
+
+      {% endfor %}
+
+      {% else %} 
+      <div class="d-flex align-items-center justify-content-center homework__notfound ">
+        <img class="homework__gif" src={% static 'posts/images/homework_not_found.gif' %} > 
+        <div class="alert homework__alert"> Henüz bir şey yok</div>
+      </div>
+      
+      {% endif %}
 
   </div>
 </div>

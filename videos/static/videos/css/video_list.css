@@ -1,3 +1,100 @@
+.videolist__container {
+    margin-top: 56px; 
+    width: 100%;
+}
+
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    background: #eff6f6; 
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+  
+  .aside__active{
+    font-weight: 800;
+  }
+  .sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    color: #374772;
+    display: block;
+    transition: 0.2s;
+  }
+  
+  .sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+
+  .closebtn:hover {
+    background-color: transparent !important;
+    color:#446E9C !important;
+  }
+  
+  .openbtn {
+    font-size: 1.1rem;
+    cursor: pointer;
+    background-color: #446E9C;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 0.25rem;
+    transition: 0.3s;
+  }
+  
+  .openbtn:active {
+    transform: scale(1.01);
+  }
+  
+  #main {
+    transition: margin-left .5s;
+    padding: 16px;
+  }
+
+  @media screen and (max-height: 450px) {
+    .sidebar {
+        padding-top: 15px;
+    }
+    .sidebar a {font-size: 18px;}
+  }
+
+  .video__category{
+    position: relative;
+    transition: 0.2s ease-in-out !important;
+  }
+
+  .video__category::after{
+    content: '';
+    width: 10%;
+    border-bottom: solid 3px var(--line-color);
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: rotate(90deg);
+    z-index: 1;
+    transition: .2s ease-in-out;
+  }
+
+  @media screen and (max-width: 576px) {
+    .video__category::after{
+      left: 0 !important;
+    }
+  }
+
+  .video__category:hover {
+    color: var(--line-color) !important;
+  }
+
 .main__container{
     position: absolute;
     top: 0 !important;
@@ -82,19 +179,3 @@
 button{
     text-decoration: none !important;
 }
-
-.openbtn {
-    margin-top: 5rem;
-    font-size: 1.1rem;
-    cursor: pointer;
-    background-color: #446E9C;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 0.25rem;
-    transition: 0.3s;
-  }
-  
-  .openbtn:active {
-    transform: scale(1.01);
-  }
