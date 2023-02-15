@@ -6,7 +6,10 @@ from django.contrib import messages
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .utils import get_commands, run_sh
+from django.conf import settings
+from .utils import get_commands, get_maintenance_commands, run_sh, get_json_dot_seperated, read_json_data, dump_json_data
+
+from users.models import Person
 
 def handler403(request, exception):
 
@@ -83,8 +86,17 @@ class ServerController(LoginRequiredMixin, View):
             messages.warning(req, "Bu sayfaya giriş izininiz bulunmamaktadır")
             return HttpResponseRedirect('/')
 
+        user = req.user
+
         content = {
-            'commands': get_commands().keys()
+            'person': Person.objects.get(pk=user.id),
+            'commands': get_commands().keys(),
+            'maintenance': get_json_dot_seperated(settings.URL_CONFIG_DIR).maintenance,
+            'style_file': 'partials/css/commands.css',
+            'js_files': [
+                'partials/js/commands.js',
+                'partials/js/_navbar.js',
+            ]
         }
         return HttpResponse(render(req, 'commands.html', content))
 
@@ -93,7 +105,19 @@ class ServerController(LoginRequiredMixin, View):
         if not req.user.is_superuser and not isinstance(req.user, AnonymousUser):
             messages.warning(req, "Bu sayfada işlem izininiz bulunmamaktadır")
             return HttpResponseRedirect('/')
-        
+
+        maintenance_commands = get_maintenance_commands(settings.URL_CONFIG_DIR)
+        for m_command in maintenance_commands:
+            if m_command in req.POST:
+                app_name = m_command.split("_")[0]
+                data = read_json_data(settings.URL_CONFIG_DIR)
+                data["maintenance"][app_name] = not data["maintenance"][app_name]
+                dump_json_data(settings.URL_CONFIG_DIR, data)
+                run_sh("reload_server.sh")
+
+                messages.success(req, "Uygulama bakım durumu başarıyla değiştirildi")
+                return HttpResponseRedirect('/server-commands')
+
         commands = get_commands()
         command_name = None
 
