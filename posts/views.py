@@ -82,6 +82,10 @@ class HomeworkDetailById(LoginRequiredMixin, View):
         user = req.user
         homework = Homework.objects.get(pk=_id)
 
+        if homework.check_expired():
+            messages.warning(req, "Bu ödevin süresi geçmiştir")
+            return HttpResponseRedirect('/homeworks')
+
         content = {
             'title': f'WEB | Ödevler - {homework.name}',
             'homework' : homework,
