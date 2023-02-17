@@ -25,9 +25,9 @@
                                 {{person.name}} {{person.surname}}
                                 <span class="profile__title">({{person.age}})</span>
                          </h3>
-                            <p class="mt-3 profile__info"><span class="profile__title mr-1 font-weight-bold">Username :</span> {{person.user.username}}</p>
-                            <p class="profile__info"><span class="profile__title mr-1 font-weight-bold">Email :</span> {{person.user.email}}</p>
-                            <p class="profile__info"><span class="profile__title mr-1 font-weight-bold">Github :</span> <a class="text-decoration-none profile__git" href="{{person.github_url}}" target="_blank">{{person.github_url}}</a> </p>
+                            <p class="mt-3 profile__info"><span class="profile__title mr-1 font-weight-bold">Kullanıcı Adı :</span> {{person.user.username}}</p>
+                            <p class="profile__info"><span class="profile__title mr-1 font-weight-bold">E-mail :</span> {{person.user.email}}</p>
+                            <p class="profile__info"><span class="profile__title mr-1 font-weight-bold">GitHub :</span> <a class="text-decoration-none profile__git" href="{{person.github_url}}" target="_blank">{{person.github_url}}</a> </p>
                             <div class="profile__buttons mt-3">
                                 <button type="button" class="btn profile__button mr-2" data-toggle="modal" data-target="#updateModal">Bilgileri Güncelle</button>
                                 <button type="button" class="btn profile__button__2 " data-toggle="modal" data-target="#seePosts">Postları Görüntüle</button>
@@ -51,6 +51,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalCenterTitle">Bilgileri Güncelle</h5>
+          <button type="button" class="fillbtn" onclick="fillProfileFormInput()"><i class="fa-solid fa-pen"></i> <p>Doldur</p></button>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -63,17 +64,17 @@
                 {% if field.name == "age" %}
                 <div class="form-group col-md-6">
                     <label for="{{  "id_"|add:field.name }}">{{ field.label }}:</label>
-                    <input class="form-control" type="number" placeholder="{{ field.value }}" name="{{ field.name }}" max="100" min="0" required id="{{  "id_"|add:field.name }}">
+                    <input id="form-age" class="form-control" data-value={{ field.value }} type="number" placeholder="- {{ field.value }} -" name="{{ field.name }}" max="100" min="0" required id="{{  "id_"|add:field.name }}">
                 </div>
                 {% elif field.name == "github_url" %}
                 <div class="form-group col-md-6">
                     <label for="{{  "id_"|add:field.name }}">{{ field.label }}:</label>
-                    <input class="form-control" type="url" placeholder="{{ field.value|truncatechars:23 }}" name="{{ field.name }}" maxlength="200" required id="{{  "id_"|add:field.name }}">
+                    <input id="form-github" class="form-control" data-value={{ field.value }} type="url" placeholder="- {{ field.value|truncatechars:23 }} -" name="{{ field.name }}" maxlength="200" required id="{{  "id_"|add:field.name }}">
                 </div>
                 {% else %}
                 <div class="form-group col-md-6">
                     <label for="{{  "id_"|add:field.name }}">{{ field.label }}:</label>
-                    <input class="form-control" type="text" placeholder="{{ field.value }}" name="{{ field.name }}" maxlength="50" required id="{{  "id_"|add:field.name }}">
+                    <input id="form-{{field.name}}" class="form-control" data-value={{ field.value }} type="text" placeholder="- {{ field.value }} -" name="{{ field.name }}" maxlength="50" required id="{{  "id_"|add:field.name }}">
                 </div>
                 {% endif %}
                 {% endfor %}

@@ -415,7 +415,8 @@ class Profile(LoginRequiredMixin, View):
             'update_person_form': self.person_form(initial=model_to_dict(person)),
             'style_file':'users/css/profile.css',
             'js_files': [
-                'partials/js/_navbar.js'
+                'partials/js/_navbar.js',
+                'users/js/profile.js',
             ]
         }
 

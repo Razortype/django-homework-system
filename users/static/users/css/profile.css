@@ -112,3 +112,32 @@
 .profile__button_2:focus{
     box-shadow: none !important;
 }
+
+.fillbtn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    margin-left: .5rem;
+    border-radius: 20px;
+    overflow: hidden;
+    width: 30px;
+    transition: width 0.3s;
+}
+
+.fillbtn p {
+    margin-bottom: 0;
+    font-weight: bold;
+}
+
+.fillbtn:hover {
+    width: 100px;
+}
+
+.fillbtn:focus {
+    outline: none;
+}
+
+.form-control {
+    color: black !important;
+}
