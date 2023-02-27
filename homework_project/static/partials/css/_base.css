@@ -21,3 +21,19 @@
 body{
     position: relative;
 }
+
+.code-block {
+    position: relative;
+    padding: 10px;
+    background-color:   #ffccbf;
+    white-space: pre;
+    border-radius: 5px;
+    overflow: scroll;
+    margin: 20px 0px;
+}
+
+.code-block code {
+    font-family: monospace;
+    font-weight: bold;
+    color:#4e84be;
+}
