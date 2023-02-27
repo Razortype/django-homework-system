@@ -37,10 +37,13 @@ class Homework(models.Model):
 
     def check_expired(self):
         dt = datetime(self.expired_date.year, self.expired_date.month, self.expired_date.day)
-        return dt < timezone.now().now()
+        return dt < timezone.now().now() and not self.display
 
     def __str__(self) -> str:
         return f"{self.name} ({self.category.name})"
+    
+    class Meta:
+        ordering = ('expired_date',)
 
 class HomeworkDetail(models.Model):
     LOW = 'L'
