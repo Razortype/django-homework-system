@@ -66,6 +66,9 @@ class HomeworkDetail(models.Model):
 
     def __str__(self) -> str:
         return f"{self.detail_name} - {self.homework.name}"
+    
+    class Meta:
+        ordering = ('pk',)
 
 class Post(models.Model):
     person = models.ForeignKey(Person, on_delete=models.PROTECT)
